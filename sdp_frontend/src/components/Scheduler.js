@@ -129,9 +129,11 @@ class Students extends Component{
     render(){
         return(
             <div>
+                <pre>
                 <PageHeader>
                     <h1>Timetable Scheduler</h1>
                 </PageHeader>
+                </pre>
                 
                 <div class='row'>
                     <div class='col-lg-5'>
@@ -151,7 +153,7 @@ class Students extends Component{
                         </div>
                     </div>
                     <div class='col-lg-1' style={{height:2}}></div>
-                    <div align = "center" class='col-lg-4' style={{marginTop:'10%'}}>
+                    <div align = "center" class='col-lg-4' style={{marginTop:'5%'}}>
                         <div><Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button></div>
                         <p></p>
                         <div><Button bsStyle="warning" onClick={this.deselectAll}>Deselect All</Button></div>
