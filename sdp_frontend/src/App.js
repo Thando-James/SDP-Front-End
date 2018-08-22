@@ -23,11 +23,11 @@ class App extends Component {
     var reader = new FileReader();
     reader.onload=function(e){
        //Need functionality here
-      var fileInput = document.getElementById('fileInput');
-      var DisplayArea = document.getElementById('DisplayArea');
+     // var fileInput = document.getElementById('fileInput');
+     // var DisplayArea = document.getElementById('DisplayArea');
       var csv = reader.result;
       var lines = csv.split("\n");
-      var stngs =[]; //lines[0].substring(0,8);
+      var stngs =[]; 
       var stngs2=[];
       
       for(var i=0;i<lines.length;i++){
@@ -38,30 +38,13 @@ class App extends Component {
       $.each(stngs2, function(i, el){
         if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
     });
-    
-  //  // DisplayArea.innerText = uniqueNames;
-  //    for(var i=0;i<uniqueNames.length;i++){
-  //     var currline= "<input type='checkbox' value='" + i + "'/>";
-  //     var lbl = "<label>" + uniqueNames[i] + "</label>";
-  //    }
-     // var headers = lines[0].split("/");
-     // var result = [];
-     // var obj = {};
-      /*for(var i=0;i<lines.length;i++){
-        var currline= "<input type='checkbox' value='" + i + "'/>";
-        var lbl = "<label>" + lines[i] + "</label>";
-        DisplayArea.innerText=lines[i];
-      }*/
-        //for(var j=0;j<headers.length;j++){
-          //obj[headers[j]] = currline[j];
-          _self.setState({
+             _self.setState({
             data:uniqueNames
         })
         }
         reader.readAsText(files[0]);
-        //result.push(obj);
-      }
-    //   
+       }
+       
     
 
     
@@ -86,7 +69,7 @@ class App extends Component {
         console.log(x);
         return(
           <div>
-            <input type="checkbox" name="vehicle1" value="x" /> {x}
+            <input type="checkbox" name="courses" value="C" /> {x}
           </div>
         )
        }) : <div></div>
