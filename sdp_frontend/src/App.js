@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Comp from './Comp'
+//import Comp from './Comp'
 import ReactFileReader from 'react-file-reader';
 import $ from 'jquery';
 
+
+var uniqueNames = [];
+    
 class App extends Component {
   constructor(props){
     super(props);
     this.onSubmit = this.onSubmit.bind(this)
+    this.state={
+      data:[],
+    }
   }
-  handleFiles = files =>{
+  
+ 
+ handleFiles = files =>{
+    let _self = this;
     var reader = new FileReader();
     reader.onload=function(e){
        //Need functionality here
@@ -20,8 +29,7 @@ class App extends Component {
       var lines = csv.split("\n");
       var stngs =[]; //lines[0].substring(0,8);
       var stngs2=[];
-      var stngs3=[];
-      var uniqueNames = [];
+      
       for(var i=0;i<lines.length;i++){
 
         stngs[i] = lines[i];
@@ -30,8 +38,12 @@ class App extends Component {
       $.each(stngs2, function(i, el){
         if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
     });
-     DisplayArea.innerText = uniqueNames;
     
+  //  // DisplayArea.innerText = uniqueNames;
+  //    for(var i=0;i<uniqueNames.length;i++){
+  //     var currline= "<input type='checkbox' value='" + i + "'/>";
+  //     var lbl = "<label>" + uniqueNames[i] + "</label>";
+  //    }
      // var headers = lines[0].split("/");
      // var result = [];
      // var obj = {};
@@ -42,6 +54,9 @@ class App extends Component {
       }*/
         //for(var j=0;j<headers.length;j++){
           //obj[headers[j]] = currline[j];
+          _self.setState({
+            data:uniqueNames
+        })
         }
         reader.readAsText(files[0]);
         //result.push(obj);
@@ -59,23 +74,26 @@ class App extends Component {
     return (
      
       <div className="App">
-       <p>This is the not exam app</p>
+       <p>This is the exam app</p>
       <ReactFileReader handleFiles={this.handleFiles}fileTypes={'.csv'}>
       <button className='btn'>CSV</button>
       </ReactFileReader>  
       <div>
       <pre id="DisplayArea"> </pre>
-      <input  type="radio" id="D2"></input>
       </div>
       <div>
-      </div>
-       
-      <script src="text.js"></script>
-      </div>
-      
-    
+      {this.state.data ? this.state.data.map((x)=>{
+        console.log(x);
+        return(
+          <div>
+            <input type="checkbox" name="vehicle1" value="x" /> {x}
+          </div>
+        )
+       }) : <div></div>
+      }
+       </div>
+       </div>
     );
   }
 }
-
 export default App;
