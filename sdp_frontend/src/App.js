@@ -44,12 +44,23 @@ class App extends Component {
         }
         reader.readAsText(files[0]);
        }
-       
-    
+  
+     
 
-    
- 
- onSubmit(){
+       selectAll = function (){
+      var checkboxes = document.getElementsByName('courses');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = true;
+        }
+       }
+       
+       deselectAll = function (){
+        var checkboxes = document.getElementsByName('courses');
+          for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = false;
+            }
+          } 
+  onSubmit(){
     //Add fetch for localhost
   }
   
@@ -60,7 +71,16 @@ class App extends Component {
        <p>This is the exam app</p>
       <ReactFileReader handleFiles={this.handleFiles}fileTypes={'.csv'}>
       <button className='btn'>CSV</button>
-      </ReactFileReader>  
+      </ReactFileReader> 
+      <div><p></p></div> 
+      <div>
+      <button className='btn' onClick={this.selectAll}>Select All</button>
+      <p></p> 
+      <button className='btn' onClick={this.deselectAll}>Deselect All</button>
+      <p></p> 
+      <button className='btn'>Generate</button>
+      <p></p>
+     </div>
       <div>
       <pre id="DisplayArea"> </pre>
       </div>
@@ -69,7 +89,7 @@ class App extends Component {
         console.log(x);
         return(
           <div>
-            <input type="checkbox" name="courses" value="C" /> {x}
+            <input type="checkbox" name="courses" value={x} /> {x}
           </div>
         )
        }) : <div></div>
