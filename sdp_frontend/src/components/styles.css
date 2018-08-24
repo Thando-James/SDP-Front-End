@@ -1,0 +1,16 @@
+.navbar-container{
+   margin-bottom: 30px;
+}
+
+.navbar-container ul{
+    margin: 0;
+    list-style: none;
+    background-color: #191919
+}
+
+.navbar-container ul li{
+    display: inline;
+    margin-right: 10px;
+    color: white;
+    cursor: pointer;
+}

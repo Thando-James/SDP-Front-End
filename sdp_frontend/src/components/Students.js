@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-class Upload extends Component{
+class Students extends Component{
     constructor(props){
         super(props)
         this.onSubmit = this.onSubmit.bind(this)
@@ -10,14 +10,15 @@ class Upload extends Component{
         e.preventDefault();
         let form = e.target;
         let data = new FormData(form);
-        fetch('http://localhost:3456/upload',{
+        let url = 'http://localhost:3456/upload/students'
+        fetch(url,{
             method:"POST",
             body:data
         })
-        .then(function(response){
-            console.log(response)
-            response.json()
-        })
+        // .then(function(response){
+        //     console.log(response)
+        //     response.json()
+        // })
         .then(function(response){
             console.log(response)
         })
@@ -29,7 +30,8 @@ class Upload extends Component{
     render(){
         return(
             <div>
-                <form onSubmit={this.onSubmit}>
+                <form onSubmit={this.onSubmit} id="students-form">
+                    <label>Upload csv with students registration data</label><br/><br/>
                     <input type="file" name="file" />
                     <input type="submit" value="Submit" />
                 </form>
@@ -38,4 +40,4 @@ class Upload extends Component{
     }
 }
 
-export default Upload
+export default Students
