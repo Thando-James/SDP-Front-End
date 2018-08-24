@@ -4,6 +4,11 @@ import './App.css';
 //import Comp from './Comp'
 import ReactFileReader from 'react-file-reader';
 import $ from 'jquery';
+import {Button} from 'react-bootstrap';
+import {ButtonToolbar} from 'react-bootstrap';
+import {PageHeader} from 'react-bootstrap';
+
+
 
 
 var uniqueNames = [];
@@ -17,14 +22,11 @@ class App extends Component {
     }
   }
   
- 
  handleFiles = files =>{
     let _self = this;
     var reader = new FileReader();
     reader.onload=function(e){
        //Need functionality here
-     // var fileInput = document.getElementById('fileInput');
-     // var DisplayArea = document.getElementById('DisplayArea');
       var csv = reader.result;
       var lines = csv.split("\n");
       var stngs =[]; 
@@ -45,21 +47,39 @@ class App extends Component {
         reader.readAsText(files[0]);
        }
   
-     
-
-       selectAll = function (){
-      var checkboxes = document.getElementsByName('courses');
-        for(var i=0, n=checkboxes.length;i<n;i++) {
+      selectAll = function (){
+        var checkboxes = document.getElementsByName('courses');
+         for(var i=0, n=checkboxes.length;i<n;i++) {
           checkboxes[i].checked = true;
         }
        }
        
-       deselectAll = function (){
+      deselectAll = function (){
         var checkboxes = document.getElementsByName('courses');
           for(var i=0, n=checkboxes.length;i<n;i++) {
             checkboxes[i].checked = false;
             }
-          } 
+          }
+      
+      getCourseStrings = function(){
+        var c1;
+        var checked = Array.prototype.slice.call(document.querySelectorAll('.selectedcourses:checked')).map(function(c1){
+          return c1.value;
+        }).join(",");
+        
+        console.log(checked);
+      }
+      
+      //   var courses = [];
+      //   var checkboxes = document.getElementsByName('courses');
+      //   var checkedcourses = checkboxes.substring(0,8);
+      //   for(var i=0, n=checkboxes.length;i<n;i++){
+      //     if(checkboxes[i].checked = true){
+      //       courses[i] = checkedcourses[i];
+      //     }
+      //   }
+      //   console.log(courses);
+       
   onSubmit(){
     //Add fetch for localhost
   }
@@ -68,19 +88,19 @@ class App extends Component {
     return (
      
       <div className="App">
-       <p>This is the exam app</p>
+      <PageHeader>
+       <h1>Timetable Scheduler</h1>
+      </PageHeader>
+      <div><p></p></div>
+      
+      <ButtonToolbar align = "centre">
       <ReactFileReader handleFiles={this.handleFiles}fileTypes={'.csv'}>
-      <button className='btn'>CSV</button>
+      <Button bsStyle="primary" className='btn'>Upload CSV</Button>
       </ReactFileReader> 
-      <div><p></p></div> 
-      <div>
-      <button className='btn' onClick={this.selectAll}>Select All</button>
-      <p></p> 
-      <button className='btn' onClick={this.deselectAll}>Deselect All</button>
-      <p></p> 
-      <button className='btn'>Generate</button>
-      <p></p>
-     </div>
+      <Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button>
+      <Button bsStyle="primary" onClick={this.deselectAll}>Deselect All</Button>
+      <Button bsStyle="primary"onClick={this.getCourseStrings} >Generate</Button>
+      </ButtonToolbar>
       <div>
       <pre id="DisplayArea"> </pre>
       </div>
@@ -89,7 +109,7 @@ class App extends Component {
         console.log(x);
         return(
           <div>
-            <input type="checkbox" name="courses" value={x} /> {x}
+            <input type="checkbox" name="courses" value={x} class = "selectedcourses"/> {x}
           </div>
         )
        }) : <div></div>
