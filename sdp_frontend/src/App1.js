@@ -11,7 +11,7 @@ import {PageHeader} from 'react-bootstrap';
 
 
 
-var uniqueNames = [];
+//var uniqueNames = [];
     
 class App extends Component {
   constructor(props){
@@ -22,30 +22,30 @@ class App extends Component {
     }
   }
   
- handleFiles = files =>{
-    let _self = this;
-    var reader = new FileReader();
-    reader.onload=function(e){
-       //Need functionality here
-      var csv = reader.result;
-      var lines = csv.split("\n");
-      var stngs =[]; 
-      var stngs2=[];
+//  handleFiles = files =>{
+//     let _self = this;
+//     var reader = new FileReader();
+//     reader.onload=function(e){
+//        //Need functionality here
+//       var csv = reader.result;
+//       var lines = csv.split("\n");
+//       var stngs =[]; 
+//       var stngs2=[];
       
-      for(var i=0;i<lines.length;i++){
+//       for(var i=0;i<lines.length;i++){
 
-        stngs[i] = lines[i];
-        stngs2[i] = stngs[i].substring(0,8);
-        }
-      $.each(stngs2, function(i, el){
-        if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
-    });
-             _self.setState({
-            data:uniqueNames
-        })
-        }
-        reader.readAsText(files[0]);
-       }
+//         stngs[i] = lines[i];
+//         stngs2[i] = stngs[i].substring(0,8);
+//         }
+//       $.each(stngs2, function(i, el){
+//         if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+//     });
+//              _self.setState({
+//             data:uniqueNames
+//         })
+//         }
+//         reader.readAsText(files[0]);
+//        }
   
       selectAll = function (){
         var checkboxes = document.getElementsByName('courses');
@@ -94,9 +94,7 @@ class App extends Component {
       <div><p></p></div>
       
       <ButtonToolbar align = "centre">
-      <ReactFileReader handleFiles={this.handleFiles}fileTypes={'.csv'}>
       <Button bsStyle="primary" className='btn'>Upload CSV</Button>
-      </ReactFileReader> 
       <Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button>
       <Button bsStyle="primary" onClick={this.deselectAll}>Deselect All</Button>
       <Button bsStyle="primary"onClick={this.getCourseStrings} >Generate</Button>
