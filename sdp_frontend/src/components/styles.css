@@ -14,3 +14,14 @@
     color: white;
     cursor: pointer;
 }
+
+.courses-list{
+    height: 350px;
+    overflow: scroll;
+}
+.row{
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    margin-top: 2%;
+}
