@@ -32,7 +32,7 @@ class Students extends Component{
             <div>
                 <form onSubmit={this.onSubmit} id="students-form">
                     <label>Upload csv with students registration data</label><br/><br/>
-                    <input type="file" name="file" />
+                    <input type="file" name="file" accept= ".csv" />
                     <input type="submit" value="Submit" />
                 </form>
             </div>

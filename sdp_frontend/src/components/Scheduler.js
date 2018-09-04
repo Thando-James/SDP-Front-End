@@ -6,6 +6,7 @@ import {PageHeader} from 'react-bootstrap';
 class Students extends Component{
     constructor(props){
         super(props)
+        this.unitTests = this.unitTests.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.onChecked = this.onChecked.bind(this)
         this.getCourseStrings = this.getCourseStrings.bind(this)
@@ -64,6 +65,7 @@ class Students extends Component{
 
 
     onSubmit(e){
+        let ress;
         e.preventDefault();
         let form = e.target;
         console.log(form);
@@ -73,17 +75,36 @@ class Students extends Component{
             method:"POST",
             body:data
         })
+
         // .then(function(response){
         //     console.log(response)
         //     response.json()
         // })
         .then(function(response){
+            console.log("response is ............")
+
             console.log(response)
+            ress = response.status;
         })
         .catch(function(err){
             console.log(err)
         })
+        return ress;
     }
+    
+    unitTests= function() {
+        console.log("we are in");
+        var resp= 200;
+         var funct_res = this.onSubmit();
+        //method(reque,resss);
+        if(funct_res !== resp){
+            console.log("Upload courses not working");
+        }
+        else{
+            console.log("Upload working");
+        }
+    };
+
 
     onChecked(e){
         const checked = this.state.checkedArr
@@ -132,7 +153,7 @@ class Students extends Component{
                         <ButtonToolbar >
                             <form onSubmit={this.onSubmit} id="students-form">
                                 <label>Upload a CSV with students registration data</label><br/><br/>
-                                <input type="file" name="file" />
+                                <input type="file" name="file" accept= ".csv" />
                                 <br/>
                                 <Button bsStyle="primary" className='btn' style={{marginLeft:'42%'}} type="submit">Submit</Button>
                             </form>
