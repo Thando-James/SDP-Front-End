@@ -56,6 +56,7 @@ class Students extends Component{
         })
       .then(function(response){
             console.log(response)
+            this.props.history.push("/timetable")
         })
         .catch(function(err){
             console.log(err)

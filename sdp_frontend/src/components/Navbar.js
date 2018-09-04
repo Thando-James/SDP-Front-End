@@ -9,6 +9,7 @@ class NavBar extends Component{
                 <ul>
                     <li><Link to="/">Scheduler</Link></li>
                     <li><Link to="/courses">Students</Link></li>
+                   
                 </ul>
             </div>
         )
