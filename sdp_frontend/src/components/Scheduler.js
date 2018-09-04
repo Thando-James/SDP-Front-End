@@ -133,7 +133,7 @@ class Students extends Component{
                             {this.state.data ? this.state.data.map((x)=>{
                                 return(
                                     <div>
-                                        <input type="checkbox" name="courses" value={x.course_code} class = "selectedcourses" onChange={this.onChecked}/> {x.course_code}
+                                        <input type="checkbox" name="courses" value={x.Course_Code} class = "selectedcourses" onChange={this.onChecked}/> {x.Course_Code}
                                     </div>
                                 )}) : <div></div>
                             }
