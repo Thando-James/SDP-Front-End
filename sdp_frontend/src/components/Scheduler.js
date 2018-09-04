@@ -3,6 +3,8 @@ import {Button} from 'react-bootstrap';
 import {ButtonToolbar} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 
+let url = 'http://youthleague.co'
+// let url = 'http://localhost'
 class Students extends Component{
     constructor(props){
         super(props)
@@ -47,11 +49,9 @@ class Students extends Component{
     }.bind(this)
       
     getCourseStrings(){
-        let checked = this.state.checkedArr
-        let url = 'https://youthleague.co:3456/generate'
-        
-        
-        fetch(url,{
+        let _self = this;
+        let checked = this.state.checkedArr            
+        fetch(`${url}:3456/generate`,{
             method:"POST",
             body:JSON.stringify({data:checked,
                                 maxSessions:this.state.maxSessions,
@@ -61,9 +61,15 @@ class Students extends Component{
                 "Content-Type": "application/json; charset=utf-8",
             },
         })
+        .then(function(response){
+            return response.json()
+        })
       .then(function(response){
             console.log(response)
-            this.props.history.push("/timetable")
+            _self.props.history.push({
+                pathname:'/timetable',
+                state:response
+            })
         })
         .catch(function(err){
             console.log(err)
@@ -76,8 +82,8 @@ class Students extends Component{
         let form = e.target;
         console.log(form);
         let data = new FormData(form);
-        let url = 'https://youthleague.co/upload/courses'
-        fetch(url,{
+
+        fetch(`${url}:3456/upload/courses`,{
             method:"POST",
             body:data
         })
@@ -170,8 +176,8 @@ class Students extends Component{
 
     componentDidMount(){
         let _self = this;
-        let url = 'https://youthleague.co:3456/display/courses'
-        fetch(url)
+        
+        fetch(`${url}:3456/display/courses`)
         .then(function(res){
             return res.json()
         })

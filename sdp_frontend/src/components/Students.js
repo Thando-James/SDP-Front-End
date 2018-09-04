@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 
+let url = 'http://youthleague.co'
+// let url = 'http://localhost'
 class Students extends Component{
     constructor(props){
         super(props)
@@ -10,8 +12,8 @@ class Students extends Component{
         e.preventDefault();
         let form = e.target;
         let data = new FormData(form);
-        let url = 'http://localhost:3456/upload/students'
-        fetch(url,{
+
+        fetch(`${url}:3456/upload/students`,{
             method:"POST",
             body:data
         })

@@ -6,9 +6,6 @@ import {PageHeader} from 'react-bootstrap';
 class Timetable extends Component{
     constructor(props){
         super(props)
-        this.state = {
-            data :[["IS","COMS"],["MATH","ENG"],["PHYS"],["ACCN"]]
-        }
        }
 render(){
     var counter = 1;
@@ -19,7 +16,7 @@ render(){
                     <th>Sessions</th> 
                     <th>Courses</th>
                     </tr>
-     {this.state.data ? this.state.data.map((x)=>{
+     {this.props.location.state ? this.props.location.state.map((x)=>{
             return(
 
                     <tr><td>{counter++}</td>
