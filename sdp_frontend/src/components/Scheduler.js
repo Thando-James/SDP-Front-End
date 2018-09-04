@@ -48,7 +48,7 @@ class Students extends Component{
       
     getCourseStrings(){
         let checked = this.state.checkedArr
-        let url = 'http://localhost:3456/generate'
+        let url = 'https://youthleague.co:3456/generate'
         
         
         fetch(url,{
@@ -76,7 +76,7 @@ class Students extends Component{
         let form = e.target;
         console.log(form);
         let data = new FormData(form);
-        let url = 'http://localhost:3456/upload/courses'
+        let url = 'https://youthleague.co/upload/courses'
         fetch(url,{
             method:"POST",
             body:data
@@ -170,7 +170,7 @@ class Students extends Component{
 
     componentDidMount(){
         let _self = this;
-        let url = 'http://localhost:3456/display/courses'
+        let url = 'https://youthleague.co:3456/display/courses'
         fetch(url)
         .then(function(res){
             return res.json()
