@@ -9,9 +9,12 @@ class Students extends Component{
         this.onSubmit = this.onSubmit.bind(this)
         this.onChecked = this.onChecked.bind(this)
         this.getCourseStrings = this.getCourseStrings.bind(this)
+        this.onParamChange = this.onParamChange.bind(this)
         this.state={
             data:[],
-            checkedArr:[]
+            checkedArr:[],
+            maxSessions:1000,
+            clashParameter: 1
         }
     }
 
@@ -47,9 +50,13 @@ class Students extends Component{
         let checked = this.state.checkedArr
         let url = 'http://localhost:3456/generate'
         
+        
         fetch(url,{
             method:"POST",
-            body:JSON.stringify({data:checked}),
+            body:JSON.stringify({data:checked,
+                                maxSessions:this.state.maxSessions,
+                                clashParameter:this.state.clashParameter
+                                }),
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
@@ -100,6 +107,19 @@ class Students extends Component{
         })
     }
 
+    onParamChange(e){
+        console.log(e.target.name)
+        if(e.target.name === 'maxSession'){
+            this.setState({
+                maxSessions:e.target.value
+            })
+        }else if(e.target.name === 'clashParameter'){
+            this.setState({
+                clashParameter:e.target.value
+            })
+        }
+    }
+
     render(){
         return(
             <div>
@@ -118,6 +138,10 @@ class Students extends Component{
                                     </div>
                                 )}) : <div></div>
                             }
+                        </div>
+                        <div>
+                                <input type="text" name="maxSession" placeholder="Please input max session" onChange={this.onParamChange}/>
+                                <input type="text" name="clashParameter" placeholder="Please input your clash parameter" onChange={this.onParamChange} />
                         </div>
                     </div>
                     <div class='col-lg-1' style={{height:2}}></div>
