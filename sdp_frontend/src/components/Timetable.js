@@ -11,6 +11,7 @@ class Timetable extends Component{
     
        
 render(){
+  //
     function search() {
         var input, filter, table, tr, td, i;
         input = document.getElementById("myInput");
