@@ -51,7 +51,7 @@ class Students extends Component{
       
     getCourseStrings(){
         let _self = this;
-        let checked = this.state.checkedArr            
+        let checked = this.state.checkedArr ;          
         fetch(`${url}:3456/generate`,{
             method:"POST",
             body:JSON.stringify({data:checked,
