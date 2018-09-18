@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Button} from 'react-bootstrap';
 import {ButtonToolbar} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
+import {Panel} from 'react-bootstrap';
 
 let url = 'http://youthleague.co'
 // let url = 'http://localhost'
@@ -16,10 +17,13 @@ class Students extends Component{
             data:[],
             checkedArr:[],
             maxSessions:1000,
-            clashParameter: 1
+            clashParameter:1,
+            degree:0,
+            numStudents:1,
+            affected:2
         }
     }
-
+    
     selectAll = function (){
         //
         var checkboxes = document.getElementsByName('courses');
@@ -49,14 +53,43 @@ class Students extends Component{
             }
     }.bind(this)
       
+    sortBy =function(){
+        var dropdown = document.getElementById('sortby');
+        var strUser = dropdown.options[dropdown.selectedIndex].value;
+        console.log(strUser)
+        if(strUser === 0){
+            this.setState({
+                degree:strUser
+            })
+            
+        }
+        else if(strUser === 1){
+            this.setState({
+                numStudents:strUser
+            })
+            
+        }
+        else if(strUser === 2){
+            this.setState({
+                affected:strUser
+            })
+           }
+     }
+
     getCourseStrings(){
         let _self = this;
-        let checked = this.state.checkedArr ;          
+        let checked = this.state.checkedArr;  
+        var dropdown = document.getElementById('sortby');
+        var strUser = dropdown.options[dropdown.selectedIndex].value
+        console.log(strUser)        
         fetch(`${url}:3456/generate`,{
             method:"POST",
             body:JSON.stringify({data:checked,
                                 maxSessions:this.state.maxSessions,
-                                clashParameter:this.state.clashParameter
+                                clashParameter:this.state.clashParameter,
+                                degree:this.state.degree,
+                                numStudents:this.state.numStudents,
+                                affected:this.state.affected
                                 }),
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -75,9 +108,9 @@ class Students extends Component{
         .catch(function(err){
             console.log(err)
         })
+     //   console.log(maxSessions);
+       // console.log(clashParameter);
     }
-
-
     onSubmit(e){
         e.preventDefault();
         let form = e.target;
@@ -127,6 +160,7 @@ class Students extends Component{
         }
     }
 
+
     render(){
         return(
             <div>
@@ -135,7 +169,7 @@ class Students extends Component{
                     <h1>Timetable Scheduler</h1>
                 </PageHeader>
                 </pre>
-                
+               
                 <div class='row'>
                     <div class='col-lg-5'>
                         <h2 style={{textAlign:'left',marginLeft:'7%'}}>Courses</h2>
@@ -149,10 +183,19 @@ class Students extends Component{
                             }
                         </div>
                         <div>
-                                <input type="text" name="maxSession" placeholder="Please input max session" onChange={this.onParamChange}/>
+                               <input type="text" name="maxSession" placeholder="Please input max session"  onChange={this.onParamChange}/>
                                 <input type="text" name="clashParameter" placeholder="Please input your clash parameter" onChange={this.onParamChange} />
                         </div>
                     </div>
+                    <div>
+                    <h2 style={{textAlign:'right',marginRight:'50%'}}>Sort By:</h2>
+                   
+                    <select id="sortby" style={{marginLeft:'-82%'}}>
+                        <option value="" disabled selected>Select your option</option>
+                        <option value='0' name="Degree" onSelect={this.sortBy}>Degree</option>
+                        <option value='1' name="Noofstudents "onSelect={this.sortBy}>Number of students in the course</option>
+                        <option value='2'name="Affected" onSelect={this.sortBy}>Number of students affected</option>
+                    </select>
                     <div class='col-lg-1' style={{height:2}}></div>
                     <div align = "center" class='col-lg-4' style={{marginTop:'5%'}}>
                         <div><Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button></div>
@@ -174,6 +217,8 @@ class Students extends Component{
                     </div>
                 </div>
             </div>
+       </div>
+           
         )
     }
 
