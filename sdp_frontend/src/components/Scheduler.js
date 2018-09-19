@@ -53,7 +53,7 @@ class Students extends Component{
             }
     }.bind(this)
       
-    sortBy =function(){
+    sortBy = function(){
         var dropdown = document.getElementById('sortby');
         var strUser = dropdown.options[dropdown.selectedIndex].value;
         console.log(strUser)
@@ -79,8 +79,6 @@ class Students extends Component{
     getCourseStrings(){
         let _self = this;
         let checked = this.state.checkedArr;  
-        var dropdown = document.getElementById('sortby');
-        var strUser = dropdown.options[dropdown.selectedIndex].value
         console.log(strUser)        
         fetch(`${url}:3456/generate`,{
             method:"POST",
@@ -108,10 +106,30 @@ class Students extends Component{
         .catch(function(err){
             console.log(err)
         })
-     //   console.log(maxSessions);
-       // console.log(clashParameter);
-    }
-    onSubmit(e){
+        //Sort By functionality
+        var dropdown = document.getElementById('sortby');
+        var strUser = dropdown.options[dropdown.selectedIndex].value;
+        console.log(strUser)
+        if(strUser === 0){
+            this.setState({
+                degree:strUser
+            })
+            
+        }
+        else if(strUser === 1){
+            this.setState({
+                numStudents:strUser
+            })
+            
+        }
+        else if(strUser === 2){
+            this.setState({
+                affected:strUser
+            })
+           }
+     }
+
+     onSubmit(e){
         e.preventDefault();
         let form = e.target;
         console.log(form);
