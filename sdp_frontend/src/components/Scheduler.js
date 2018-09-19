@@ -18,9 +18,8 @@ class Students extends Component{
             checkedArr:[],
             maxSessions:1000,
             clashParameter:1,
-            degree:0,
-            numStudents:1,
-            affected:2
+            SortBy:-1,
+            
         }
     }
     
@@ -53,41 +52,16 @@ class Students extends Component{
             }
     }.bind(this)
       
-    sortBy = function(){
-        var dropdown = document.getElementById('sortby');
-        var strUser = dropdown.options[dropdown.selectedIndex].value;
-        console.log(strUser)
-        if(strUser === 0){
-            this.setState({
-                degree:strUser
-            })
-            
-        }
-        else if(strUser === 1){
-            this.setState({
-                numStudents:strUser
-            })
-            
-        }
-        else if(strUser === 2){
-            this.setState({
-                affected:strUser
-            })
-           }
-     }
-
     getCourseStrings(){
         let _self = this;
         let checked = this.state.checkedArr;  
-        console.log(strUser)        
+        console.log(strValue)        
         fetch(`${url}:3456/generate`,{
             method:"POST",
             body:JSON.stringify({data:checked,
                                 maxSessions:this.state.maxSessions,
                                 clashParameter:this.state.clashParameter,
-                                degree:this.state.degree,
-                                numStudents:this.state.numStudents,
-                                affected:this.state.affected
+                                SortBy:this.state.SortBy
                                 }),
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -108,23 +82,26 @@ class Students extends Component{
         })
         //Sort By functionality
         var dropdown = document.getElementById('sortby');
-        var strUser = dropdown.options[dropdown.selectedIndex].value;
-        console.log(strUser)
-        if(strUser === 0){
+        var strValue = dropdown.options[dropdown.selectedIndex].value;
+        console.log(strValue)
+        if(strValue === 0){
             this.setState({
-                degree:strUser
+                strValue : 0,
+                SortBy:strValue
             })
             
         }
-        else if(strUser === 1){
+        else if(strValue === 1){
             this.setState({
-                numStudents:strUser
+                strValue : 1,
+                SortBy:strValue
             })
             
         }
-        else if(strUser === 2){
+        else if(strValue === 2){
             this.setState({
-                affected:strUser
+                strValue : 2,
+                SortBy:strValue
             })
            }
      }
