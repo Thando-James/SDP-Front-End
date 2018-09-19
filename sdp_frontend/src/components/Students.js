@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
-let url = 'http://youthleague.co'
-// let url = 'http://localhost'
+// let url = 'http://youthleague.co'
+let url = 'http://localhost'
 class Students extends Component{
     constructor(props){
         super(props)

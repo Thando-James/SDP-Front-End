@@ -4,8 +4,8 @@ import {ButtonToolbar} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import {Panel} from 'react-bootstrap';
 
-let url = 'http://youthleague.co'
-// let url = 'http://localhost'
+// let url = 'http://youthleague.co'
+let url = 'http://localhost'
 class Students extends Component{
     constructor(props){
         super(props)
@@ -18,8 +18,6 @@ class Students extends Component{
             checkedArr:[],
             maxSessions:1000,
             clashParameter:1,
-            SortBy:-1,
-            
         }
     }
     
@@ -54,14 +52,17 @@ class Students extends Component{
       
     getCourseStrings(){
         let _self = this;
-        let checked = this.state.checkedArr;  
-        console.log(strValue)        
+        let checked = this.state.checkedArr;      
+        //Sort By functionality
+        var dropdown = document.getElementById('sortby');
+        var strValue = dropdown.options[dropdown.selectedIndex].value;  
+
         fetch(`${url}:3456/generate`,{
             method:"POST",
             body:JSON.stringify({data:checked,
                                 maxSessions:this.state.maxSessions,
                                 clashParameter:this.state.clashParameter,
-                                SortBy:this.state.SortBy
+                                SortBy:strValue
                                 }),
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -79,31 +80,7 @@ class Students extends Component{
         })
         .catch(function(err){
             console.log(err)
-        })
-        //Sort By functionality
-        var dropdown = document.getElementById('sortby');
-        var strValue = dropdown.options[dropdown.selectedIndex].value;
-        console.log(strValue)
-        if(strValue === 0){
-            this.setState({
-                strValue : 0,
-                SortBy:strValue
-            })
-            
-        }
-        else if(strValue === 1){
-            this.setState({
-                strValue : 1,
-                SortBy:strValue
-            })
-            
-        }
-        else if(strValue === 2){
-            this.setState({
-                strValue : 2,
-                SortBy:strValue
-            })
-           }
+        })        
      }
 
      onSubmit(e){
@@ -167,7 +144,15 @@ class Students extends Component{
                
                 <div class='row'>
                     <div class='col-lg-5'>
-                        <h2 style={{textAlign:'left',marginLeft:'7%'}}>Courses</h2>
+                        <h2 style={{textAlign:'left',marginLeft:'40%'}}>Courses</h2>
+                        
+                        <div  style={{marginLeft:'35%'}}>
+                        <ButtonToolbar>
+                        <Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button>
+                        <Button bsStyle="warning" onClick={this.deselectAll}>Deselect All</Button>
+                        </ButtonToolbar>
+                        </div>
+                        <p></p>
                         <div className = "courses-list">
                             {this.state.data ? this.state.data.map((x)=>{
                                 return(
@@ -185,19 +170,13 @@ class Students extends Component{
                     <div>
                     <h2 style={{textAlign:'right',marginRight:'50%'}}>Sort By:</h2>
                    
-                    <select id="sortby" style={{marginLeft:'-82%'}}>
-                        <option value="" disabled selected>Select your option</option>
+                    <select id="sortby" style={{marginLeft:'-75%'}}>
                         <option value='0' name="Degree" onSelect={this.sortBy}>Degree</option>
                         <option value='1' name="Noofstudents "onSelect={this.sortBy}>Number of students in the course</option>
                         <option value='2'name="Affected" onSelect={this.sortBy}>Number of students affected</option>
                     </select>
-                    <div class='col-lg-1' style={{height:2}}></div>
-                    <div align = "center" class='col-lg-4' style={{marginTop:'5%'}}>
-                        <div><Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button></div>
-                        <p></p>
-                        <div><Button bsStyle="warning" onClick={this.deselectAll}>Deselect All</Button></div>
-                        <p></p>
-                        <div><Button bsStyle="success"onClick={this.getCourseStrings} >Generate</Button></div>
+                    <div align = "left" class='col-lg-4' style={{marginTop:'5%'}}>
+                    <Button bsStyle="success"onClick={this.getCourseStrings} >Generate Timetable</Button>
                         <br/>
                         <span>or</span>
                         <br/><br/>
