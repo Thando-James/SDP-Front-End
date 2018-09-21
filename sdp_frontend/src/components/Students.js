@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 
-// let url = 'http://youthleague.co'
-let url = 'http://localhost'
+let url = 'http://youthleague.co'
+// let url = 'http://localhost'
 class Students extends Component{
     constructor(props){
         super(props)
         this.onSubmit = this.onSubmit.bind(this)
     }
 
-    onSubmit(e){
+    onSubmitStudents(e){
         e.preventDefault();
         let form = e.target;
         let data = new FormData(form);
@@ -32,11 +32,7 @@ class Students extends Component{
     render(){
         return(
             <div>
-                <form onSubmit={this.onSubmit} id="students-form">
-                    <label>Upload csv with students registration data</label><br/><br/>
-                    <input type="file" name="file" />
-                    <input type="submit" value="Submit" />
-                </form>
+                
             </div>
         )
     }
