@@ -17,9 +17,11 @@ render(){
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
         table = document.getElementById("sessions");
-        tr = table.getElementsByTagName("tr");
+        tr = table.getElementsByTagName("tr").innerHTML;
         for (i = 0; i < tr.length; i++) {
           td = tr[i].getElementsByTagName("td")[1];
+          var test = td.toString()
+          console.log(test)
           if (td) {
             if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
               tr[i].style.display = "";
@@ -57,7 +59,7 @@ render(){
             return(
                     <tbody>
                     <tr><td>{counter++}</td>
-                    <td>{x + " "}</td></tr>
+                    <td>{x + " "}<Button>Add</Button></td></tr>
                     </tbody>
                   )}) : <div></div>
          }
