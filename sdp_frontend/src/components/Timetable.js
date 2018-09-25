@@ -3,7 +3,8 @@ import {Table} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {Button} from 'react-bootstrap'
-let url = 'http://youthleague.co'
+// let url = 'http://youthleague.co'
+let url = 'http://localhost'
 class Timetable extends Component{
     constructor(props){
         super(props)
@@ -15,13 +16,10 @@ class Timetable extends Component{
       sendStdnum = function(){
         let _self = this;
         var stdnum = document.getElementById("stdNum")
-        var stringStdNum = stdnum.toString();
-        this.setState({
-          studentnumber:stringStdNum
-        })
+        console.log(stdnum.value)
        fetch(`${url}:3456/student`,{
           method:"POST",
-          body:JSON.stringify({studentnumber:this.state.studentnumber
+          body:JSON.stringify({studentnumber:stdnum.value
         }),
           headers: {
               "Content-Type": "application/json; charset=utf-8",
