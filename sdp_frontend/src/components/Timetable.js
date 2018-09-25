@@ -33,7 +33,7 @@ class Timetable extends Component{
     .then(function(response){
           console.log(response)
           _self.props.history.push({
-              pathname:'',
+              pathname:'/stdtimetable',
               state:response
           })
       })
@@ -70,7 +70,7 @@ class Timetable extends Component{
         <h1>Generated timetable with sessions</h1>
          </PageHeader>
          </pre>
-         <div align ="center" class='col-lg-4' style={{marginTop:'3%', marginLeft:'35%'}}>
+         <div align ="center" class='col-lg-4' style={{marginTop:'3%', marginLeft:'15%'}}>
          <div>
              <ReactHTMLTableToExcel id="test" className="btn btn-primary" 
             table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
@@ -99,6 +99,13 @@ class Timetable extends Component{
          }
            </Table>
            </div>
+           {this.props.location.state ? this.props.location.state.map((x)=>{
+             return(
+              <div className="checklist" >
+              <input type="checkbox" name="courses" value={x}  onChange={this.onChecked}/> {x.Course_Code}
+              </div>
+             )}):<div></div>
+           }
            </div>
   
  )}}
