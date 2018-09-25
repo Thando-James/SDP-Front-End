@@ -4,8 +4,8 @@ import {ButtonToolbar} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import {Panel} from 'react-bootstrap';
 
-let url = 'http://youthleague.co'
-// let url = 'http://localhost'
+// let url = 'http://youthleague.co'
+let url = 'http://localhost'
 class Students extends Component{
     constructor(props){
         super(props)
