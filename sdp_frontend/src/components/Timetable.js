@@ -3,13 +3,14 @@ import {Table} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {Button} from 'react-bootstrap'
-// let url = 'http://youthleague.co'
-let url = 'http://localhost'
+ let url = 'http://youthleague.co'
+//let url = 'http://localhost'
 class Timetable extends Component{
     constructor(props){
         super(props)
         this.state={
           studentnumber:"",
+          coursecode:""
         }
        }
 
@@ -32,6 +33,32 @@ class Timetable extends Component{
           console.log(response)
           _self.props.history.push({
               pathname:'/stdtimetable',
+              state:response
+          })
+      })
+      .catch(function(err){
+          console.log(err)
+      })}.bind(this)
+
+      getNeighbor= function(){
+        let _self = this;
+        var courseN = document.getElementById("courseN")
+       console.log(courseN.value)
+       fetch(`${url}:3456/neighbor`,{
+          method:"POST",
+          body:JSON.stringify({coursecode:courseN.value
+        }),
+          headers: {
+              "Content-Type": "application/json; charset=utf-8",
+          },
+      })
+      .then(function(response){
+          return response.json()
+      })
+    .then(function(response){
+          console.log(response)
+          _self.props.history.push({
+              pathname:'/',
               state:response
           })
       })
@@ -79,6 +106,10 @@ class Timetable extends Component{
             <p></p>
             <Button onClick={this.sendStdnum}>Generate timetable</Button>
             <p></p>
+            <label>Please enter course number:</label>
+            <div><input type="text" name="courseNeighbor"  id = "courseN" placeholder="Check course neighbors here"/></div>
+            <p></p>
+            <Button onClick={this.getNeighbor}>Check neighbors</Button>
            <Table id ="sessions" bordered striped condensed hover >
                     <thead>                   
                     <tr>
@@ -89,22 +120,28 @@ class Timetable extends Component{
                     </thead>
      {this.props.location.state ? this.props.location.state.map((x)=>{
             return(
+                    
                     <tbody>
                     <tr><td>{counter++}</td>
                     <td>{x + " "}</td></tr>
                     </tbody>
+                    
                   )}) : <div></div>
          }
            </Table>
            </div>
-           {this.props.location.state ? this.props.location.state.map((x)=>{
+           </div>
+            )}} export default Timetable
+          
+          
+          
+            /*{this.props.location.state ? this.props.location.state.map((x)=>{
              return(
+               
               <div className="checklist" >
-              <input type="checkbox" name="courses" value={x}  onChange={this.onChecked}/> {x.Course_Code}
+              <input type="checkbox" name="courses" value={x}  onChange={this.onChecked}/> {x}
               </div>
              )}):<div></div>
-           }
-           </div>
+           } }*/
+         
   
- )}}
-  export default Timetable
