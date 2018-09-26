@@ -237,9 +237,11 @@ class Students extends Component{
                                 <Button bsStyle="warning" disabled>Deselect All</Button>
                             </ButtonToolbar>
                          }
+                         <p></p>
+                          <div><input id = "myInput" type="text" placeholder="Search for a course" /></div>
                         </div>
                         <p></p>
-                        <div><input id = "myInput" type="text" placeholder="Search for a course" /></div> 
+                        
                         <p></p>
                         <div className = "courses-list">
                             {this.state.data != "" ? this.state.data.map((x)=>{

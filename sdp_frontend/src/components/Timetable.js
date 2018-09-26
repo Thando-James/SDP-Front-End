@@ -56,9 +56,9 @@ class Timetable extends Component{
           return response.json()
       })
     .then(function(response){
-          console.log(response)
+          console.log("Neighbors think im selling dope" + response)
           _self.props.history.push({
-              pathname:'/',
+              pathname:'/neighbors',
               state:response
           })
       })
@@ -112,6 +112,7 @@ class Timetable extends Component{
 
      {this.props.location.state ? this.props.location.state.map((x)=>{
            for(var i=0 ; i < x.length; i++ ){
+             console.log("Timetables x[i]" + x[i])
            return(
                     
                     <tbody>
@@ -141,8 +142,9 @@ class Timetable extends Component{
             </div>
             {this.props.location.state ? this.props.location.state.map((x)=>{
            for(var i= 0 ; i < x.length; i++ ){
-              console.log('This is what xi looks like' + x[i])
+            
              for(var j = 0; j < x[i].length;j++){
+             
            return(
                     <div align='right' style={{marginRight:'40%', marginTop:'1%'}}>
                      <input type="checkbox" name="courses" value={x[i]} /> {x[i] + " "}
