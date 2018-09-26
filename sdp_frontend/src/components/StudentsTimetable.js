@@ -16,9 +16,10 @@ class StudentsTimetable extends Component{
         <div>
         <pre> 
          <PageHeader>
-            <h1>Student Timetable</h1>
+            <h1 align='center'>Student Timetable</h1>
              </PageHeader>
              </pre>
+             <div align ="center" class='col-lg-4' style={{marginTop:'3%', marginLeft:'15%'}}>
              <Table id ="sessions" bordered striped condensed hover >
              <thead>                   
              <tr>
@@ -30,7 +31,6 @@ class StudentsTimetable extends Component{
     
      {this.props.location.state ? this.props.location.state.map((x)=>{
             return(
-             
              <tbody>
              <tr><td>{counter++}</td>
              <td>{x + " "}</td></tr>
@@ -38,5 +38,6 @@ class StudentsTimetable extends Component{
            )}) : <div></div>
      }
     </Table>
+    </div>
     </div>
     )}}export default StudentsTimetable

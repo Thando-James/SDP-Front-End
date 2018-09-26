@@ -44,7 +44,7 @@ class Timetable extends Component{
         let _self = this;
         var courseN = document.getElementById("courseN")
        console.log(courseN.value)
-       fetch(`${url}:3456/neighbor`,{
+       fetch(`${url}:3456/neighbors`,{
           method:"POST",
           body:JSON.stringify({coursecode:courseN.value
         }),
@@ -92,7 +92,7 @@ class Timetable extends Component{
     <div>
     <pre> 
      <PageHeader>
-        <h1>Generated timetable with sessions</h1>
+        <h1 align='center'>Generated timetable with sessions</h1>
          </PageHeader>
          </pre>
          <div align ="center" class='col-lg-4' style={{marginTop:'3%', marginLeft:'15%'}}>
@@ -100,17 +100,8 @@ class Timetable extends Component{
              <ReactHTMLTableToExcel id="test" className="btn btn-primary" 
             table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
            </div> 
-          
-            <label>Please enter student number:</label>
-            <div><input type="text" name="studentNum"  id = "stdNum" placeholder="Student number"/></div>
-            <p></p>
-            <Button onClick={this.sendStdnum}>Generate timetable</Button>
-            <p></p>
-            <label>Please enter course number:</label>
-            <div><input type="text" name="courseNeighbor"  id = "courseN" placeholder="Check course neighbors here"/></div>
-            <p></p>
-            <Button onClick={this.getNeighbor}>Check neighbors</Button>
-           <Table id ="sessions" bordered striped condensed hover >
+           <p></p>
+    <Table id ="sessions" bordered striped condensed hover >
                     <thead>                   
                     <tr>
                     <th>Sessions</th> 
@@ -130,6 +121,20 @@ class Timetable extends Component{
          }
            </Table>
            </div>
+           <div className="col-lg-7" style={{marginTop:'-23.5%', marginLeft:'50%'}}>
+            <label>Please enter student number:</label>
+            <div><input type="text" name="studentNum"  id = "stdNum" placeholder="Student number"/></div>
+            <p></p>
+            <Button bsStyle="success" onClick={this.sendStdnum}>Generate timetable</Button>
+            <p></p>
+            <span></span>
+            <p></p>
+            <label>Please enter course number:</label>
+            <div><input type="text" name="courseNeighbor"  id = "courseN" placeholder="Check course neighbors here"/></div>
+            <p></p>
+           
+            <Button bsStyle="success" onClick={this.getNeighbor}>Check neighbors</Button>
+            </div>
            </div>
             )}} export default Timetable
           
