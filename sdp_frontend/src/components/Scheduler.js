@@ -3,9 +3,10 @@ import {Button} from 'react-bootstrap';
 import {ButtonToolbar} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import {Panel} from 'react-bootstrap';
-
-// let url = 'http://youthleague.co'
-let url = 'http://localhost'
+import $ from 'jquery';
+import '/Users/Miller/Desktop/SDP-Front-End/sdp_frontend/src/components/Scheduler.css'
+ let url = 'http://youthleague.co'
+//let url = 'http://localhost'
 class Students extends Component{
     constructor(props){
         super(props)
@@ -27,8 +28,7 @@ class Students extends Component{
             isStudentsChanged: false
         }
     }
-    
-    selectAll = function (){
+  selectAll = function (){
         //
         var checkboxes = document.getElementsByName('courses');
          for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -79,7 +79,7 @@ class Students extends Component{
             return response.json()
         })
       .then(function(response){
-            console.log(response)
+          //  console.log(response)
             _self.props.history.push({
                 pathname:'/timetable',
                 state:response
@@ -199,7 +199,22 @@ class Students extends Component{
     }
 
     render(){
-        return(
+        window.onload=function(){
+            var checkboxdivs = document.querySelectorAll(".checkbox");
+              document.querySelector("#myInput").addEventListener("input", function(e){
+                     var inputValue = e.srcElement.value;
+                    // console.log(inputValue)
+                     for(var i=0;i<checkboxdivs.length;i++){
+                         var checkbox = checkboxdivs[i].children[0];
+                         if(checkbox.value.includes(inputValue) && inputValue.length !=0){
+                             checkboxdivs[i].style.display = 'block';
+                         }else{
+                             checkboxdivs[i].style.display='none';
+                         }
+                     }
+                 })};
+      return(
+           
             <div>
                 <pre>
                 <PageHeader style={{textAlign:'center'}}>
@@ -221,14 +236,15 @@ class Students extends Component{
                                 <Button  type="button" className="btn btn-primary"  disabled>Select All</Button>
                                 <Button bsStyle="warning" disabled>Deselect All</Button>
                             </ButtonToolbar>
-                        }
-                        
+                         }
                         </div>
+                        <p></p>
+                        <div><input id = "myInput" type="text" placeholder="Search for a course" /></div> 
                         <p></p>
                         <div className = "courses-list">
                             {this.state.data != "" ? this.state.data.map((x)=>{
                                 return(
-                                    <div className="checklist">
+                                    <div id="chkitems"  className="checklist">
                                         <input type="checkbox" name="courses" value={x.Course_Code} class = "selectedcourses" onChange={this.onChecked}/> {x.Course_Code}
                                     </div>
                                 )}) : 
@@ -246,6 +262,7 @@ class Students extends Component{
                                                 }
                                                 
                                             </form>
+                                        
                                         </div>
                                         <br/>
                                         <hr style={{width:'30%'}}/>
@@ -295,7 +312,7 @@ class Students extends Component{
             </div>
            
         )
-    }
+      }
 
     componentDidMount(){
         let _self = this;
