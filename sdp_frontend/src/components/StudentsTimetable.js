@@ -8,18 +8,36 @@ let url = 'http://youthleague.co'
 class StudentsTimetable extends Component{
     constructor(props){
         super(props)
-        this.state={
-          studentnumber:"",
-        }
     }
+    
     render(){
+    var counter =1;
     return(
         <div>
         <pre> 
          <PageHeader>
-            <h1>Student Timetable</h1>
+            <h1 align='center'>Student Timetable</h1>
              </PageHeader>
              </pre>
-             </div>
-    )
-}}export default StudentsTimetable
+             <div align ="center" class='col-lg-4' style={{marginTop:'3%', marginLeft:'15%'}}>
+             <Table id ="sessions" bordered striped condensed hover >
+             <thead>                   
+             <tr>
+             <th>Sessions</th> 
+             <th>Courses <input type="text" id="myInput" 
+             placeholder="Search for courses.." title="Type a course"></input></th>
+             </tr>
+             </thead>
+    
+     {this.props.location.state ? this.props.location.state.map((x)=>{
+            return(
+             <tbody>
+             <tr><td>{counter++}</td>
+             <td>{x + " "}</td></tr>
+             </tbody>
+           )}) : <div></div>
+     }
+    </Table>
+    </div>
+    </div>
+    )}}export default StudentsTimetable

@@ -36,8 +36,7 @@ class Students extends Component{
             startDate:moment(),
         }
     }
-    
-    selectAll = function (){
+  selectAll = function (){
         //
         var checkboxes = document.getElementsByName('courses');
          for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -78,7 +77,8 @@ class Students extends Component{
             body:JSON.stringify({data:checked,
                                 maxSessions:this.state.maxSessions,
                                 clashParameter:this.state.clashParameter,
-                                SortBy:strValue
+                                SortBy:strValue,
+                                date:this.state.startDate.format("LL")
                                 }),
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -93,41 +93,41 @@ class Students extends Component{
             let merged = _self.state.mergedCourses
             let date = _self.state.startDate
             
-            for(let x=0; x<merged.length; x++){
-                let isFound = false;
-                let course = merged[x][0];
-                for(let y=0; y<response.length; y++){
-                    for( let z=0; z<response[y].length; z++){
-                        if(course === response[y][z]){
+            // for(let x=0; x<merged.length; x++){
+            //     let isFound = false;
+            //     let course = merged[x][0];
+            //     for(let y=0; y<response.length; y++){
+            //         for( let z=0; z<response[y].length; z++){
+            //             if(course === response[y][z]){
                             
-                            for(let i=1; i<merged[x].length;i++){
-                                response[y].push(merged[x][i])
-                            }
-                            isFound = true
-                            break;
-                        }
-                    }
-                    if(isFound){
-                        break;
-                    }
-                }
-            }
+            //                 for(let i=1; i<merged[x].length;i++){
+            //                     response[y].push(merged[x][i])
+            //                 }
+            //                 isFound = true
+            //                 break;
+            //             }
+            //         }
+            //         if(isFound){
+            //             break;
+            //         }
+            //     }
+            // }
 
-            for(let a = 0; a<response.length; a++){
-                for(let b=0; b<response[a].length; b++){
-                    let obj = {
-                        subject:response[a][b],
-                        data : [date.format("LL")]
-                    }
-                    data.push(obj)
-                }
-                date.add(1,"day")
-            }
+            // for(let a = 0; a<response.length; a++){
+            //     for(let b=0; b<response[a].length; b++){
+            //         let obj = {
+            //             subject:response[a][b],
+            //             data : [date.format("LL")]
+            //         }
+            //         data.push(obj)
+            //     }
+            //     date.add(1,"day")
+            // }
 
-            _self.props.history.push({
-                pathname:'/timetable',
-                state:data,
-            })
+            // _self.props.history.push({
+            //     pathname:'/timetable',
+            //     state:data,
+            // })
         })
         .catch(function(err){
             console.log(err)
@@ -254,7 +254,7 @@ class Students extends Component{
         this.setState({
           startDate: date
         });
-      }
+    }
 
     componentDidUpdate(){
         // fetch(`${url}:3456/display/courses`)
@@ -273,7 +273,22 @@ class Students extends Component{
     }
 
     render(){
-        return(
+        window.onload=function(){
+            var checkboxdivs = document.querySelectorAll(".checkbox");
+              document.querySelector("#myInput").addEventListener("input", function(e){
+                     var inputValue = e.srcElement.value;
+                    // console.log(inputValue)
+                     for(var i=0;i<checkboxdivs.length;i++){
+                         var checkbox = checkboxdivs[i].children[0];
+                         if(checkbox.value.includes(inputValue) && inputValue.length !=0){
+                             checkboxdivs[i].style.display = 'block';
+                         }else{
+                             checkboxdivs[i].style.display='none';
+                         }
+                     }
+                 })};
+      return(
+           
             <div>
                 <pre>
                 <PageHeader style={{textAlign:'center'}}>
@@ -297,9 +312,10 @@ class Students extends Component{
                                 <Button bsStyle="warning" disabled>Deselect All</Button>
                                 <Button  type="button" className="btn btn-primary"  disabled>Merge</Button>
                             </ButtonToolbar>
-                        }
-                        
+                         }
                         </div>
+                        <p></p>
+                        <div><input id = "myInput" type="text" placeholder="Search for a course" /></div> 
                         <p></p>
                         <div className = "courses-list">
                             {this.state.data != "" ? this.state.data.map((x)=>{
@@ -323,6 +339,7 @@ class Students extends Component{
                                                 }
                                                 
                                             </form>
+                                        
                                         </div>
                                         <br/>
                                         <hr style={{width:'30%'}}/>
@@ -379,7 +396,7 @@ class Students extends Component{
             </div>
            
         )
-    }
+      }
 
     componentDidMount(){
         let _self = this;
@@ -393,22 +410,6 @@ class Students extends Component{
             _self.setState({
                 data:response
             })
-        })
-        .catch(function(err){
-            console.log(err)
-        })
-
-        fetch(`${url}:3456/check/courses`)
-        .then(function(res){
-            return res.json()
-        })
-        .then(function(res){
-            console.log(res)
-            if(res){
-                _self.setState({
-                    isCourses:true
-                })
-            }
         })
         .catch(function(err){
             console.log(err)
