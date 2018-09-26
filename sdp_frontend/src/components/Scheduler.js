@@ -4,7 +4,7 @@ import {ButtonToolbar} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import {Panel} from 'react-bootstrap';
 import $ from 'jquery';
-import '/Users/Miller/Desktop/SDP-Front-End/sdp_frontend/src/components/Scheduler.css'
+
  let url = 'http://youthleague.co'
 //let url = 'http://localhost'
 class Students extends Component{
@@ -79,7 +79,7 @@ class Students extends Component{
             return response.json()
         })
       .then(function(response){
-          //  console.log(response)
+            console.log(response)
             _self.props.history.push({
                 pathname:'/timetable',
                 state:response
@@ -326,22 +326,6 @@ class Students extends Component{
             _self.setState({
                 data:response
             })
-        })
-        .catch(function(err){
-            console.log(err)
-        })
-
-        fetch(`${url}:3456/check/courses`)
-        .then(function(res){
-            return res.json()
-        })
-        .then(function(res){
-            console.log(res)
-            if(res){
-                _self.setState({
-                    isCourses:true
-                })
-            }
         })
         .catch(function(err){
             console.log(err)
