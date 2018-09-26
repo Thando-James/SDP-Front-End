@@ -1,72 +1,72 @@
 .navbar-container{
-    margin-bottom: 30px;
- }
- 
- .navbar-container ul{
-     margin: 0;
-     list-style: none;
-     background-color: #191919
- }
- 
- .navbar-container ul li{
-     display: inline;
-     margin-right: 10px;
-     color: white;
-     cursor: pointer;
- }
- 
- .courses-list{
-     text-align: center;
-     height: 410px;
-     overflow: scroll;
-     margin-left: 60px;
-     margin-right: 60px;
-     border: 1px solid grey;
-     background-color: #F5F5F5;
- }
- .row{
-     overflow: hidden;
-     padding: 0;
-     margin: 0;
-     margin-top: 2%;
- }
- 
- .upload-csv input{
-     margin: auto;
- }
- 
- .generate{
-   padding-top: 25%;
- }
- .generate input{
-    margin-bottom: 2%;
- }
- 
- .generate input[type=text], .generate select {
-     width: 40%;
-     padding: 12px 20px;
-     margin: 8px 0;
-     display: inline-block;
-     border: 1px solid #ccc;
-     border-radius: 4px;
-     box-sizing: border-box;
- }
- 
- .generate input[type=submit] {
-     width: 100%;
-     background-color: #4CAF50;
-     color: white;
-     padding: 14px 20px;
-     margin: 8px 0;
-     border: none;
-     border-radius: 4px;
-     cursor: pointer;
- }
- 
- .checklist{
-     padding-top: 30px;
- }
- 
- .datepicker{
-     width: 100% !important;
- }
+   margin-bottom: 30px;
+}
+
+.navbar-container ul{
+    margin: 0;
+    list-style: none;
+    background-color: #191919
+}
+
+.navbar-container ul li{
+    display: inline;
+    margin-right: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.courses-list{
+    text-align: center;
+    height: 410px;
+    overflow: scroll;
+    margin-left: 60px;
+    margin-right: 60px;
+    border: 1px solid grey;
+    background-color: #F5F5F5;
+}
+.row{
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    margin-top: 2%;
+}
+
+.upload-csv input{
+    margin: auto;
+}
+
+.generate{
+  padding-top: 25%;
+}
+.generate input{
+   margin-bottom: 2%;
+}
+
+.generate input[type=text], .generate select {
+    width: 40%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.generate input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.checklist{
+    padding-top: 30px;
+}
+
+.datepicker{
+    width: 100% !important;
+}
