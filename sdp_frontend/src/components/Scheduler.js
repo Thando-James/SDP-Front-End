@@ -330,6 +330,22 @@ class Students extends Component{
         .catch(function(err){
             console.log(err)
         })
+
+        fetch(`${url}:3456/check/courses`)
+        .then(function(res){
+            return res.json()
+        })
+        .then(function(res){
+            console.log(res)
+            if(res){
+                _self.setState({
+                    isCourses:true
+                })
+            }
+        })
+        .catch(function(err){
+            console.log(err)
+        })
     }
 }
 
