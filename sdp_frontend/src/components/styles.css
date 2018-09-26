@@ -66,3 +66,7 @@
 .checklist{
     padding-top: 30px;
 }
+
+.datepicker{
+    width: 100% !important;
+}

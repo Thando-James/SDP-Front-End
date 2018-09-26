@@ -3,9 +3,14 @@ import {Button} from 'react-bootstrap';
 import {ButtonToolbar} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import {Panel} from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
-// let url = 'http://youthleague.co'
-let url = 'http://localhost'
+import 'react-datepicker/dist/react-datepicker.css';
+
+
+let url = 'http://youthleague.co'
+// let url = 'http://localhost'
 class Students extends Component{
     constructor(props){
         super(props)
@@ -16,15 +21,19 @@ class Students extends Component{
         this.onParamChange = this.onParamChange.bind(this)
         this.onCoursesChange = this.onCoursesChange.bind(this)
         this.onStudentsChange = this.onStudentsChange.bind(this)
+        this.onMerge = this.onMerge.bind(this)
+        this.handleChange = this.handleChange.bind(this);
         this.state={
             data:[],
             checkedArr:[],
+            mergedCourses:[],
             maxSessions:1000,
             clashParameter:1,
             isCourses:false,
             isStudents:false,
             isCoursesChanged: false,
-            isStudentsChanged: false
+            isStudentsChanged: false,
+            startDate:moment(),
         }
     }
     
@@ -80,9 +89,44 @@ class Students extends Component{
         })
       .then(function(response){
             console.log(response)
+            let data = []
+            let merged = _self.state.mergedCourses
+            let date = _self.state.startDate
+            
+            for(let x=0; x<merged.length; x++){
+                let isFound = false;
+                let course = merged[x][0];
+                for(let y=0; y<response.length; y++){
+                    for( let z=0; z<response[y].length; z++){
+                        if(course === response[y][z]){
+                            
+                            for(let i=1; i<merged[x].length;i++){
+                                response[y].push(merged[x][i])
+                            }
+                            isFound = true
+                            break;
+                        }
+                    }
+                    if(isFound){
+                        break;
+                    }
+                }
+            }
+
+            for(let a = 0; a<response.length; a++){
+                for(let b=0; b<response[a].length; b++){
+                    let obj = {
+                        subject:response[a][b],
+                        data : [date.format("LL")]
+                    }
+                    data.push(obj)
+                }
+                date.add(1,"day")
+            }
+
             _self.props.history.push({
                 pathname:'/timetable',
-                state:response
+                state:data,
             })
         })
         .catch(function(err){
@@ -154,14 +198,13 @@ class Students extends Component{
     }
 
     onChecked(e){
-        const checked = this.state.checkedArr
+        let checked = this.state.checkedArr
         if(e.target.checked){
             checked.push(e.target.value)
         }else{
             let index = checked.indexOf(e.target.value)
             checked.splice(index,1)
         }
-
         this.setState({
             checkedArr: checked
         })
@@ -180,9 +223,40 @@ class Students extends Component{
         }
     }
 
-    componentDidUpdate(){
-        let _self = this;
+    onMerge(){
+        let courses = this.state.data;
+        let checkedCourses = this.state.checkedArr;
+        let merged = this.state.mergedCourses;
+        merged.push(checkedCourses);
+        for (let x=1; x<checkedCourses.length; x++){
+            for(let y=0; y<courses.length; y++){
+                if(checkedCourses[x] === courses[y].Course_Code){
+                    console.log(checkedCourses[x])
+                    console.log(courses[y].Course_Code)
+                    courses.splice(y,1)
+                }
+            }
+        }
+
+        var checkboxes = document.getElementsByName('courses');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = false;
+        }
         
+        this.setState({
+            data: courses,
+            checkedArr:[],
+            mergedCourses:merged
+        })
+    }
+
+    handleChange(date) {
+        this.setState({
+          startDate: date
+        });
+      }
+
+    componentDidUpdate(){
         // fetch(`${url}:3456/display/courses`)
         // .then(function(res){
         //     return res.json()
@@ -216,10 +290,12 @@ class Students extends Component{
                             this.state.data.length > 0 ? <ButtonToolbar>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button>
                                 <Button bsStyle="warning" onClick={this.deselectAll}>Deselect All</Button>
+                                <Button  type="button" className="btn btn-primary"  onClick={this.onMerge}>Merge</Button>
                             </ButtonToolbar> :
                             <ButtonToolbar>
                                 <Button  type="button" className="btn btn-primary"  disabled>Select All</Button>
                                 <Button bsStyle="warning" disabled>Deselect All</Button>
+                                <Button  type="button" className="btn btn-primary"  disabled>Merge</Button>
                             </ButtonToolbar>
                         }
                         
@@ -227,9 +303,10 @@ class Students extends Component{
                         <p></p>
                         <div className = "courses-list">
                             {this.state.data != "" ? this.state.data.map((x)=>{
+                                let count = 0
                                 return(
                                     <div className="checklist">
-                                        <input type="checkbox" name="courses" value={x.Course_Code} class = "selectedcourses" onChange={this.onChecked}/> {x.Course_Code}
+                                        <input type="checkbox" name="courses" value={x.Course_Code} key={count} class = "selectedcourses" onChange={this.onChecked}/> {x.Course_Code}
                                     </div>
                                 )}) : 
                                 (
@@ -281,6 +358,13 @@ class Students extends Component{
                                     <option value='1' name="Noofstudents "onSelect={this.sortBy}>Number of students in the course</option>
                                     <option value='2'name="Affected" onSelect={this.sortBy}>Number of students affected</option>
                                 </select>
+                            </div>
+                            <div>
+                                <DatePicker
+                                    selected={this.state.startDate}
+                                    onChange={this.handleChange}
+                                    className="datepicker"
+                                />
                             </div>
                             <div style={{marginTop:'1%'}}>
                                 {
