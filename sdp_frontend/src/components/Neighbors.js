@@ -9,38 +9,6 @@ class Neighbors extends Component{
     constructor(props){
         super(props)
     }
-<<<<<<< HEAD
-  render(){
-         return( 
-        <div className = "courses-list">
-        {this.props.location.state ? this.props.location.state.map((x)=>{
-            return(
-                <div id="chkitems"  className="checklist">
-                    <input type="checkbox" name="courses" value={x.Course_Code} class = "selectedcourses" onChange={this.onChecked}/> {x.Course_Code}
-                </div>
-                
-            )}):<div></div>
-            }
-         </div> 
-         )}
-       componentDidMount(){
-        let _self = this;
-        
-        fetch(`${url}:3456/neighbors`)
-        .then(function(res){
-            return res.json()
-        })
-        .then(function(response){
-            console.log(response)
-            _self.setState({
-                data:response
-            })
-        })
-        .catch(function(err){
-            console.log(err)
-        })
-    }}export default Neighbors
-=======
     
     render(){
     var counter =1;
@@ -75,4 +43,3 @@ class Neighbors extends Component{
     </div>
     </div>
     )}}export default Neighbors
->>>>>>> 1ed2b6c5d6ce7f0bfdea3651fe7730515065eca2
