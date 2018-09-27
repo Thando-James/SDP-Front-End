@@ -3,8 +3,8 @@ import {Table} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {Button} from 'react-bootstrap'
-// let url = 'http://youthleague.co'
-let url = 'http://localhost'
+ let url = 'http://youthleague.co'
+//let url = 'http://localhost'
 class Timetable extends Component{
     constructor(props){
         super(props)
@@ -99,13 +99,16 @@ class Timetable extends Component{
         <h1 align='center'>Generated timetable with sessions</h1>
          </PageHeader>
          </pre>
-    <div align ="left" class='col-lg-4' style={{marginTop:'3%', marginLeft:'0%'}}>
-         <div>
+         <div className='row'>
+
+        
+    <div class='col-lg-6' >
+            <div align='center'>
              <ReactHTMLTableToExcel id="test" className="btn btn-primary" 
             table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
            </div> 
            <p></p>
-    <Table id ="sessions" bordered striped condensed hover >
+    <Table id ="sessions" align='center' bordered striped condensed hover style={{width:'300px'}} >
                     <thead>                   
                     <tr>
                       <th>Sessions</th> 
@@ -128,7 +131,7 @@ class Timetable extends Component{
         
            </Table>
            </div>
-           <div className="col-lg-7" style={{marginTop:'-23.5%', marginLeft:'35%'}}>
+           <div className="col-lg-6" >
             <label>Please enter student number:</label>
             <div><input type="text" name="studentNum"  id = "stdNum" placeholder="Student number"/></div>
             <p></p>
@@ -142,15 +145,8 @@ class Timetable extends Component{
            
             <Button bsStyle="success" onClick={this.getNeighbor}>Check neighbors</Button>
             </div>
-            {this.props.location.state ? this.props.location.state.map((x)=>{
-           return(
-                    <div className="virtualcourse-list">
-                     <input type="checkbox" name="courses" value={x.subject} /> {x.subject + " "}
-                    </div>
-                  )}) : <div></div>
-            }
-
-           </div>
+            </div>
+            </div>
             )}} export default Timetable
           
           
