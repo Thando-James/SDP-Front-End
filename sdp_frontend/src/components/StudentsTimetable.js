@@ -39,7 +39,7 @@ class StudentsTimetable extends Component{
              </PageHeader>
              </pre>
              <div align ="center" class='col-lg-4' style={{marginTop:'3%', marginLeft:'15%'}}>
-             <Table id ="sessions" bordered striped condensed hover >
+             <Table id ="sessions" bordered striped condensed hover style={{marginRight:'-95%'}} >
              <thead>                   
              <tr>
              <th>Sessions</th> 

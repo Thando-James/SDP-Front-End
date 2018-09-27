@@ -3,6 +3,7 @@ import {Table} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {Button} from 'react-bootstrap'
+import SelectSearch from 'react-select-search'
  let url = 'http://youthleague.co'
 //let url = 'http://localhost'
 class Timetable extends Component{
@@ -45,7 +46,7 @@ class Timetable extends Component{
       getNeighbor= function(){
         let _self = this;
         var courseN = document.getElementById("courseN")
-       console.log(courseN.value)
+    
        fetch(`${url}:3456/neighbors`,{
           method:"POST",
           body:JSON.stringify({coursecode:courseN.value
@@ -71,7 +72,7 @@ class Timetable extends Component{
     }.bind(this)
 
   render(){
-    //
+      
       function search() {
           var input, filter, table, tr, td, i;
           input = document.getElementById("myInput");
@@ -141,7 +142,7 @@ class Timetable extends Component{
             <label>Please enter course code:</label>
             <div>
             
-            <select class="ui fluid search dropdown" >
+            <select id="courseN" >
             <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"/>
             {this.state.data != "" ? this.state.data.map((x)=>{
               console.log(x.Course_Code)
