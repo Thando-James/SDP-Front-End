@@ -5,7 +5,7 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {Button} from 'react-bootstrap'
 
 let url = 'http://youthleague.co'
-class StudentsTimetable extends Component{
+class Neighbors extends Component{
     constructor(props){
         super(props)
     }
@@ -16,7 +16,7 @@ class StudentsTimetable extends Component{
         <div>
         <pre> 
          <PageHeader>
-            <h1 align='center'>Student Timetable</h1>
+            <h1 align='center'>Courses interactions Timetable</h1>
              </PageHeader>
              </pre>
              <div align ="center" class='col-lg-4' style={{marginTop:'3%', marginLeft:'15%'}}>
@@ -42,4 +42,4 @@ class StudentsTimetable extends Component{
     </Table>
     </div>
     </div>
-    )}}export default StudentsTimetable
+    )}}export default Neighbors
