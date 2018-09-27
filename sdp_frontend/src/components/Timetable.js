@@ -143,14 +143,11 @@ class Timetable extends Component{
             <Button bsStyle="success" onClick={this.getNeighbor}>Check neighbors</Button>
             </div>
             {this.props.location.state ? this.props.location.state.map((x)=>{
-           for(var i= 0 ; i < x.length; i++ ){
-              console.log('This is what xi looks like' + x[i])
-             for(var j = 0; j < x[i].length;j++){
            return(
-                    <div align='right' style={{marginRight:'40%', marginTop:'1%'}}>
-                     <input type="checkbox" name="courses" value={x[i]} /> {x[i] + " "}
+                    <div align='right' style={{marginRight:'40%', marginTop:'2%'}}>
+                     <input type="checkbox" name="courses" value={x.subject} /> {x.subject + " "}
                     </div>
-                  )}}}) : <div></div>
+                  )}) : <div></div>
             }
 
            </div>

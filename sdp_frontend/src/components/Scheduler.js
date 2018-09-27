@@ -89,6 +89,8 @@ class Students extends Component{
         })
       .then(function(response){
             console.log(response)
+            console.log("zzzzz"+ response)
+            let data = []
             let merged = _self.state.mergedCourses
             
             // for(let x=0; x<merged.length; x++){
@@ -111,9 +113,20 @@ class Students extends Component{
             //     }
             // }
 
+            for(let a = 0; a<response.length; a++){
+                for(let b=0; b<response[a].length; b++){
+                    let obj = {
+                        subject:response[a][b],
+                        data : [date.format("LL")]
+                    }
+                    data.push(obj)
+                }
+                date.add(1,"day")
+            }
+
             _self.props.history.push({
                 pathname:'/timetable',
-                state:response,
+                state:data,
             })
         })
         .catch(function(err){
@@ -300,9 +313,11 @@ class Students extends Component{
                                 <Button  type="button" className="btn btn-primary"  disabled>Merge</Button>
                             </ButtonToolbar>
                          }
+                         <p></p>
+                          <div><input id = "myInput" type="text" placeholder="Search for a course" /></div>
                         </div>
                         <p></p>
-                        <div><input id = "myInput" type="text" placeholder="Search for a course" /></div> 
+                        
                         <p></p>
                         <div className = "courses-list">
                             {this.state.data != "" ? this.state.data.map((x)=>{
