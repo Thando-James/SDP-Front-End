@@ -8,6 +8,7 @@
     "react": "^16.4.2",
     "react-bootstrap": "^0.32.3",
     "react-bootstrap-table-next": "^1.1.4",
+    "react-date-picker": "^6.12.1",
     "react-datepicker": "^1.6.0",
     "react-dom": "^16.4.2",
     "react-file-reader": "^1.1.4",

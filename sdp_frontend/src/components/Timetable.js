@@ -144,7 +144,7 @@ class Timetable extends Component{
             </div>
             {this.props.location.state ? this.props.location.state.map((x)=>{
            return(
-                    <div align='right' style={{marginRight:'40%', marginTop:'2%'}}>
+                    <div className="virtualcourse-list">
                      <input type="checkbox" name="courses" value={x.subject} /> {x.subject + " "}
                     </div>
                   )}) : <div></div>

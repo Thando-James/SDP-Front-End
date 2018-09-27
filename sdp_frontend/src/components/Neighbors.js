@@ -8,10 +8,7 @@ import {Button} from 'react-bootstrap'
 class Neighbors extends Component{
     constructor(props){
         super(props)
-        this.state={
-            data:[],
-        }
-      }
+    }
   render(){
          return( 
         <div className = "courses-list">
