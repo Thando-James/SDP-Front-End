@@ -3,8 +3,8 @@ import {Table} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {Button} from 'react-bootstrap'
-// let url = 'http://youthleague.co'
-let url = 'http://localhost'
+let url = 'http://youthleague.co'
+// let url = 'http://localhost'
 class Timetable extends Component{
     constructor(props){
         super(props)
