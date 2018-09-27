@@ -92,41 +92,10 @@ class Students extends Component{
             console.log("zzzzz"+ response)
             let data = []
             let merged = _self.state.mergedCourses
-            
-            // for(let x=0; x<merged.length; x++){
-            //     let isFound = false;
-            //     let course = merged[x][0];
-            //     for(let y=0; y<response.length; y++){
-            //         for( let z=0; z<response[y].length; z++){
-            //             if(course === response[y][z]){
-                            
-            //                 for(let i=1; i<merged[x].length;i++){
-            //                     response[y].push(merged[x][i])
-            //                 }
-            //                 isFound = true
-            //                 break;
-            //             }
-            //         }
-            //         if(isFound){
-            //             break;
-            //         }
-            //     }
-            // }
-
-            for(let a = 0; a<response.length; a++){
-                for(let b=0; b<response[a].length; b++){
-                    let obj = {
-                        subject:response[a][b],
-                        data : [date.format("LL")]
-                    }
-                    data.push(obj)
-                }
-                date.add(1,"day")
-            }
 
             _self.props.history.push({
                 pathname:'/timetable',
-                state:data,
+                state:response,
             })
         })
         .catch(function(err){
