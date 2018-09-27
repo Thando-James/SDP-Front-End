@@ -92,30 +92,7 @@ class Students extends Component{
             let data = []
             let merged = _self.state.mergedCourses
             let date = _self.state.startDate
-            
-            // for(let x=0; x<merged.length; x++){
-            //     let isFound = false;
-            //     let course = merged[x][0];
-            //     for(let y=0; y<response.length; y++){
-            //         for( let z=0; z<response[y].length; z++){
-            //             if(course === response[y][z]){
-                            
-            //                 for(let i=1; i<merged[x].length;i++){
-            //                     response[y].push(merged[x][i])
-            //                 }
-            //                 isFound = true
-            //                 break;
-            //             }
-            //         }
-            //         if(isFound){
-            //             break;
-            //         }
-            //     }
-            // }
-
-            
-
-            _self.props.history.push({
+               _self.props.history.push({
                 pathname:'/timetable',
                 state:response,
             })
