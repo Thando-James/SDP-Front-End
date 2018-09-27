@@ -10,7 +10,8 @@ class Timetable extends Component{
         super(props)
         this.state={
           studentnumber:"",
-          coursecode:""
+          coursecode:"",
+          data:[]
         }
     }
 
@@ -90,8 +91,6 @@ class Timetable extends Component{
             }       
           }
       }
-    
-    var counter = 1;
     return(
     <div>
     <pre> 
@@ -108,7 +107,7 @@ class Timetable extends Component{
             table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
            </div> 
            <p></p>
-    <Table id ="sessions" align='center' bordered striped condensed hover style={{width:'300px'}} >
+    <Table id ="sessions" align='center' bordered striped condensed hover style={{width:'500px'}} >
                     <thead>                   
                     <tr>
                       <th>Sessions</th> 
@@ -140,14 +139,44 @@ class Timetable extends Component{
             <span></span>
             <p></p>
             <label>Please enter course code:</label>
-            <div><input type="text" name="courseNeighbor"  id = "courseN" placeholder="Check course neighbors here"/></div>
+            <div>
+            
+            <select class="ui fluid search dropdown" >
+            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"/>
+            {this.state.data != "" ? this.state.data.map((x)=>{
+              console.log(x.Course_Code)
+            return(
+             <option value={x.Course_Code}>{x.Course_Code}
+            </option>
+            )}) : <div></div>
+            }
+            </select>
+            </div>
             <p></p>
-           
-            <Button bsStyle="success" onClick={this.getNeighbor}>Check neighbors</Button>
+           <Button bsStyle="success" onClick={this.getNeighbor}>Check neighbors</Button>
             </div>
             </div>
             </div>
-            )}} export default Timetable
+            
+            )
+          }
+          
+    componentDidMount(){
+      let _self = this;
+      fetch(`${url}:3456/display/courses`)
+      .then(function(res){
+          return res.json()
+      })
+      .then(function(response){
+          console.log(response)
+          _self.setState({
+              data:response
+          })
+      })
+      .catch(function(err){
+          console.log(err)
+      })
+    }}export default Timetable
           
           
           
