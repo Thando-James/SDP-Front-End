@@ -10,7 +10,8 @@ class Timetable extends Component{
         super(props)
         this.state={
           studentnumber:"",
-          coursecode:""
+          coursecode:"",
+          data:[]
         }
     }
 
@@ -90,8 +91,6 @@ class Timetable extends Component{
             }       
           }
       }
-    
-    var counter = 1;
     return(
     <div>
     <pre> 
@@ -99,13 +98,16 @@ class Timetable extends Component{
         <h1 align='center'>Generated timetable with sessions</h1>
          </PageHeader>
          </pre>
-    <div align ="left" class='col-lg-4' style={{marginTop:'3%', marginLeft:'0%'}}>
-         <div>
+         <div className='row'>
+
+        
+    <div class='col-lg-6' >
+            <div align='center'>
              <ReactHTMLTableToExcel id="test" className="btn btn-primary" 
             table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
            </div> 
            <p></p>
-    <Table id ="sessions" bordered striped condensed hover >
+    <Table id ="sessions" align='center' bordered striped condensed hover style={{width:'500px'}} >
                     <thead>                   
                     <tr>
                       <th>Sessions</th> 
@@ -128,7 +130,7 @@ class Timetable extends Component{
         
            </Table>
            </div>
-           <div className="col-lg-7" style={{marginTop:'-23.5%', marginLeft:'35%'}}>
+           <div className="col-lg-6" >
             <label>Please enter student number:</label>
             <div><input type="text" name="studentNum"  id = "stdNum" placeholder="Student number"/></div>
             <p></p>
@@ -137,21 +139,44 @@ class Timetable extends Component{
             <span></span>
             <p></p>
             <label>Please enter course code:</label>
-            <div><input type="text" name="courseNeighbor"  id = "courseN" placeholder="Check course neighbors here"/></div>
-            <p></p>
-           
-            <Button bsStyle="success" onClick={this.getNeighbor}>Check neighbors</Button>
-            </div>
-            {this.props.location.state ? this.props.location.state.map((x)=>{
-           return(
-                    <div align='right' style={{marginRight:'40%', marginTop:'2%'}}>
-                     <input type="checkbox" name="courses" value={x.subject} /> {x.subject + " "}
-                    </div>
-                  )}) : <div></div>
+            <div>
+            
+            <select class="ui fluid search dropdown" >
+            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"/>
+            {this.state.data != "" ? this.state.data.map((x)=>{
+              console.log(x.Course_Code)
+            return(
+             <option value={x.Course_Code}>{x.Course_Code}
+            </option>
+            )}) : <div></div>
             }
-
-           </div>
-            )}} export default Timetable
+            </select>
+            </div>
+            <p></p>
+           <Button bsStyle="success" onClick={this.getNeighbor}>Check neighbors</Button>
+            </div>
+            </div>
+            </div>
+            
+            )
+          }
+          
+    componentDidMount(){
+      let _self = this;
+      fetch(`${url}:3456/display/courses`)
+      .then(function(res){
+          return res.json()
+      })
+      .then(function(response){
+          console.log(response)
+          _self.setState({
+              data:response
+          })
+      })
+      .catch(function(err){
+          console.log(err)
+      })
+    }}export default Timetable
           
           
           

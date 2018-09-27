@@ -11,6 +11,25 @@ class StudentsTimetable extends Component{
     }
     
     render(){
+        function search() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("sessions");
+            tr = table.getElementsByTagName("tr")
+            for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td")[1];
+              
+             // console.log(test)
+              if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+                } else {
+                  tr[i].style.display = "none";
+                }
+              }       
+            }
+        }
     var counter =1;
     return(
         <div>
@@ -25,7 +44,7 @@ class StudentsTimetable extends Component{
              <tr>
              <th>Sessions</th> 
              <th>Courses <input type="text" id="myInput" 
-             placeholder="Search for courses.." title="Type a course"></input></th>
+             placeholder="Search for courses.." title="Type a course" onKeyUp={search}></input></th>
              </tr>
              </thead>
     

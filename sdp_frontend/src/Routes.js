@@ -5,7 +5,6 @@ import Scheduler from './components/Scheduler';
 import Timetable from './components/Timetable';
 import StudentsTimetable from './components/StudentsTimetable';
 import Neighbors from './components/Neighbors';
-
 export default class Routes extends React.Component{
     render(){
         return(
