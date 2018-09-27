@@ -3,8 +3,8 @@ import {Table} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {Button} from 'react-bootstrap'
-let url = 'http://youthleague.co'
-// let url = 'http://localhost'
+// let url = 'http://youthleague.co'
+let url = 'http://localhost'
 class Timetable extends Component{
     constructor(props){
         super(props)
@@ -57,10 +57,10 @@ class Timetable extends Component{
           return response.json()
       })
     .then(function(response){
-          console.log("Neighbors think im selling dope ")
+          console.log('Response from Nelly')
           console.log(response)
           _self.props.history.push({
-              pathname:'/neighbors',
+              pathname:'/interactions',
               state:response
           })
         })

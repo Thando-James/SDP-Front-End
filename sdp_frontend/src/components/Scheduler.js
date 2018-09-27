@@ -9,8 +9,8 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
 
-let url = 'http://youthleague.co'
-// let url = 'http://localhost'
+// let url = 'http://youthleague.co'
+let url = 'http://localhost'
 class Students extends Component{
     constructor(props){
         super(props)
@@ -78,7 +78,7 @@ class Students extends Component{
                                 maxSessions:this.state.maxSessions,
                                 clashParameter:this.state.clashParameter,
                                 SortBy:strValue,
-                                date:this.state.startDate.format("LL")
+                                date:this.state.startDate._d
                                 }),
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -88,10 +88,10 @@ class Students extends Component{
             return response.json()
         })
       .then(function(response){
+            console.log(response)
             console.log("zzzzz"+ response)
             let data = []
             let merged = _self.state.mergedCourses
-            let date = _self.state.startDate
             
             // for(let x=0; x<merged.length; x++){
             //     let isFound = false;

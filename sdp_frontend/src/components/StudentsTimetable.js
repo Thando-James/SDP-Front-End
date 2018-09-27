@@ -29,14 +29,16 @@ class StudentsTimetable extends Component{
              </tr>
              </thead>
     
-     {this.props.location.state ? this.props.location.state.map((x)=>{
-            return(
-             <tbody>
-             <tr><td>{counter++}</td>
-             <td>{x + " "}</td></tr>
-             </tbody>
-           )}) : <div></div>
-     }
+             {this.props.location.state ? this.props.location.state.map((x)=>{
+                    return(
+                            <tbody>
+                            <tr><td>{x.data[0]}</td>
+                            <td>{x.subject + " "}</td></tr>
+                            </tbody>
+                          )
+                        
+                        } ) : <div></div>
+                  }
     </Table>
     </div>
     </div>
