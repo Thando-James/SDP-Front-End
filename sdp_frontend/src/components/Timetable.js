@@ -45,7 +45,6 @@ class Timetable extends Component{
       getNeighbor= function(){
         let _self = this;
         var courseN = document.getElementById("courseN")
-       console.log(courseN.value)
        fetch(`${url}:3456/neighbors`,{
           method:"POST",
           body:JSON.stringify({coursecode:courseN.value
@@ -141,7 +140,7 @@ class Timetable extends Component{
             <label>Please enter course code:</label>
             <div>
             
-            <select class="ui fluid search dropdown" >
+            <select id="courseN" >
             <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"/>
             {this.state.data != "" ? this.state.data.map((x)=>{
               console.log(x.Course_Code)
