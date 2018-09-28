@@ -39,7 +39,11 @@ class StudentsTimetable extends Component{
              </PageHeader>
              </pre>
              <div align ="center" class='col-lg-4' style={{marginTop:'3%', marginLeft:'15%'}}>
-             <Table id ="sessions" bordered striped condensed hover >
+             {this.props.location.state ? <div align = 'center'>
+            <label color='red' align= 'center'>Timetable for student number:  {this.props.location.state.std}</label>
+            </div>:<div></div>
+             }
+             <Table id ="sessions" bordered striped condensed hover style={{marginRight:'-35%'}} >
              <thead>                   
              <tr>
              <th>Sessions</th> 
@@ -48,7 +52,7 @@ class StudentsTimetable extends Component{
              </tr>
              </thead>
     
-             {this.props.location.state ? this.props.location.state.map((x)=>{
+             {this.props.location.state ? this.props.location.state.singleTable.map((x)=>{
                     return(
                             <tbody>
                             <tr><td>{x.data[0]}</td>

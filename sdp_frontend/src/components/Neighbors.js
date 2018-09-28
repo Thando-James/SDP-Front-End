@@ -39,7 +39,7 @@ class Neighbors extends Component{
              </PageHeader>
              </pre>
              <div align ="center" class='col-lg-4' style={{marginTop:'3%', marginLeft:'15%'}}>
-             <Table id ="sessions" bordered striped condensed hover >
+             <Table style={{marginRight:'-95%'}}id ="sessions" bordered striped condensed hover >
              <thead>                   
              <tr>
              <th>Sessions</th> 

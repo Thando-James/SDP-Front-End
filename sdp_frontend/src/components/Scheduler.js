@@ -5,7 +5,7 @@ import {PageHeader} from 'react-bootstrap';
 import {Panel} from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-
+import $ from 'jquery'
 import 'react-datepicker/dist/react-datepicker.css';
 
 
@@ -64,6 +64,26 @@ class Students extends Component{
             this.onChecked(e)
             }
     }.bind(this)
+
+    search = function (){
+        $("#searchColumn").on("input",function(){
+    
+            var searchTxt = $(this).val();
+            searchTxt = searchTxt.replace(/^[\w.]+$/i,"\\$&");
+    
+            var patt = new RegExp("^" + searchTxt,"i");
+    
+            $(":checkbox").each(function(){
+    
+                if(patt.test($(this).val())) 
+                    $(this).closest("div").show(500);
+    
+                else 
+                    $(this).closest("div").hide(500);
+    
+            })
+        })
+    }
       
     getCourseStrings(){
         let _self = this;
@@ -89,7 +109,7 @@ class Students extends Component{
         })
       .then(function(response){
             console.log(response)
-            console.log("zzzzz"+ response)
+           // console.log("zzzzz"+ response)
             let data = []
             let merged = _self.state.mergedCourses
 
@@ -242,20 +262,7 @@ class Students extends Component{
     }
 
     render(){
-        window.onload=function(){
-            var checkboxdivs = document.querySelectorAll(".checkbox");
-              document.querySelector("#myInput").addEventListener("input", function(e){
-                     var inputValue = e.srcElement.value;
-                    // console.log(inputValue)
-                     for(var i=0;i<checkboxdivs.length;i++){
-                         var checkbox = checkboxdivs[i].children[0];
-                         if(checkbox.value.includes(inputValue) && inputValue.length !=0){
-                             checkboxdivs[i].style.display = 'block';
-                         }else{
-                             checkboxdivs[i].style.display='none';
-                         }
-                     }
-                 })};
+     
       return(
            
             <div>
@@ -283,7 +290,7 @@ class Students extends Component{
                             </ButtonToolbar>
                          }
                          <p></p>
-                          <div><input id = "myInput" type="text" placeholder="Search for a course" /></div>
+                          <div><input id = 'searchColumn' name='searchColumn' type="text" placeholder="Search for a course" onKeyUp={this.search} /></div>
                         </div>
                         <p></p>
                         
