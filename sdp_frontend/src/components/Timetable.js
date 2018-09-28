@@ -143,7 +143,7 @@ class Timetable extends Component{
             <div>
             
             <select id="courseN" >
-            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"/>
+           
             {this.state.data != "" ? this.state.data.map((x)=>{
               console.log(x.Course_Code)
             return(
