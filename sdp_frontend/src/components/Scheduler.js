@@ -109,7 +109,6 @@ class Students extends Component{
         })
       .then(function(response){
             console.log(response)
-           // console.log("zzzzz"+ response)
             let data = []
             let merged = _self.state.mergedCourses
 

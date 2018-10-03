@@ -77,7 +77,7 @@ class Timetable extends Component{
       $("#myInput").on("input",function(){
   
           var str = $('#myInput').val();
-          var strary = str.split(' ');
+          var strary = str.split(';');
   
           $("table").find("tr").slice(1).each(function (index) {
               var text = $.trim($(this).text());
