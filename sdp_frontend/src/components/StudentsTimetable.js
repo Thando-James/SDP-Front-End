@@ -43,6 +43,10 @@ class StudentsTimetable extends Component{
             <label color='red' align= 'center'>Timetable for student number:  {this.props.location.state.std}</label>
             </div>:<div></div>
              }
+             <div align='center'>
+             <ReactHTMLTableToExcel id="test" className="btn btn-primary" 
+            table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
+           </div> 
              <Table id ="sessions" bordered striped condensed hover style={{marginRight:'-35%'}} >
              <thead>                   
              <tr>

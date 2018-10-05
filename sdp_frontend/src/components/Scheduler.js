@@ -155,7 +155,7 @@ class Students extends Component{
         let form = e.target;
         let data = new FormData(form);
 
-        fetch(`${url}:3456/upload/students`,{
+        fetch(`${url}:3456/upload/papers`,{
             method:"POST",
             body:data
         })
@@ -296,6 +296,7 @@ class Students extends Component{
                         
                         <p></p>
                         <div className = "courses-list">
+                            {console.log(typeof(this.state.data))}
                             {this.state.data != "" ? this.state.data.map((x)=>{
                                 let count = 0
                                 return(
@@ -385,9 +386,11 @@ class Students extends Component{
         })
         .then(function(response){
             console.log(response)
-            _self.setState({
-                data:response
-            })
+            if(!response.errorMessage){
+                _self.setState({
+                    data:response
+                })   
+            }
         })
         .catch(function(err){
             console.log(err)

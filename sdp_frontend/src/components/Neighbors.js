@@ -39,6 +39,10 @@ class Neighbors extends Component{
              </PageHeader>
              </pre>
              <div align ="center" class='col-lg-4' style={{marginTop:'3%', marginLeft:'15%'}}>
+             <div align='center'>
+             <ReactHTMLTableToExcel id="test" className="btn btn-primary" 
+            table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
+           </div> 
              <Table style={{marginRight:'-95%'}}id ="sessions" bordered striped condensed hover >
              <thead>                   
              <tr>
