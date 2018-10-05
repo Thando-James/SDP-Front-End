@@ -68,7 +68,7 @@ class Students extends Component{
     search = function (){
         $("#searchColumn").on("input",function(){
     
-            var searchTxt = $(this).val();
+            var searchTxt = $(this);  //.val();
             searchTxt = searchTxt.replace(/^[\w.]+$/i,"\\$&");
     
             var patt = new RegExp("^" + searchTxt,"i");
