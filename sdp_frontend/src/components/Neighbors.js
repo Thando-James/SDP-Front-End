@@ -49,6 +49,8 @@ class Neighbors extends Component{
              <th>Sessions</th> 
              <th>Courses <input type="text" id="myInput" 
              placeholder="Search for courses.." title="Type a course" onKeyUp={search}></input></th>
+             <th>Number of students</th>
+             <th>Proportion</th>
              </tr>
              </thead>
     
@@ -56,7 +58,10 @@ class Neighbors extends Component{
                     return(
                             <tbody>
                             <tr><td>{x.data[0]}</td>
-                            <td>{x.subject + " "}</td></tr>
+                            <td>{x.subject + " "}</td>
+                            <td></td>
+                            <td></td>
+                            </tr>
                             </tbody>
                           )
                         

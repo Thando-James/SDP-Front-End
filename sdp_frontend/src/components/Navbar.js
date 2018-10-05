@@ -21,6 +21,9 @@ class NavBar extends Component{
                     <NavItem 
                         eventKey={1} href="/">Scheduler
                     </NavItem>
+                    <NavItem 
+                        eventKey={2} href="/login">Login
+                    </NavItem>
                 </Nav>   
             </Navbar.Collapse>
             </Navbar>
