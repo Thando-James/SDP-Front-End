@@ -19,9 +19,13 @@
     "react-select-search": "^0.9.3"
   },
   "scripts": {
-    "start": "set PORT=3001 && react-scripts start",
+    "start": "set PORT=3001 && react-scripts start && npm run homepage" ,
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "homepage": "http://localhost:3001/login",
+  "devDependencies": {
+    "sleep-ms": "^2.0.1"
   }
 }

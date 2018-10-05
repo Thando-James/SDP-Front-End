@@ -77,7 +77,7 @@ class Timetable extends Component{
       $("#myInput").on("input",function(){
   
           var str = $('#myInput').val();
-          var strary = str.split(';');
+          var strary = str.split(':');
   
           $("table").find("tr").slice(1).each(function (index) {
               var text = $.trim($(this).text());
@@ -154,12 +154,19 @@ class Timetable extends Component{
             table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
            </div> 
            <p></p>
+            <div>
+           <label style={{textAlign:'left',marginLeft:'12%'}}>Search for multiple courses by adding a ":" after course name</label> 
+           </div>
+           <div class ="form-group has-feedback has-search">
+           <span class="glyphicon glyphicon-search form-control-feedback" style={{marginRight:'30%'}}></span>
+           <input class="glyphicon glyphicon-search form-control-feedback" style={{marginLeft:'12%',width:'400px'}} type="text" id="myInput"  onKeyUp= {this.search}
+            placeholder="Search for courses.." title="Type a course" class="form-control"/>
+           </div><p></p>
     <Table id ="sessions" align='center' bordered striped condensed hover style={{width:'500px'}} >
                     <thead>                   
                     <tr>
                       <th>Sessions</th> 
-                      <th>Courses <input type="text" id="myInput"  onKeyUp= {this.search}
-                          placeholder="Search for courses.." title="Type a course"></input>
+                      <th>Courses 
                       </th>
                     </tr>
                     </thead>
@@ -180,7 +187,7 @@ class Timetable extends Component{
         
            </Table>
            </div>
-           <div className="col-lg-6" >
+            <div className="col-lg-6" >
             <label>Please enter student number:</label>
             <div><input type="text" name="studentNum"  id = "stdNum" placeholder="Student number"/></div>
             <p></p>
