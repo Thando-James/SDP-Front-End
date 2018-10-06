@@ -4,9 +4,12 @@ import {PageHeader} from 'react-bootstrap';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {Button} from 'react-bootstrap'
 import $ from 'jquery'
-import SelectSearch from 'react-select-search'
-import { EventCalendar} from 'react-event-calendar'
- 
+import BigCalendar from 'react-big-calendar'
+import moment from 'moment'
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+const localizer = BigCalendar.momentLocalizer(moment)
+
 let url = 'http://youthleague.co'
 //let url = 'http://localhost'
 
@@ -81,11 +84,14 @@ class Timetable extends Component{
             return response.json()
         })
         .then(function(response){
-            console.log('Response from Nelly')
-            console.log(response)
-            _self.props.history.push({
-                pathname:'/interactions',
-                state:response
+            // console.log('Response from Nelly')
+            // console.log(response)
+            // _self.props.history.push({
+            //     pathname:'/interactions',
+            //     state:response
+            // })
+            _self.setState({
+                timetable:response
             })
         })
         .catch(function(err){
@@ -166,7 +172,7 @@ class Timetable extends Component{
                     </PageHeader>
                 </pre>
                 <div className='row'>
-                    <div class='col-lg-6' >
+                    <div class='col-lg-5'>
                             <div align='center'>
                                 <ReactHTMLTableToExcel id="test" className="btn btn-primary" table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
                             </div> 
@@ -179,7 +185,7 @@ class Timetable extends Component{
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'400px'}} type="text" id="myInput"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
                             </div>
                             <p></p>
-                            <Table id ="sessions" align='center' bordered striped condensed hover style={{width:'500px'}} >
+                            <Table id ="sessions" align='center' bordered striped condensed hover  >
                                 <thead>                   
                                     <tr>
                                         <th>Sessions</th> 
@@ -201,8 +207,8 @@ class Timetable extends Component{
                             </Table>
                     </div>
 
-                    <div className="col-lg-6" >
-                        <div className="timetable row">
+                    <div className="col-lg-7">
+                        <div className="timetable row" style={{marginBottom:25}}>
                             <div className="col-lg-6">
                                 <input type="text" name="studentNum"  id = "stdNum" placeholder="Enter student number" style={{marginRight:10}}/>
                                 <br/>
@@ -211,12 +217,12 @@ class Timetable extends Component{
                             </div>
                            
                            <div className="col-lg-6">
-                                <select style={{marginLeft:10}} >
+                                <select style={{marginLeft:10}} id="courseN">
                                         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"/>
                                     
                                         {this.state.data != "" ? this.state.data.map((x)=>{
                                             return(
-                                                <option value={x.Course_Code}>{x.Course_Code}</option>
+                                                <option value={x.course_code}>{x.course_code}</option>
                                             )}) : <div></div>
                                         }
                                 </select>
@@ -226,13 +232,15 @@ class Timetable extends Component{
                            </div>
                             
                         </div>
-
-                        <EventCalendar 
-                            month={10}
-                            year={2018}
-                            events={events}
-                            // onEventClick={(target, eventData, day) => console.log(eventData)} 
-                        />
+                        
+                        <div style={{width:'50vw', height:'70vh'}}>
+                            <BigCalendar
+                                localizer={localizer}
+                                events={(this.state.timetable || this.state.data)}
+                                startAccessor="start"
+                                endAccessor="end"
+                            />
+                        </div>
                         
                     </div>
                 </div>
