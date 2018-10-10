@@ -98,7 +98,8 @@ class Timetable extends Component{
             console.log(err)
         })
     }.bind(this)
-    
+
+   
     search = function (){
       $("#myInput").on("input",function(){
   
