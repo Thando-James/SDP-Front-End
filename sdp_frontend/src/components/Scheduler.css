@@ -4,3 +4,15 @@
   .checkbox{
     display:none;
   }
+
+  .courses-list{
+    text-align: center;
+    height: 410px;
+   
+    overflow: scroll;
+    box-align: center;
+    margin-left: 160px;
+    margin-right: 160px;
+    border: 1px solid grey;
+    background-color: #F5F5F5;
+}

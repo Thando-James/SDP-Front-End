@@ -15,12 +15,12 @@ class Login extends Component{
     this.state={
         email:'',
         password:'',
-        shown : false
+        shown : false,
+        authenticated:false
     }
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPassChange = this.onPassChange.bind(this);
-
-    }
+}
 
     onEmailChange(e){
         this.setState({
@@ -57,6 +57,8 @@ ValidateLogin =function(e){
     console.log('response from log in is ', response)
     console.log('length is ', response.length)
     if(response.length!==0){
+        this.authenticated=true
+        console.log(this.authenticated)
         _self.props.history.push({
             pathname:'/',
             state:response,
