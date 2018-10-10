@@ -11,15 +11,47 @@ let url = 'http://youthleague.co'
 class Login extends Component{
     constructor(props){
         super(props)
-    this.state={
-        email:[],
-        password:[],
-    }
-    }
+     }
 ValidateLogin =function(){
-   
-    
+   let _self=this
+   var email = document.getElementById("inputEmail")
+   var password = document.getElementById("inputPassword")
+  
+   let user = {
+    email: email.value,
+    password: password.value, 
+  
+    };
+    console.log(user)
+   fetch(`${url}:3456/login`,{
+    method:"POST",
+    body:JSON.stringify({
+        
+               user
+        
+            }),
+    headers: {
+        "Content-Type": "application/json; charset=utf-8",
+    },
+})
+.then(function(response){
+    return response.json()
+})
+.then(function(response){
+    console.log(response)
+   // let data = []
+    //let merged = _self.state.mergedCourses
+
+    _self.props.history.push({
+        pathname:'/',
+        state:response,
+    })
+})
+.catch(function(err){
+    console.log(err)
+})        
 }
+
 render(){
 
 return(
@@ -42,7 +74,7 @@ return(
                         <input type="checkbox" value="remember-me"/> Remember me />
                     </label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" onClick={this.ValidateLogin}>Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" onClick={this.ValidateLogin}>Sign in</button>
             </form>
             <a href="#" class="forgot-password"> Forgot the password?</a>
         </div>
