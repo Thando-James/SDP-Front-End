@@ -6,6 +6,7 @@
     "jquery": "^3.3.1",
     "moment": "^2.22.2",
     "react": "^16.4.2",
+    "react-big-calendar": "^0.20.1",
     "react-bootstrap": "^0.32.3",
     "react-bootstrap-table-next": "^1.1.4",
     "react-date-picker": "^6.12.1",
@@ -19,7 +20,7 @@
     "react-select-search": "^0.9.3"
   },
   "scripts": {
-    "start": "set PORT=3001 && react-scripts start && npm run homepage" ,
+    "start": "set PORT=3001 && react-scripts start && npm run homepage",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

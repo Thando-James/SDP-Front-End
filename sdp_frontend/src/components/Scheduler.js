@@ -25,6 +25,7 @@ class Students extends Component{
         this.handleChange = this.handleChange.bind(this);
         this.state={
             data:[],
+            dataAfterMerge:[],
             checkedArr:[],
             mergedCourses:[],
             maxSessions:1000,
@@ -158,10 +159,10 @@ class Students extends Component{
             method:"POST",
             body:data
         })
-        // .then(function(response){
-        //     console.log(response)
-        //     response.json()
-        // })
+        .then(function(response){
+            console.log(response)
+            response.json()
+        })
         .then(function(response){
             console.log(response)
             _self.setState({
@@ -216,15 +217,35 @@ class Students extends Component{
         let checkedCourses = this.state.checkedArr;
         let merged = this.state.mergedCourses;
         merged.push(checkedCourses);
-        for (let x=1; x<checkedCourses.length; x++){
+        console.log(checkedCourses);
+        
+        let index = -1;
+        // merging for loop
+        for (let x=0; x<checkedCourses.length; x++){
             for(let y=0; y<courses.length; y++){
-                if(checkedCourses[x] === courses[y].Course_Code){
+                if(x==0 && checkedCourses[x] === courses[y].course_code){
+                    console.log(checkedCourses[x]);
+                    
+                    index = y;
+                    break;
+                } else
+                if(checkedCourses[x] === courses[y].course_code ){
+                    console.log(x);
+                    
                     console.log(checkedCourses[x])
-                    console.log(courses[y].Course_Code)
+                    console.log(courses[y].course_code)
+                    courses[index].course_code = courses[index].course_code + `, ${checkedCourses[x]}` 
                     courses.splice(y,1)
+
+                    if(y<index){
+                        index = index-1;
+                    }
+
+                    break;
                 }
             }
         }
+
 
         var checkboxes = document.getElementsByName('courses');
         for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -300,7 +321,7 @@ class Students extends Component{
                                 let count = 0
                                 return(
                                     <div className="checklist">
-                                        <input type="checkbox" name="courses" value={x.Course_Code} key={count} class = "selectedcourses" onChange={this.onChecked}/> {x.Course_Code}
+                                        <input type="checkbox" name="courses" value={x.course_code} key={count} class = "selectedcourses" onChange={this.onChecked}/> {x.course_code}
                                     </div>
                                 )}) : 
                                 (
