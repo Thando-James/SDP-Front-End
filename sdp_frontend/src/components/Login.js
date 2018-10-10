@@ -12,28 +12,6 @@ let url = 'http://youthleague.co'
 class Login extends Component{
     constructor(props){
         super(props)
-<<<<<<< HEAD
-     }
-ValidateLogin =function(){
-   let _self=this
-   var email = document.getElementById("inputEmail")
-   var password = document.getElementById("inputPassword")
-  
-   let user = {
-    email: email.value,
-    password: password.value, 
-  
-    };
-    console.log(user)
-   fetch(`${url}:3456/login`,{
-    method:"POST",
-    body:JSON.stringify({
-        
-               user
-        
-            }),
-    headers: {
-=======
     this.state={
         email:'',
         password:'',
@@ -68,7 +46,6 @@ ValidateLogin =function(e){
    fetch(`${url}:3456/login`,{
     method:"POST",
     body:JSON.stringify(user), headers: {
->>>>>>> e816a9525536f8984ab694922a708f0688f6922a
         "Content-Type": "application/json; charset=utf-8",
     },
 })
@@ -76,22 +53,6 @@ ValidateLogin =function(e){
     return response.json()
 })
 .then(function(response){
-<<<<<<< HEAD
-    console.log(response)
-   // let data = []
-    //let merged = _self.state.mergedCourses
-
-    _self.props.history.push({
-        pathname:'/',
-        state:response,
-    })
-})
-.catch(function(err){
-    console.log(err)
-})        
-}
-
-=======
     // console.log(response)
     console.log('response from log in is ', response)
     console.log('length is ', response.length)
@@ -116,7 +77,6 @@ ValidateLogin =function(e){
 
     
 }.bind(this);
->>>>>>> e816a9525536f8984ab694922a708f0688f6922a
 render(){
 
 return(
@@ -139,14 +99,10 @@ return(
                         <input type="checkbox" value="remember-me"/> Remember me />
                     </label>
                 </div>
-<<<<<<< HEAD
-                <button class="btn btn-lg btn-primary btn-block btn-signin" onClick={this.ValidateLogin}>Sign in</button>
-=======
                 <div  class="error">
                     {this.state.shown ? <div >Incorrect credentials!!</div> : null}
                 </div>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" onClick={this.ValidateLogin}>Sign in</button>
->>>>>>> e816a9525536f8984ab694922a708f0688f6922a
             </form>
             <a href="#" class="forgot-password"> Forgot the password?</a>
         </div>
