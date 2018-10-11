@@ -97,12 +97,9 @@ class allStudents extends Component{
         
         
     render(){
-   
-    return(
-      
-        <div class="container">
-       
-           <PageHeader style={{textAlign:'center'}}>
+      return(
+          <div class="container">
+          <PageHeader style={{textAlign:'center'}}>
            <h1>All Registered Students</h1>
            </PageHeader>
           
@@ -147,9 +144,7 @@ class allStudents extends Component{
         </div>
          )
         }
-     
-
-  componentDidMount(){
+    componentDidMount(){
         let _self = this
         fetch(`${url}:3456/allStudents`)
         .then(function(res){

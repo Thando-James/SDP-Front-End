@@ -22,10 +22,10 @@ class NavBar extends Component{
                         eventKey={1} href="/">Scheduler
                     </NavItem>
                     <NavItem 
-                        eventKey={2} href="/login">Login
+                        eventKey={2} href="/allstudents">Students
                     </NavItem>
                     <NavItem 
-                        eventKey={3} href="/allstudents">Students
+                        eventKey={3} href="/login">Login
                     </NavItem>
                 </Nav>   
             </Navbar.Collapse>

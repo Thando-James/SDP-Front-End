@@ -23,11 +23,13 @@ class Students extends Component{
         this.onStudentsChange = this.onStudentsChange.bind(this)
         this.onMerge = this.onMerge.bind(this)
         this.handleChange = this.handleChange.bind(this);
+      //  this.isLoggedin=this.isLoggedin.bind(this)
         this.state={
             data:[],
             checkedArr:[],
             mergedCourses:[],
             byebye:[],
+            isLoggedin:[],
             maxSessions:1000,
             clashParameter:1,
             isCourses:false,
@@ -38,6 +40,7 @@ class Students extends Component{
         }
     
     }
+   // ValidateLogin()
   selectAll = function (){
         //
         var checkboxes = document.getElementsByName('courses');
@@ -102,13 +105,8 @@ class Students extends Component{
                      console.log(err)
                  })
              }.bind(this)
-
-
-
-
-
-
-
+             
+             
     search = function (){
         $("#searchColumn").on("input",function(){
     
@@ -155,6 +153,14 @@ class Students extends Component{
             console.log(response)
             let data = []
             let merged = _self.state.mergedCourses
+            
+            // for(let i = 0; i<response.length; i++){
+            //     let a = moment(response[i].start)
+            //     let b = moment(response[i].end)
+            //     response[i].start = a
+            //     response[i].end = b
+            //     data.push(response[i]);
+            // }
 
             _self.props.history.push({
                 pathname:'/timetable',
@@ -260,12 +266,30 @@ class Students extends Component{
         let checkedCourses = this.state.checkedArr;
         let merged = this.state.mergedCourses;
         merged.push(checkedCourses);
-        for (let x=1; x<checkedCourses.length; x++){
+  
+        let index = -1;
+        // merging for loop
+        for (let x=0; x<checkedCourses.length; x++){
             for(let y=0; y<courses.length; y++){
-                if(checkedCourses[x] === courses[y].Course_Code){
+                if(x==0 && checkedCourses[x] === courses[y].course_code){
+                    console.log(checkedCourses[x]);
+                    
+                    index = y;
+                    break;
+                } else
+                if(checkedCourses[x] === courses[y].course_code ){
+                    console.log(x);
+                    
                     console.log(checkedCourses[x])
-                    console.log(courses[y].Course_Code)
+                    console.log(courses[y].course_code)
+                    courses[index].course_code = courses[index].course_code + `;${checkedCourses[x]}` 
                     courses.splice(y,1)
+
+                    if(y<index){
+                        index = index-1;
+                    }
+
+                    break;
                 }
             }
         }
@@ -288,23 +312,14 @@ class Students extends Component{
         });
     }
 
-    componentDidUpdate(){
-        // fetch(`${url}:3456/display/courses`)
-        // .then(function(res){
-        //     return res.json()
-        // })
-        // .then(function(response){
-        //     console.log(response)
-        //     _self.setState({
-        //         data:response
-        //     })
-        // })
-        // .catch(function(err){
-        //     console.log(err)
-        // })
-    }
-
     render(){
+        let _self = this
+        console.log(this.props.location.state)
+        if(this.props.location.state === "" || this.props.location.state === undefined){
+            _self.props.history.push({
+                pathname:'/login'
+            })
+        }
      
       return(
            
@@ -324,7 +339,7 @@ class Students extends Component{
                             this.state.data.length > 0 ? <ButtonToolbar>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button>
                                 <Button bsStyle="warning" onClick={this.deselectAll}>Deselect All</Button>
-                                <Button bsStyle="danger" onClick={this.deleteCourse}>Delete Selected courses/s </Button>
+                                <Button bsStyle="danger" onClick={this.ValidateLogin}>Delete Selected courses/s </Button>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.onMerge}>Merge</Button>
                             </ButtonToolbar> :
                             <ButtonToolbar>
@@ -345,7 +360,7 @@ class Students extends Component{
                                 let count = 0
                                 return(
                                     <div className="checklist">
-                                        <input type="checkbox" name="courses" value={x.Course_Code} key={count} class = "selectedcourses" onChange={this.onChecked}/> {x.Course_Code}
+                                        <input type="checkbox" name="courses" value={x.course_code} key={count} class = "selectedcourses" onChange={this.onChecked}/> {x.course_code}
                                     </div>
                                 )}) : 
                                 (
@@ -430,15 +445,17 @@ class Students extends Component{
             return res.json()
         })
         .then(function(response){
-            console.log("Nton nton" + response)
+            //console.log("Nton nton" + response)
             _self.setState({
-                data:response
+                data:response,
+                //states:response
             })
         })
         .catch(function(err){
             console.log(err)
         })
-    }
+     }
 }
+
 
 export default Students
