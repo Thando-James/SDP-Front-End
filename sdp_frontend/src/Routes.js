@@ -7,18 +7,20 @@ import StudentsTimetable from './components/StudentsTimetable';
 import Neighbors from './components/Neighbors';
 import Login from './components/Login';
 import allStudents from './components/allStudents';
+import SummaryData from './components/SummaryData';
 
 export default class Routes extends React.Component{
     render(){
         return(
             <Switch>
-                <Route exact path="/" component={Scheduler}/>
+                <Route exact path="/"  component={Scheduler}/>
                 <Route path="/courses" component={Students}/>
                 <Route path="/timetable" component={Timetable}/>
                 <Route path="/stdtimetable" component={StudentsTimetable}/>
                 <Route path="/interactions" component={Neighbors}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/allstudents" component={allStudents}/>
+                <Route path="/summary" component ={SummaryData}/>
             </Switch>
         )
     }
