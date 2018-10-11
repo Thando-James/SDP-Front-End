@@ -109,6 +109,14 @@ class Timetable extends Component{
     }
 
     render(){
+        
+        var id = getCookie("id");
+        if (id === "") {
+            this.props.history.push({
+                pathname:'/login'
+            })
+        }
+
         if(this.props.location.state && !this.state.timetable){
             let timetable = this.props.location.state;
             for(let i = 0; i<timetable.length; i++){
@@ -248,5 +256,21 @@ class Timetable extends Component{
 
 }
     
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 export default Timetable
   

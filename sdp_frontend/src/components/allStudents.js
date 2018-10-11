@@ -11,6 +11,9 @@ class allStudents extends Component{
     constructor(props){
         super(props)
         this.state={
+            studentnumber: "",
+            code: "",
+            reg: "",
             data:[],
             bye:[],
             stdnumbers: this.props.location.state
@@ -54,14 +57,23 @@ class allStudents extends Component{
             }.bind(this)
 
 
-            AddNewStudent = function(){
+            AddNewStudent = function(e){
+                e.preventDefault();
                 let _self = this;
                 var newKid = document.getElementById("std")
-                console.log(newKid.value)
+                var Course = document.getElementById("code")
+                var stat = document.getElementById("reg");
+                console.log('std is ',newKid.value)
+                console.log('code is ',Course.value)
+                console.log('status is ', stat.value);
+
         
                 fetch(`${url}:3456/addStudent`,{
                     method:"POST",
-                    body:JSON.stringify({studentnumber:newKid.value
+                    body:JSON.stringify({studentnumber:newKid.value,
+                        code:Course.value,
+                        reg: stat.value
+
                   }),
                     headers: {
                       "Content-Type": "application/json; charset=utf-8",
@@ -71,10 +83,13 @@ class allStudents extends Component{
                     return response.json()
                 })
                 .then(function(response){
-                    console.log(response)
-                    // _self.setState({
-                    //     timetable:response
-                    // })
+                    console.log('pppppp: ',response)
+                    _self.setState({
+                        studentnumber:response,
+                        code:response,
+                        reg:response
+
+                    })
                 })
                 .catch(function(err){
                     console.log(err)
@@ -103,6 +118,14 @@ class allStudents extends Component{
         
         
     render(){
+
+        var id = getCookie("id");
+        if (id === "") {
+            this.props.history.push({
+                pathname:'/login'
+            })
+        }
+
       return(
           <div class="container">
           <PageHeader style={{textAlign:'center'}}>
@@ -111,7 +134,7 @@ class allStudents extends Component{
           
        <div class='row' >
        <div class ='col-lg-5'>
-       <Button style={{marginLeft:'180px'}}bsStyle="warning" onClick={this.deregister}>De-register</Button>
+       <Button style={{marginLeft:'180px'}}bsStyle="primary" onClick={this.deregister}>De-register</Button>
             <p></p>
             <div class ="form-group has-feedback has-search" align='center'>
                                 <span class="glyphicon glyphicon-search form-control-feedback" style={{marginRight:'28%'}}></span>
@@ -137,19 +160,26 @@ class allStudents extends Component{
         </div>
         <form method="post" action="/add" novalidate>
         <div class="form-field">
-            <label for="Std">Student Number: </label>
+            <label for="Std">Student Number:</label>
             <p></p>
-            <input type="text" class="form-control" style={{width:'200px'}}  placeholder="Type here" id="std" name="studentnum"  value="" />
+            <input type="text"  class="form-control" style={{width:'100px'}} name="studentNum"  id = "std" placeholder="Enter student number" style={{marginRight:10}}/>
         </div>
         <p></p>
         <div class="form-field">
             <label for="code">Course Code:</label>
             <p></p>
-            <input type="text" class="form-control" style={{width:'200px'}} placeholder="Type here" id="code" name="coursecode" type="text" value="" />
+            <input type="text"style={{width:'200px'}}  class="form-control" name="coursecode"  id = "code" placeholder="Enter course" style={{marginRight:10}}/>
+        </div>
+        <p></p>
+        <div >
+            <label for="Reg">Status:</label>
+            <p></p>
+            <input type="text"  style={{width:'200px'}} class="form-control" name="reg"  id = "reg" placeholder="Status"  style={{marginRight:10}}/>
+            <p></p>
         </div>
         <p></p>
         <div class="form-actions">
-            <Button bsStyle='primary' class="btn" type="submit" onClick={this.AddNewStudent}>Add</Button>
+            <Button bsStyle='success' class="btn" type="submit" onClick={this.AddNewStudent}>Add</Button>
         </div>
         </form>
         </div>
@@ -175,6 +205,22 @@ class allStudents extends Component{
         })
         
     }
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 
 export default allStudents
