@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "circular-json": "^0.5.7",
     "jquery": "^3.3.1",
     "moment": "^2.22.2",
     "react": "^16.4.2",
     "react-big-calendar": "^0.20.1",
     "react-bootstrap": "^0.32.3",
     "react-bootstrap-table-next": "^1.1.4",
+    "react-breadcrumbs-dynamic": "^1.1.1",
     "react-date-picker": "^6.12.1",
     "react-datepicker": "^1.6.0",
     "react-dom": "^16.4.2",
@@ -17,7 +19,8 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-    "react-select-search": "^0.9.3"
+    "react-select-search": "^0.9.3",
+    "react-through": "^1.1.1"
   },
   "scripts": {
     "start": "set PORT=3001 && react-scripts start && npm run homepage",

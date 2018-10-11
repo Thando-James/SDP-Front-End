@@ -10,7 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 
 let url = 'http://youthleague.co'
-// let url = 'http://localhost'
+//let url = 'http://localhost'
 class Students extends Component{
     constructor(props){
         super(props)
@@ -23,11 +23,13 @@ class Students extends Component{
         this.onStudentsChange = this.onStudentsChange.bind(this)
         this.onMerge = this.onMerge.bind(this)
         this.handleChange = this.handleChange.bind(this);
+      //  this.isLoggedin=this.isLoggedin.bind(this)
         this.state={
             data:[],
-            dataAfterMerge:[],
             checkedArr:[],
             mergedCourses:[],
+            byebye:[],
+            isLoggedin:[],
             maxSessions:1000,
             clashParameter:1,
             isCourses:false,
@@ -36,7 +38,9 @@ class Students extends Component{
             isStudentsChanged: false,
             startDate:moment(),
         }
+    
     }
+   // ValidateLogin()
   selectAll = function (){
         //
         var checkboxes = document.getElementsByName('courses');
@@ -66,6 +70,43 @@ class Students extends Component{
             }
     }.bind(this)
 
+    delete = function(){
+         let  _self = this
+         var courses = document.querySelectorAll('input[type=checkbox]:checked')
+         var array = []
+         for(var i=0, n=courses.length;i<n;i++) {
+                array.push(courses[i].value)
+                
+            }       
+                 fetch(`${url}:3456/delete`,{
+                     method:"POST",
+                     body:JSON.stringify({byebye:array
+                 }),
+                   headers: {
+                       "Content-Type": "application/json; charset=utf-8",
+                   },
+                 })
+                 .then(function(response){
+                     return response.json()
+                    
+                 })
+                 .then(function(response){
+                     // console.log('Response from Nelly')
+                     console.log(response)
+                     // _self.props.history.push({
+                     //     pathname:'/interactions',
+                     //     state:response
+                     // })
+                     _self.setState({
+                        // stdnumbers:response
+                     })
+                 })
+                 .catch(function(err){
+                     console.log(err)
+                 })
+             }.bind(this)
+             
+             
     search = function (){
         $("#searchColumn").on("input",function(){
     
@@ -163,14 +204,14 @@ class Students extends Component{
         let form = e.target;
         let data = new FormData(form);
 
-        fetch(`${url}:3456/upload/papers`,{
+        fetch(`${url}:3456/upload/students`,{
             method:"POST",
             body:data
         })
-        .then(function(response){
-            console.log(response)
-            response.json()
-        })
+        // .then(function(response){
+        //     console.log(response)
+        //     response.json()
+        // })
         .then(function(response){
             console.log(response)
             _self.setState({
@@ -225,8 +266,7 @@ class Students extends Component{
         let checkedCourses = this.state.checkedArr;
         let merged = this.state.mergedCourses;
         merged.push(checkedCourses);
-        console.log(checkedCourses);
-        
+  
         let index = -1;
         // merging for loop
         for (let x=0; x<checkedCourses.length; x++){
@@ -254,7 +294,6 @@ class Students extends Component{
             }
         }
 
-
         var checkboxes = document.getElementsByName('courses');
         for(var i=0, n=checkboxes.length;i<n;i++) {
             checkboxes[i].checked = false;
@@ -273,23 +312,14 @@ class Students extends Component{
         });
     }
 
-    componentDidUpdate(){
-        // fetch(`${url}:3456/display/courses`)
-        // .then(function(res){
-        //     return res.json()
-        // })
-        // .then(function(response){
-        //     console.log(response)
-        //     _self.setState({
-        //         data:response
-        //     })
-        // })
-        // .catch(function(err){
-        //     console.log(err)
-        // })
-    }
-
     render(){
+        let _self = this
+        console.log(this.props.location.state)
+        if(this.props.location.state === "" || this.props.location.state === undefined){
+            _self.props.history.push({
+                pathname:'/login'
+            })
+        }
      
       return(
            
@@ -309,12 +339,14 @@ class Students extends Component{
                             this.state.data.length > 0 ? <ButtonToolbar>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button>
                                 <Button bsStyle="warning" onClick={this.deselectAll}>Deselect All</Button>
+                                <Button bsStyle="danger" onClick={this.ValidateLogin}>Delete Selected courses/s </Button>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.onMerge}>Merge</Button>
                             </ButtonToolbar> :
                             <ButtonToolbar>
-                                <Button  type="button" className="btn btn-primary"  disabled>Select All</Button>
-                                <Button bsStyle="warning" disabled>Deselect All</Button>
-                                <Button  type="button" className="btn btn-primary"  disabled>Merge</Button>
+                                <Button bsSize="small" type="button" className="btn btn-primary" disabled>Select All</Button>
+                                <Button bsSize="small" bsStyle="warning" disabled>Deselect All</Button>
+                                <Button bsSize="small" bsStyle="danger" type="button" className="btn btn-primary" disabled >Delete Selected courses/s </Button>
+                                <Button  bsSize="small" type="button" className="btn btn-primary"  disabled>Merge</Button>
                             </ButtonToolbar>
                          }
                          <p></p>
@@ -324,7 +356,6 @@ class Students extends Component{
                         
                         <p></p>
                         <div className = "courses-list">
-                            {console.log(typeof(this.state.data))}
                             {this.state.data != "" ? this.state.data.map((x)=>{
                                 let count = 0
                                 return(
@@ -341,8 +372,8 @@ class Students extends Component{
                                                 <input type="file" name="file" accept=".csv" onChange={this.onCoursesChange}/>
                                                 <br/>
                                                 {
-                                                    this.state.isCoursesChanged ? <Button bsStyle="primary" className='btn' type="submit" >Upload Courses</Button> :
-                                                    <Button bsStyle="primary" className='btn' type="submit" disabled >Upload Courses</Button>
+                                                    this.state.isCoursesChanged ? <Button bsStyle="primary" className='btn' type="submit" >Upload Students</Button> :
+                                                    <Button bsStyle="primary" className='btn' type="submit" disabled >Upload Students</Button>
                                                 }
                                                 
                                             </form>
@@ -357,8 +388,8 @@ class Students extends Component{
                                                 <input type="file" name="file" accept=".csv" onChange={this.onStudentsChange}/>
                                                 <br/>
                                                 {
-                                                    this.state.isStudentsChanged && this.state.isCourses? <Button bsStyle="primary" className='btn' type="submit">Upload Student Data</Button> :
-                                                    <Button bsStyle="primary" className='btn' type="submit" disabled>Upload Student Data</Button>
+                                                    this.state.isStudentsChanged && this.state.isCourses? <Button bsStyle="primary" className='btn' type="submit">Upload Courses Data</Button> :
+                                                    <Button bsStyle="primary" className='btn' type="submit" disabled>Upload Courses Data</Button>
                                                 }
                                                 
                                             </form>
@@ -381,6 +412,7 @@ class Students extends Component{
                                     <option value='0' name="Degree" onSelect={this.sortBy}>Degree</option>
                                     <option value='1' name="Noofstudents "onSelect={this.sortBy}>Number of students in the course</option>
                                     <option value='2'name="Affected" onSelect={this.sortBy}>Number of students affected</option>
+                                    <option value='3'name="Affected" onSelect={this.sortBy}>Row sum without diagonal</option>
                                 </select>
                             </div>
                             <div>
@@ -413,17 +445,17 @@ class Students extends Component{
             return res.json()
         })
         .then(function(response){
-            console.log(response)
-            if(!response.errorMessage){
-                _self.setState({
-                    data:response
-                })   
-            }
+            //console.log("Nton nton" + response)
+            _self.setState({
+                data:response,
+                //states:response
+            })
         })
         .catch(function(err){
             console.log(err)
         })
-    }
+     }
 }
+
 
 export default Students

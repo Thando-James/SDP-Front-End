@@ -83,7 +83,8 @@ class Timetable extends Component{
             console.log(err)
         })
     }.bind(this)
-    
+
+   
     search = function (){
       $("#myInput").on("input",function(){
   
@@ -236,7 +237,8 @@ class Timetable extends Component{
         .then(function(response){
             console.log(response)
             _self.setState({
-                data:response
+                data:response,
+                states:response
             })
         })
         .catch(function(err){
