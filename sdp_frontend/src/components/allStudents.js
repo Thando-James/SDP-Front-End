@@ -51,6 +51,35 @@ class allStudents extends Component{
                     console.log(err)
                 })
             }.bind(this)
+
+
+            AddNewStudent = function(){
+                let _self = this;
+                var newKid = document.getElementById("std")
+                console.log(newKid.value)
+        
+                fetch(`${url}:3456/addStudent`,{
+                    method:"POST",
+                    body:JSON.stringify({studentnumber:newKid.value
+                  }),
+                    headers: {
+                      "Content-Type": "application/json; charset=utf-8",
+                    },
+                })
+                .then(function(response){
+                    return response.json()
+                })
+                .then(function(response){
+                    console.log(response)
+                    // _self.setState({
+                    //     timetable:response
+                    // })
+                })
+                .catch(function(err){
+                    console.log(err)
+                })
+            }.bind(this)
+        
         
     render(){
    
@@ -69,12 +98,31 @@ class allStudents extends Component{
              <div class='courses-list'>
            {this.state.data != "" ? this.state.data.map((x)=>{
            return(
+            
             <div className="checklist">
             <input type="checkbox" id="allStudents" value={x} class = "students"/> {x}
             </div>
            )}) :<div><p class="Oops" style={{align:'center'}}>Oops!!! looks like the database is down please ask Nelly/James to refresh</p></div>
             }
+                 
             </div>
+            <div class="form-header">
+  <h2>Add new student</h2>
+        </div>
+        <form method="post" action="/add" novalidate>
+        <div class="form-field">
+            <label for="Std">Student Number</label>
+            <input class="input" id="std" name="studentnum" type="text" value="" />
+        </div>
+        <div class="form-field">
+            <label for="code">Course Code</label>
+            <input class="input" id="code" name="coursecode" type="text" value="" />
+        </div>
+        <div class="form-actions">
+            <button class="btn" type="submit" onClick={this.AddNewStudent}>Add</button>
+        </div>
+        </form>
+
             </div>
             </div>
         </div>
