@@ -344,7 +344,6 @@ class Students extends Component{
                             <ButtonToolbar>
                                 <Button bsSize="small" type="button" className="btn btn-primary" disabled>Select All</Button>
                                 <Button bsSize="small" bsStyle="warning" disabled>Deselect All</Button>
-                                <Button bsSize="small" bsStyle="danger" type="button" className="btn btn-primary" disabled >Delete Selected courses/s </Button>
                                 <Button  bsSize="small" type="button" className="btn btn-primary"  disabled>Merge</Button>
                             </ButtonToolbar>
                          }
