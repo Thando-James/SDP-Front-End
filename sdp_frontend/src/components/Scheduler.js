@@ -313,10 +313,10 @@ class Students extends Component{
     }
 
     render(){
-        let _self = this
-        console.log(this.props.location.state)
-        if(this.props.location.state === "" || this.props.location.state === undefined){
-            _self.props.history.push({
+
+        var id = getCookie("id");
+        if (id === "") {
+            this.props.history.push({
                 pathname:'/login'
             })
         }
@@ -339,7 +339,6 @@ class Students extends Component{
                             this.state.data.length > 0 ? <ButtonToolbar>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button>
                                 <Button bsStyle="warning" onClick={this.deselectAll}>Deselect All</Button>
-                                <Button bsStyle="danger" onClick={this.ValidateLogin}>Delete Selected courses/s </Button>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.onMerge}>Merge</Button>
                             </ButtonToolbar> :
                             <ButtonToolbar>
@@ -457,5 +456,20 @@ class Students extends Component{
      }
 }
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
 export default Students

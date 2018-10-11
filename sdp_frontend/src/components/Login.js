@@ -59,6 +59,7 @@ ValidateLogin =function(e){
     if(response.length!==0){
        // this.authenticated=true
      //   console.log(this.authenticated)
+        setCookie("id",response,1)
         _self.props.history.push({
             pathname:'/',
             state:response,
@@ -111,4 +112,13 @@ return(
     </div>
     )
     }
-} export default Login
+} 
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+export default Login
