@@ -112,6 +112,14 @@ class Students extends Component{
             console.log(response)
             let data = []
             let merged = _self.state.mergedCourses
+            
+            // for(let i = 0; i<response.length; i++){
+            //     let a = moment(response[i].start)
+            //     let b = moment(response[i].end)
+            //     response[i].start = a
+            //     response[i].end = b
+            //     data.push(response[i]);
+            // }
 
             _self.props.history.push({
                 pathname:'/timetable',
@@ -234,7 +242,7 @@ class Students extends Component{
                     
                     console.log(checkedCourses[x])
                     console.log(courses[y].course_code)
-                    courses[index].course_code = courses[index].course_code + `, ${checkedCourses[x]}` 
+                    courses[index].course_code = courses[index].course_code + `;${checkedCourses[x]}` 
                     courses.splice(y,1)
 
                     if(y<index){

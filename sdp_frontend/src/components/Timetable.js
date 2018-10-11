@@ -9,26 +9,11 @@ import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = BigCalendar.momentLocalizer(moment)
+let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
 let url = 'http://youthleague.co'
 //let url = 'http://localhost'
 
-const events = [
-    {
-        start: '2015-07-20',
-        end: '2015-07-02',
-        eventClasses: 'optionalEvent',
-        title: 'test event',
-        description: 'This is a test description of an event',
-    },
-    {
-        start: '2015-07-19',
-        end: '2015-07-25',
-        title: 'test event',
-        description: 'This is a test description of an event',
-        data: 'you can add what ever random data you may want to use later',
-    },
-];
 class Timetable extends Component{
 
     constructor(props){
@@ -37,7 +22,7 @@ class Timetable extends Component{
           studentnumber:"",
           coursecode:"",
           data:[],
-          timetable: this.props.location.state
+          timetable: ""
         }
     }
 
@@ -123,47 +108,20 @@ class Timetable extends Component{
     }
 
     render(){
+        if(this.props.location.state && !this.state.timetable){
+            let timetable = this.props.location.state;
+            for(let i = 0; i<timetable.length; i++){
+                    let a = new Date(timetable[i].start)
+                    let b = new Date(timetable[i].end)
+                    timetable[i].start = new Date(a)
+                    timetable[i].end = new Date(b)
 
-        // function search() {
-        //     var input, filter, table, tr, td, i,word;
-        //     input = document.getElementById("myInput");
-        //     filter = input.value.toUpperCase();
-        //     table = document.getElementById("sessions");
-        //     tr = table.getElementsByTagName("tr")
-        //     if(!(filter.includes(","))){
-        //         for (i = 0; i < tr.length; i++) {
-        //         td = tr[i].getElementsByTagName("td")[1];
-        //         console.log("This is td" + td)
-        //         console.log(test)
-        //         if (td) {
-        //         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        //             tr[i].style.display = "";
-        //         } else {
-        //             tr[i].style.display = "none";
-        //         }
-        //         }       
-        //     }
-        //     }
-        //     else{
-        //     word = filter.split(",");
-
-        //     for(var j=0; j < word.length;j++){
-        //     for (i = 0; i < tr.length; i++) {
-        //         td = tr[i].getElementsByTagName("td")[1];
-                
-        //         console.log("This is td" + tr[i])
-        //         console.log(test)
-        //         if (td) {
-        //         if (td.innerHTML.toUpperCase().indexOf(word[j]) > -1) {
-        //             tr[i].style.display = "";
-        //         } else {
-        //             tr[i].style.display = "none"
-        //         }
-        //         }       
-        //     }
-        //     }
-        // }
-        // }
+            }
+            console.log(timetable);
+            this.setState({
+                timetable:timetable
+            })
+        }
         return(
             <div>
                 <pre> 
@@ -188,7 +146,8 @@ class Timetable extends Component{
                             <Table id ="sessions" align='center' bordered striped condensed hover  >
                                 <thead>                   
                                     <tr>
-                                        <th>Sessions</th> 
+                                        <th>Sessions</th>
+                                        <th>Dates</th> 
                                         <th>Courses</th>
                                     </tr>
                                 </thead>
@@ -197,6 +156,8 @@ class Timetable extends Component{
                                     return(
                                         <tbody>
                                             <tr>
+                                                {console.log(typeof(x.start))}
+                                                <td>{x.resource[0].session}</td>
                                                 <td>{x.data[0]}</td>
                                                 <td>{x.subject + " "}</td>
                                             </tr>
@@ -234,9 +195,13 @@ class Timetable extends Component{
                         </div>
                         
                         <div style={{width:'50vw', height:'70vh'}}>
+                            
                             <BigCalendar
                                 localizer={localizer}
                                 events={(this.state.timetable || this.state.data)}
+                                views={allViews}
+                                step={60}
+                                showMultiDayTimes
                                 startAccessor="start"
                                 endAccessor="end"
                             />
@@ -249,6 +214,20 @@ class Timetable extends Component{
     }
           
     componentDidMount(){
+        let schedule = this.props.location.state;
+        console.log(schedule);
+
+        //   for(let i = 0; i<schedule.length; i++){
+        //         let a = moment(schedule[i].start)
+        //         let b = moment(schedule[i].end)
+        //         schedule[i].start = a
+        //         schedule[i].end = b
+        //     }
+        //     console.log(schedule);
+            
+        //     this.setState({
+        //         timetable: schedule
+        //     })
         let _self = this;
         fetch(`${url}:3456/display/courses`)
         .then(function(res){
