@@ -70,42 +70,41 @@ class Students extends Component{
             }
     }.bind(this)
 
-    delete = function(){
-         let  _self = this
-         var courses = document.querySelectorAll('input[type=checkbox]:checked')
-         var array = []
-         for(var i=0, n=courses.length;i<n;i++) {
-                array.push(courses[i].value)
+    // delete = function(){
+    //      let  _self = this
+    //      var courses = document.querySelectorAll('input[type=checkbox]:checked')
+    //      var array = []
+    //      for(var i=0, n=courses.length;i<n;i++) {
+    //             array.push(courses[i].value)
                 
-            }       
-                 fetch(`${url}:3456/delete`,{
-                     method:"POST",
-                     body:JSON.stringify({byebye:array
-                 }),
-                   headers: {
-                       "Content-Type": "application/json; charset=utf-8",
-                   },
-                 })
-                 .then(function(response){
-                     return response.json()
+    //         }       
+    //              fetch(`${url}:3456/delete`,{
+    //                  method:"POST",
+    //                  body:JSON.stringify({byebye:array
+    //              }),
+    //                headers: {
+    //                    "Content-Type": "application/json; charset=utf-8",
+    //                },
+    //              })
+    //              .then(function(response){
+    //                  return response.json()
                     
-                 })
-                 .then(function(response){
-                     // console.log('Response from Nelly')
-                     console.log(response)
-                     // _self.props.history.push({
-                     //     pathname:'/interactions',
-                     //     state:response
-                     // })
-                     _self.setState({
-                        // stdnumbers:response
-                     })
-                 })
-                 .catch(function(err){
-                     console.log(err)
-                 })
-             }.bind(this)
-             
+    //              })
+    //              .then(function(response){
+    //                  // console.log('Response from Nelly')
+    //                  console.log(response)
+    //                  // _self.props.history.push({
+    //                  //     pathname:'/interactions',
+    //                  //     state:response
+    //                  // })
+    //                  _self.setState({
+    //                     // stdnumbers:response
+    //                  })
+    //              })
+    //              .catch(function(err){
+    //                  console.log(err)
+    //              })
+    //          }.bind(this)
              
     search = function (){
         $("#searchColumn").on("input",function(){
@@ -334,23 +333,24 @@ class Students extends Component{
                     <div class='col-lg-5'>
                         <h2 style={{textAlign:'left',marginLeft:'40%'}}>Courses</h2>
                         
-                        <div  style={{marginLeft:'35%'}}>
+                        <div  style={{marginLeft:'25%'}}>
                         {
                             this.state.data.length > 0 ? <ButtonToolbar>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button>
                                 <Button bsStyle="warning" onClick={this.deselectAll}>Deselect All</Button>
-                                <Button bsStyle="danger" onClick={this.ValidateLogin}>Delete Selected courses/s </Button>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.onMerge}>Merge</Button>
                             </ButtonToolbar> :
                             <ButtonToolbar>
                                 <Button bsSize="small" type="button" className="btn btn-primary" disabled>Select All</Button>
                                 <Button bsSize="small" bsStyle="warning" disabled>Deselect All</Button>
-                                <Button bsSize="small" bsStyle="danger" type="button" className="btn btn-primary" disabled >Delete Selected courses/s </Button>
                                 <Button  bsSize="small" type="button" className="btn btn-primary"  disabled>Merge</Button>
                             </ButtonToolbar>
                          }
                          <p></p>
-                          <div><input id = 'searchColumn' name='searchColumn' type="text" placeholder="Search for a course" onKeyUp={this.search} /></div>
+                         <div class ="form-group has-feedback has-search" align='center'>
+                                <span class="glyphicon glyphicon-search form-control-feedback" style={{marginRight:'38%'}}></span>
+                                <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'200px',marginRight:'25%'}} type="text" id="searchColumn"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
+                            </div>
                         </div>
                         <p></p>
                         
