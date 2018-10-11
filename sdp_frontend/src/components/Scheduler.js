@@ -357,8 +357,8 @@ class Students extends Component{
                                                 <input type="file" name="file" accept=".csv" onChange={this.onCoursesChange}/>
                                                 <br/>
                                                 {
-                                                    this.state.isCoursesChanged ? <Button bsStyle="primary" className='btn' type="submit" >Upload Courses</Button> :
-                                                    <Button bsStyle="primary" className='btn' type="submit" disabled >Upload Courses</Button>
+                                                    this.state.isCoursesChanged ? <Button bsStyle="primary" className='btn' type="submit" >Upload Students</Button> :
+                                                    <Button bsStyle="primary" className='btn' type="submit" disabled >Upload Students</Button>
                                                 }
                                                 
                                             </form>
@@ -373,8 +373,8 @@ class Students extends Component{
                                                 <input type="file" name="file" accept=".csv" onChange={this.onStudentsChange}/>
                                                 <br/>
                                                 {
-                                                    this.state.isStudentsChanged && this.state.isCourses? <Button bsStyle="primary" className='btn' type="submit">Upload Student Data</Button> :
-                                                    <Button bsStyle="primary" className='btn' type="submit" disabled>Upload Student Data</Button>
+                                                    this.state.isStudentsChanged && this.state.isCourses? <Button bsStyle="primary" className='btn' type="submit">Upload Courses Data</Button> :
+                                                    <Button bsStyle="primary" className='btn' type="submit" disabled>Upload Courses Data</Button>
                                                 }
                                                 
                                             </form>
