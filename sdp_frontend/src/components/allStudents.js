@@ -10,6 +10,9 @@ class allStudents extends Component{
     constructor(props){
         super(props)
         this.state={
+            studentnumber: "",
+            code: "",
+            reg: "",
             data:[],
             bye:[],
             stdnumbers: this.props.location.state
@@ -53,14 +56,23 @@ class allStudents extends Component{
             }.bind(this)
 
 
-            AddNewStudent = function(){
+            AddNewStudent = function(e){
+                e.preventDefault();
                 let _self = this;
                 var newKid = document.getElementById("std")
-                console.log(newKid.value)
+                var Course = document.getElementById("code")
+                var stat = document.getElementById("reg");
+                console.log('std is ',newKid.value)
+                console.log('code is ',Course.value)
+                console.log('status is ', stat.value);
+
         
                 fetch(`${url}:3456/addStudent`,{
                     method:"POST",
-                    body:JSON.stringify({studentnumber:newKid.value
+                    body:JSON.stringify({studentnumber:newKid.value,
+                        code:Course.value,
+                        reg: stat.value
+
                   }),
                     headers: {
                       "Content-Type": "application/json; charset=utf-8",
@@ -70,10 +82,13 @@ class allStudents extends Component{
                     return response.json()
                 })
                 .then(function(response){
-                    console.log(response)
-                    // _self.setState({
-                    //     timetable:response
-                    // })
+                    console.log('pppppp: ',response)
+                    _self.setState({
+                        studentnumber:response,
+                        code:response,
+                        reg:response
+
+                    })
                 })
                 .catch(function(err){
                     console.log(err)
@@ -112,11 +127,15 @@ class allStudents extends Component{
         <form method="post" action="/add" novalidate>
         <div class="form-field">
             <label for="Std">Student Number</label>
-            <input class="input" id="std" name="studentnum" type="text" value="" />
+            <input type="text" name="studentNum"  id = "std" placeholder="Enter student number" style={{marginRight:10}}/>
         </div>
         <div class="form-field">
             <label for="code">Course Code</label>
-            <input class="input" id="code" name="coursecode" type="text" value="" />
+            <input type="text" name="coursecode"  id = "code" placeholder="Enter course" style={{marginRight:10}}/>
+        </div>
+        <div class="form-field">
+            <label for="Reg">Status</label>
+            <input type="text" name="reg"  id = "reg" placeholder="Status"  style={{marginRight:10}}/>
         </div>
         <div class="form-actions">
             <button class="btn" type="submit" onClick={this.AddNewStudent}>Add</button>
