@@ -63,17 +63,14 @@ class allStudents extends Component{
                 let _self = this;
                 var newKid = document.getElementById("std")
                 var Course = document.getElementById("code")
-                var stat = document.getElementById("reg");
                 console.log('std is ',newKid.value)
                 console.log('code is ',Course.value)
-                console.log('status is ', stat.value);
 
         
                 fetch(`${url}:3456/addStudent`,{
                     method:"POST",
                     body:JSON.stringify({studentnumber:newKid.value,
                         code:Course.value,
-                        reg: stat.value
 
                   }),
                     headers: {
@@ -169,8 +166,8 @@ class allStudents extends Component{
         <div class="form-field">
             <label for="code">Course Code:</label>
             <p></p>
-            <select style={{marginLeft:10}} id="courseN">
-                <input type="text" placeholder="Search.." id="code" onkeyup="filterFunction()"/>
+            <select style={{marginLeft:10}} id="code">
+                <input type="text" placeholder="Search.."  onkeyup="filterFunction()"/>
                                     
                                         {this.state.courses != "" ? this.state.courses.map((x)=>{
                                             return(
