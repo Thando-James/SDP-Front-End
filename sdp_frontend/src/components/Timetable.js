@@ -109,7 +109,7 @@ class Timetable extends Component{
     }
 
     render(){
-        
+
         var id = getCookie("id");
         if (id === "") {
             this.props.history.push({

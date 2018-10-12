@@ -23,7 +23,7 @@ class Students extends Component{
         this.onStudentsChange = this.onStudentsChange.bind(this)
         this.onMerge = this.onMerge.bind(this)
         this.handleChange = this.handleChange.bind(this);
-      //  this.isLoggedin=this.isLoggedin.bind(this)
+       this.onSplit=this.onSplit.bind(this)
         this.state={
             data:[],
             checkedArr:[],
@@ -297,11 +297,49 @@ class Students extends Component{
         for(var i=0, n=checkboxes.length;i<n;i++) {
             checkboxes[i].checked = false;
         }
-        
+        console.log(merged)
         this.setState({
             data: courses,
             checkedArr:[],
             mergedCourses:merged
+        })
+    }
+
+    onSplit(){
+        let checkedCourses = this.state.checkedArr
+        let merged = this.state.mergedCourses
+        let courses = this.state.data;
+
+        for(let i=0; i<checkedCourses.length; i++){
+            let course = checkedCourses[i].split(";")
+            for(let j=0;j<courses.length; j++){
+                console.log(courses[j]);
+                
+                if(course[0] === courses[j].course_code.split(";")[0]){
+                    courses.splice(j,1)
+                }
+            }
+            for(let k=0; k<course.length; k++){
+                courses.unshift({course_code:course[k]})
+                for(let m=merged.length-1; m>=0; m--){
+                    if(course[k] == merged[m][0]){
+                        merged.splice(m,1)
+                    }
+                }
+            }
+        }
+
+        var checkboxes = document.getElementsByName('courses');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = false;
+        }
+
+        console.log(merged)
+
+        this.setState({
+            data :courses,
+            checkedArr:[],
+            mergedCourses : merged
         })
     }
 
@@ -339,6 +377,7 @@ class Students extends Component{
                                 <Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button>
                                 <Button bsStyle="warning" onClick={this.deselectAll}>Deselect All</Button>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.onMerge}>Merge</Button>
+                                <Button  type="button" className="btn btn-primary"  onClick={this.onSplit}>Split</Button>
                             </ButtonToolbar> :
                             <ButtonToolbar>
                                 <Button bsSize="small" type="button" className="btn btn-primary" disabled>Select All</Button>

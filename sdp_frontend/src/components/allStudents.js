@@ -16,7 +16,8 @@ class allStudents extends Component{
             reg: "",
             data:[],
             bye:[],
-            stdnumbers: this.props.location.state
+            stdnumbers: this.props.location.state,
+            courses:[]
         }
     }
 
@@ -168,7 +169,15 @@ class allStudents extends Component{
         <div class="form-field">
             <label for="code">Course Code:</label>
             <p></p>
-            <input type="text"style={{width:'200px'}}  class="form-control" name="coursecode"  id = "code" placeholder="Enter course" style={{marginRight:10}}/>
+            <select style={{marginLeft:10}} id="courseN">
+                <input type="text" placeholder="Search.." id="code" onkeyup="filterFunction()"/>
+                                    
+                                        {this.state.courses != "" ? this.state.courses.map((x)=>{
+                                            return(
+                                                <option value={x.course_code}>{x.course_code}</option>
+                                            )}) : <div></div>
+                                        }
+            </select>            
         </div>
         <p></p>
         <div >
@@ -204,6 +213,19 @@ class allStudents extends Component{
            console.log(err)
         })
         
+        fetch(`${url}:3456/display/courses`)
+        .then(function(res){
+            return res.json()
+        })
+        .then(function(response){
+            console.log(response)
+            _self.setState({
+                courses:response
+            })
+        })
+        .catch(function(err){
+            console.log(err)
+        })
     }
 }
 
