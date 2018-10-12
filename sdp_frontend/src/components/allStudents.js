@@ -171,13 +171,6 @@ class allStudents extends Component{
             <input type="text"style={{width:'200px'}}  class="form-control" name="coursecode"  id = "code" placeholder="Enter course" style={{marginRight:10}}/>
         </div>
         <p></p>
-        <div >
-            <label for="Reg">Status:</label>
-            <p></p>
-            <input type="text"  style={{width:'200px'}} class="form-control" name="reg"  id = "reg" placeholder="Status"  style={{marginRight:10}}/>
-            <p></p>
-        </div>
-        <p></p>
         <div class="form-actions">
             <Button bsStyle='success' class="btn" type="submit" onClick={this.AddNewStudent}>Add</Button>
         </div>
