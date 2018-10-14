@@ -7,6 +7,45 @@ import $ from 'jquery'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+// import Hamoni from "hamoni-sync";
+
+//hamoni
+
+// componentDidMount() {
+//     let hamoni = new Hamoni("13f86ce6-43fe-4e6d-b7fe-4aa4ae543da2", "4cd736cec26643aa987bf5f18f556210");
+//     hamoni
+//       .connect()
+//       .then(() => {
+//         hamoni
+//     .get("datagrid")
+//     .then(listPrimitive => {
+//       this.listPrimitive = listPrimitive;
+//       this.setState({
+//         data: [...listPrimitive.getAll()]
+//       });
+//       listPrimitive.onItemAdded(item => {
+//         this.setState({ data: [...this.state.data, item.value] });
+//       });
+//       listPrimitive.onItemUpdated(item => {
+//         let data = [
+//         ...this.state.data.slice(0, item.index),
+//         item.value,
+//         ...this.state.data.slice(item.index + 1)
+//         ];
+//         this.setState({ data: data });
+//       });
+//       listPrimitive.onSync(data => {
+//         this.setState({ data: data });
+//       });
+//     })
+//     .catch(console.log);
+
+//       })
+//       .catch(console.log);
+//   }
+
+
+//hamoni
 
 const localizer = BigCalendar.momentLocalizer(moment)
 let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
@@ -109,6 +148,23 @@ class Timetable extends Component{
     }
 
     render(){
+        //delete
+        $('.table-remove').click(function () {
+            $(this).parents('tr').detach();
+          });
+
+        //add
+          $('.table-add').click(function (){
+
+            //add new row
+            var newRow=document.getElementById('sessions').insertRow();
+            newRow.innerHTML=`<td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td>
+            <td><span class="table-remove glyphicon glyphicon-remove"></span></td>
+            `;
+            // newRow.setAttribute('contenteditable', 'true');
+            
+           
+          });
         
         var id = getCookie("id");
         if (id === "") {
@@ -152,12 +208,16 @@ class Timetable extends Component{
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'400px'}} type="text" id="myInput"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
                             </div>
                             <p></p>
-                            <Table id ="sessions" align='center' bordered striped condensed hover  >
+                            
+                            <Table  class="table" id ="sessions" align='center' bordered striped condensed hover  >
                                 <thead>                   
                                     <tr>
                                         <th>Sessions</th>
                                         <th>Dates</th> 
                                         <th>Courses</th>
+                                        <th>
+                                            <span class="table-add glyphicon glyphicon-plus"></span>
+                                        </th>
                                     </tr>
                                 </thead>
                         
@@ -166,9 +226,12 @@ class Timetable extends Component{
                                         <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
-                                                <td>{x.resource[0].session}</td>
-                                                <td>{x.data[0]}</td>
-                                                <td>{x.subject + " "}</td>
+                                                <td contenteditable="true">{x.resource[0].session}</td>
+                                                <td contenteditable="true">{x.data[0]}</td>
+                                                <td contenteditable="true">{x.subject + " "}</td>
+                                                <td>
+                                                    <span class="table-remove glyphicon glyphicon-remove"></span>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     )} ) : <div></div>
