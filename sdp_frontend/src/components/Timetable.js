@@ -214,14 +214,22 @@ class Timetable extends Component{
           
         //add
           $('.table-add').click(function (){
-
             //add new row
+<<<<<<< HEAD
             var newRow=document.getElementById('sessions').insertRow()
             newRow.innerHTML=`<td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td>
             <td><span class="table-remove glyphicon glyphicon-remove"></span></td>`;
             // newRow.setAttribute('contenteditable', 'true');
             
            
+=======
+            var newRow=document.getElementById('sessions').insertRow();
+            newRow.innerHTML='<tr><td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td></tr>';
+
+            $('.table-remove').click(function () {
+                $(this).parents('tr').detach();
+              });
+>>>>>>> 3da1360bcf05430c0bbf7a6e496aa02289d33cd3
           });
 
         var id = getCookie("id");
