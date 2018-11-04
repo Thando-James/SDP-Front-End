@@ -19,12 +19,12 @@ class NavBar extends Component{
     render(){
 
         var id = getCookie("id");
-
+        const navbar = {backgroundColor: '#07392a6'};
         return(
-            <Navbar inverse collapseOnSelect>
+            <Navbar style={navbar} inverse collapseOnSelect>
                 <Navbar.Header>
                      <Navbar.Brand>
-                         <a href="/">Timetable Scheduler</a>
+                         <a href="/"><img src="./w1.png" weign="50" height="50"/>Timetable Scheduler</a>
                      </Navbar.Brand> 
             <Navbar.Toggle/>
                 </Navbar.Header>

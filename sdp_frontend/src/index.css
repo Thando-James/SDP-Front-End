@@ -10,3 +10,6 @@ body {
 .checkbox{
   display:none;
 }
+.background {
+  color: grey;
+}

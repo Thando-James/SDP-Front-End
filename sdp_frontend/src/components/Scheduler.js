@@ -5,7 +5,8 @@ import {PageHeader} from 'react-bootstrap';
 import {Panel} from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import $ from 'jquery'
+import $ from 'jquery';
+import './Login.css'
 import 'react-datepicker/dist/react-datepicker.css';
 
 
@@ -380,7 +381,7 @@ class Students extends Component{
                                 <Button  type="button" className="btn btn-primary"  onClick={this.onSplit}>Split</Button>
                             </ButtonToolbar> :
                             <ButtonToolbar>
-                                <Button bsSize="small" type="button" className="btn btn-primary" disabled>Select All</Button>
+                                <Button  bsSize="small" type="button" className="btn-oldstyle" disabled>Select All</Button>
                                 <Button bsSize="small" bsStyle="warning" disabled>Deselect All</Button>
                                 <Button  bsSize="small" type="button" className="btn btn-primary"  disabled>Merge</Button>
                             </ButtonToolbar>
