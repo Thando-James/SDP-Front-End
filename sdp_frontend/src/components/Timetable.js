@@ -155,15 +155,13 @@ class Timetable extends Component{
 
         //add
           $('.table-add').click(function (){
-
             //add new row
             var newRow=document.getElementById('sessions').insertRow();
-            newRow.innerHTML=`<td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td>
-            <td><span class="table-remove glyphicon glyphicon-remove"></span></td>
-            `;
-            // newRow.setAttribute('contenteditable', 'true');
-            
-           
+            newRow.innerHTML='<tr><td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td></tr>';
+
+            $('.table-remove').click(function () {
+                $(this).parents('tr').detach();
+              });
           });
         
         var id = getCookie("id");
