@@ -151,32 +151,9 @@ class Timetable extends Component{
            
 
 
-<<<<<<< HEAD
     render(){
         var newRow;
         //delete
-=======
-//  testing = function(){
-//     var tableElements = document.getElementsByTagName("table") ;
-//     for(var j = 0; j < tableElements.length; j++)
-//     {
-//         var table = tableElements[j] ;
-
-//         var rows = table.getElementsByTagName("tr") ;
-//         for(var i = 0; i <= rows.length; i++)
-//         {
-//             if(i%2==0){
-//                 rows[i].className = "even"
-//             }
-//             else{
-//                 rows[i].className = "odd";
-//             }
-//         }
-//     }
-// }
- render(){
-        // delete
->>>>>>> 069b1ec9dd95f916aa0f383f43cd0ab1147710eb
         $('.table-remove').click(function () {
             $(this).parents('tr').remove();
           });
@@ -283,7 +260,7 @@ class Timetable extends Component{
                               
                                       
                                 {this.props.location.state? this.props.location.state.map((x)=>{
-                                   console.log("This is i " + x.resource[0].session)
+                                 //  console.log("This is i " + x.resource[0].session)
                                   
                                   let style={}
 
@@ -306,11 +283,7 @@ class Timetable extends Component{
 
                                   else{style = odd}
                                    return(
-                                     
-
-
-
-                                        <tbody>
+                                      <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
                                                 <td contentEditable='true' style = {style} >{x.resource[0].session}</td>
