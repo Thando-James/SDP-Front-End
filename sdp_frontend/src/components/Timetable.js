@@ -7,8 +7,7 @@ import $ from 'jquery'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './styles.css';
-//import Hamoni from "hamoni-sync";
+// import Hamoni from "hamoni-sync";
 
 //hamoni
 
@@ -153,87 +152,28 @@ class Timetable extends Component{
               }
           });
       });
+  
     }
-           
-            
-           
-
-
-//  testing = function(){
-//     var tableElements = document.getElementsByTagName("table") ;
-//     for(var j = 0; j < tableElements.length; j++)
-//     {
-//         var table = tableElements[j] ;
-
-//         var rows = table.getElementsByTagName("tr") ;
-//         for(var i = 0; i <= rows.length; i++)
-//         {
-//             if(i%2==0){
-//                 rows[i].className = "even"
-//             }
-//             else{
-//                 rows[i].className = "odd";
-//             }
-//         }
-//     }
-// }
-
-
-
-
-
-
-
 
     render(){
-        // delete
+        //delete
         $('.table-remove').click(function () {
-            $(this).parents('tr').remove();
+            $(this).parents('tr').detach();
           });
-        //   $(document).on("click", ".table-remove", function () {
-        //     var $killrow = $(this).parent('tr');
-        //     $killrow.addClass("danger");
-        //     $killrow.fadeOut(200, function () {
-        //         $(this).remove();
-        //     });
-        // });
-        // $(function(){
-        //     $("tr").each(function(){
-        //       var col_val = $(this).find("td:eq(0)");
-        //       if (col_val.value % 2 === 0 ){
-        //         $(this).addClass('even');  //the selected class colors the row green//
-        //       } else {
-        //         $(this).addClass('odd');
-        //       }
-        //     });
-        // });
-        window.onload = function (){
-            var table = document.getElementById('sessions');
-            var rows = table.getElementsByTagName("tr");
-            for(var i=0;i<rows.length;i++){
-                if(i%2==0){
-                    rows[i].className = "even";
-                }
-                else if (i%2 !=0) {
-                    rows[i].className = "odd";
-                }
-                else{
-                    console.log("This aint working")
-                }
-            }
-        }
-          
+
         //add
           $('.table-add').click(function (){
+
             //add new row
             var newRow=document.getElementById('sessions').insertRow();
-            newRow.innerHTML='<tr><td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td></tr>';
-
-            $('.table-remove').click(function () {
-                $(this).parents('tr').detach();
-              });
+            newRow.innerHTML=`<td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td>
+            <td><span class="table-remove glyphicon glyphicon-remove"></span></td>
+            `;
+            // newRow.setAttribute('contenteditable', 'true');
+            
+           
           });
-
+        
         var id = getCookie("id");
         if (id === "") {
             this.props.history.push({
@@ -262,7 +202,6 @@ class Timetable extends Component{
                         <h1 align='center'>Generated timetable with sessions</h1>
                     </PageHeader>
                 </pre>
-              
                 <div className='row'>
                     <div class='col-lg-5'>
                             <div align='center'>
@@ -295,9 +234,9 @@ class Timetable extends Component{
                                         <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
-                                                <td  contenteditable="true">{x.resource[0].session}</td>
-                                                <td  contenteditable="true">{x.data[0]}</td>
-                                                <td  contenteditable="true">{x.subject + " "}</td>
+                                                <td contenteditable="true">{x.resource[0].session}</td>
+                                                <td contenteditable="true">{x.data[0]}</td>
+                                                <td contenteditable="true">{x.subject + " "}</td>
                                                 <td>
                                                     <span class="table-remove glyphicon glyphicon-remove"></span>
                                                 </td>

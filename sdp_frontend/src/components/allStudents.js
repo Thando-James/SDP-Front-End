@@ -139,7 +139,7 @@ class allStudents extends Component{
                                 <span class="glyphicon glyphicon-search form-control-feedback" style={{marginRight:'28%'}}></span>
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'200px',marginRight:'1%'}} type="text" id="searchColumn"  onKeyUp= {this.search} placeholder="Search for students.." title="Type a course" class="form-control"/>
                             </div>
-             <div class='courses-list'>
+             <div class='allstudents-courses-list'>
            {this.state.data != "" ? this.state.data.map((x)=>{
            return(
             
