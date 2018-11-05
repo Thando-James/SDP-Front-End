@@ -5,7 +5,7 @@ import Timetable from './components/Timetable';
 import Login from './components/Login';
 import allStudents from './components/allStudents';
 import SummaryData from './components/SummaryData';
-import test from './components/test';
+
 
 
 export default class Routes extends React.Component{

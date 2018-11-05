@@ -53,6 +53,7 @@ let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 let url = 'http://youthleague.co'
 //let url = 'http://localhost'
 
+var lengthTimetable = 0;
 class Timetable extends Component{
 
     constructor(props){
@@ -160,7 +161,6 @@ class Timetable extends Component{
         $('.table-remove').click(function () {
             $(this).parents('tr').detach();
           });
-
         //add
           $('.table-add').click(function (){
 
@@ -184,13 +184,15 @@ class Timetable extends Component{
         if(this.props.location.state && !this.state.timetable){
             let timetable = this.props.location.state;
             for(let i = 0; i<timetable.length; i++){
+                    console.log(timetable[i]);
                     let a = new Date(timetable[i].start)
                     let b = new Date(timetable[i].end)
-                    timetable[i].start = new Date(a)
-                    timetable[i].end = new Date(b)
+                    timetable[i].start = new Date(a + (2*60*60*1000))
+                    timetable[i].end = new Date(b + (2*60*60*1000))
 
             }
             console.log(timetable);
+            lengthTimetable = timetable.length-1; 
             this.setState({
                 timetable:timetable
             })
@@ -219,24 +221,56 @@ class Timetable extends Component{
                             
                             <Table  class="table" id ="sessions" align='center' bordered striped condensed hover  >
                                 <thead>                   
-                                    <tr>
-                                        <th>Sessions</th>
-                                        <th>Dates</th> 
-                                        <th>Courses</th>
+                                    <tr className="tableheading">
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Sessions</th>
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Dates</th> 
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Courses</th>
                                         <th>
                                             <span class="table-add glyphicon glyphicon-plus"></span>
                                         </th>
                                     </tr>
                                 </thead>
-                        
-                                {this.props.location.state? this.props.location.state.map((x)=>{
-                                    return(
+                              
+                                      
+                                {this.props.location.state? this.props.location.state.map((x, i)=>{
+                                    console.log(i);
+                                    console.log(lengthTimetable);
+                                    if(i == lengthTimetable){
+                                        return
+                                    }
+                                   console.log("This is i " + x.resource[0].session)
+                                  
+                                  let style={}
+
+                                  let even = {
+                                    backgroundColor: "#e5e5e5",
+                                    
+                                    
+                                   }
+
+                                  let odd = {
+                                    backgroundColor: "#FFFFFF",
+                                
+                                  }
+
+                                  var num = parseInt(x.resource[0].session)
+
+                                  if(num %2 == 0){
+                                      style = even;
+                                  }
+
+                                  else{style = odd}
+                                   return(
+                                     
+
+
+
                                         <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
-                                                <td contenteditable="true">{x.resource[0].session}</td>
-                                                <td contenteditable="true">{x.data[0]}</td>
-                                                <td contenteditable="true">{x.subject + " "}</td>
+                                                <td contentEditable='true' style = {style} >{x.resource[0].session}</td>
+                                                <td contentEditable='true'style = {style}>{x.data[0]}</td>
+                                                <td contentEditable='true'style = {style}>{x.subject + " "}</td>
                                                 <td>
                                                     <span class="table-remove glyphicon glyphicon-remove"></span>
                                                 </td>

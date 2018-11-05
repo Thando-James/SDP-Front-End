@@ -14,6 +14,9 @@
     color: white;
     cursor: pointer;
 }
+.tableheading{
+    background-color: #e5e5e59d
+}
 
 .navbar-brand {
     display: flex;
@@ -30,14 +33,14 @@
     margin-left: 60px;
     margin-right: 60px;
     border: 1px solid grey;
-    background-color: #F5F5F5;
+    background-color:#F5F5F5;
 }
 .virtualcourse-list{
     text-align: center;
     height: 410px;
     overflow: scroll;
-    margin-left: 180px;
-    margin-right: 180px;
+    margin-left: 60px;
+    margin-right: 60px;
     border: 1px solid grey;
     background-color: #F5F5F5;
 }
@@ -129,15 +132,16 @@ select{
         background-image: linear-gradient(to bottom, grey,rgba(0, 0, 0, 0.842));
         border-bottom: 1px solid #ccc;
         margin-bottom: 1px !important;
-    }
-
-    .even {
-        background-color: blueviolet;
-          color : cadetblue
-          
-                }
-        
-        .odd {
-          background-color: yellow;
-        
+ } 
+   .even {
+        background-color: rgb(96, 119, 170);
         }
+    .odd {
+          background-color: grey;
+}
+body, html {
+    height: 50%;
+    background-repeat: no-repeat;
+    background-image: url(/sdp_frontend/public/bkgnd.jpg) no-repeat center center fixed;
+ 
+}
