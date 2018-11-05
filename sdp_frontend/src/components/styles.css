@@ -15,6 +15,14 @@
     cursor: pointer;
 }
 
+.navbar-brand {
+    display: flex;
+    align-items: center;
+  }
+  .navbar-brand>img {
+    padding: 7px 14px;
+  }
+
 .courses-list{
     text-align: center;
     height: 410px;
@@ -115,3 +123,21 @@ select{
         right: 0; */
  
       }
+
+ .navbar {
+        background-color: #2a00e77c;
+        background-image: linear-gradient(to bottom, grey,rgba(0, 0, 0, 0.842));
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 1px !important;
+    }
+
+    .even {
+        background-color: blueviolet;
+          color : cadetblue
+          
+                }
+        
+        .odd {
+          background-color: yellow;
+        
+        }

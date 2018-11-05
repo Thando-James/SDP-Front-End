@@ -27,8 +27,7 @@ class allStudents extends Component{
         var array = []
         for(var i=0, n=students.length;i<n;i++) {
                array.push(students[i].value)
-               
-           }       
+               }       
                 fetch(`${url}:3456/deregister`,{
                     method:"POST",
                     body:JSON.stringify({bye:array
@@ -41,6 +40,7 @@ class allStudents extends Component{
                     return response.json()
                    
                 })
+                
                 .then(function(response){
                     // console.log('Response from Nelly')
                     console.log(response)
@@ -55,6 +55,7 @@ class allStudents extends Component{
                 .catch(function(err){
                     console.log(err)
                 })
+               
             }.bind(this)
 
 
