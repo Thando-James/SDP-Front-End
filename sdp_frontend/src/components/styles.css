@@ -132,11 +132,12 @@ select{
     }
 
     .even {
-        background-color:  rgb(64, 128, 224);
-          color: cadetblue
+        background-color: blueviolet;
+          color : cadetblue
+          
                 }
         
         .odd {
-          background-color: rgb(0, 132, 255);
+          background-color: yellow;
         
         }
