@@ -82,10 +82,18 @@ class Timetable extends Component{
             return response.json()
         })
         .then(function(response){
-            console.log(response)
-            _self.setState({
-                timetable:response
-            })
+            if(response.errorType){
+                console.log(response)
+                alert("Could not generate student timetable. please try again")
+            }else if(response.length === 0){
+                console.log(response)
+                alert("Student does not exist. Enter new student number")
+            }else{
+                console.log(response)
+                _self.setState({
+                    timetable:response
+                })
+            }
         })
         .catch(function(err){
             console.log(err)
