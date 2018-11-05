@@ -148,17 +148,19 @@ class Timetable extends Component{
     }
 
     render(){
+        var newRow;
         //delete
         $('.table-remove').click(function () {
             $(this).parents('tr').detach();
           });
 
         //add
-          $('.table-add').click(function (){
+          $('#add-btn').click(function (){
+              console.log("Fireflies");
             //add new row
-            var newRow=document.getElementById('sessions').insertRow();
-            newRow.innerHTML='<tr><td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td></tr>';
-
+            newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td></tr>';
+            
+            
             $('.table-remove').click(function () {
                 $(this).parents('tr').detach();
               });
@@ -214,7 +216,7 @@ class Timetable extends Component{
                                         <th>Dates</th> 
                                         <th>Courses</th>
                                         <th>
-                                            <span class="table-add glyphicon glyphicon-plus"></span>
+                                            <span id="add-btn" class="table-add glyphicon glyphicon-plus"></span>
                                         </th>
                                     </tr>
                                 </thead>
