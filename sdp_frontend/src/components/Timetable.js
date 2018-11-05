@@ -169,15 +169,7 @@ class Timetable extends Component{
 //         }
 //     }
 // }
-
-
-
-
-
-
-
-
-    render(){
+ render(){
         // delete
         $('.table-remove').click(function () {
             $(this).parents('tr').remove();
@@ -199,21 +191,21 @@ class Timetable extends Component{
         //       }
         //     });
         // });
-        window.onload = function (){
-            var table = document.getElementById('sessions');
-            var rows = table.getElementsByTagName("tr");
-            for(var i=0;i<rows.length;i++){
-                if(i%2==0){
-                    rows[i].className = "even";
-                }
-                else if (i%2 !=0) {
-                    rows[i].className = "odd";
-                }
-                else{
-                    console.log("This aint working")
-                }
-            }
-        }
+    //     window.onload = function (){
+    //         var table = document.getElementById('sessions');
+    //         var rows = table.getElementsByTagName("tr")[0]
+    //         for(var i=0;i<rows.length;i++){
+    //           console.log("Row val: "+ rows);  
+                
+    //             if(i%2 == 0){
+    //                 rows[i].className = "even";
+    //             }
+              
+    //             else{
+    //                 rows[i].className = "odd";
+    //         }
+    //      }
+    //    }
           
         //add
           $('.table-add').click(function (){
@@ -272,24 +264,51 @@ class Timetable extends Component{
                             
                             <Table  class="table" id ="sessions" align='center' bordered striped condensed hover  >
                                 <thead>                   
-                                    <tr>
-                                        <th>Sessions</th>
-                                        <th>Dates</th> 
-                                        <th>Courses</th>
+                                    <tr className="tableheading">
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Sessions</th>
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Dates</th> 
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Courses</th>
                                         <th>
                                             <span class="table-add glyphicon glyphicon-plus"></span>
                                         </th>
                                     </tr>
                                 </thead>
-                        
+                              
+                                      
                                 {this.props.location.state? this.props.location.state.map((x)=>{
-                                    return(
+                                   console.log("This is i " + x.resource[0].session)
+                                  
+                                  let style={}
+
+                                  let even = {
+                                    backgroundColor: "#e5e5e5",
+                                    
+                                    
+                                   }
+
+                                  let odd = {
+                                    backgroundColor: "#FFFFFF",
+                                
+                                  }
+
+                                  var num = parseInt(x.resource[0].session)
+
+                                  if(num %2 == 0){
+                                      style = even;
+                                  }
+
+                                  else{style = odd}
+                                   return(
+                                     
+
+
+
                                         <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
-                                                <td  contenteditable="true">{x.resource[0].session}</td>
-                                                <td  contenteditable="true">{x.data[0]}</td>
-                                                <td  contenteditable="true">{x.subject + " "}</td>
+                                                <td contentEditable='true' style = {style} >{x.resource[0].session}</td>
+                                                <td contentEditable='true'style = {style}>{x.data[0]}</td>
+                                                <td contentEditable='true'style = {style}>{x.subject + " "}</td>
                                                 <td>
                                                     <span class="table-remove glyphicon glyphicon-remove"></span>
                                                 </td>
