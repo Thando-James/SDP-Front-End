@@ -2,10 +2,12 @@ import React, {Component} from 'react'
 import {Button} from 'react-bootstrap';
 import {ButtonToolbar} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
-import {Panel} from 'react-bootstrap';
+
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import $ from 'jquery'
+import $ from 'jquery';
+
+import './styles.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
 
@@ -23,7 +25,7 @@ class Students extends Component{
         this.onStudentsChange = this.onStudentsChange.bind(this)
         this.onMerge = this.onMerge.bind(this)
         this.handleChange = this.handleChange.bind(this);
-       this.onSplit=this.onSplit.bind(this)
+        this.onSplit=this.onSplit.bind(this)
         this.state={
             data:[],
             checkedArr:[],
@@ -361,11 +363,12 @@ class Students extends Component{
       return(
            
             <div>
-                <pre>
-                <PageHeader style={{textAlign:'center'}}>
-                    <h1>Timetable Scheduler</h1>
-                </PageHeader>
-                </pre>
+          <PageHeader >
+          <h1 align='center'>Timetable Scheduler</h1>
+            
+          </PageHeader>
+                    
+               
                
                 <div class='row'>
                     <div class='col-lg-5'>
@@ -380,7 +383,7 @@ class Students extends Component{
                                 <Button  type="button" className="btn btn-primary"  onClick={this.onSplit}>Split</Button>
                             </ButtonToolbar> :
                             <ButtonToolbar>
-                                <Button bsSize="small" type="button" className="btn btn-primary" disabled>Select All</Button>
+                                <Button  bsSize="small" type="button" className="btn-oldstyle" disabled>Select All</Button>
                                 <Button bsSize="small" bsStyle="warning" disabled>Deselect All</Button>
                                 <Button  bsSize="small" type="button" className="btn btn-primary"  disabled>Merge</Button>
                             </ButtonToolbar>
@@ -394,7 +397,7 @@ class Students extends Component{
                         <p></p>
                         
                         <p></p>
-                        <div className = "courses-list">
+                        <div className = "virtualcourse-list">
                             {this.state.data != "" ? this.state.data.map((x)=>{
                                 let count = 0
                                 return(

@@ -7,6 +7,7 @@ import allStudents from './components/allStudents';
 import SummaryData from './components/SummaryData';
 
 
+
 export default class Routes extends React.Component{
     render(){
         return(
@@ -16,6 +17,7 @@ export default class Routes extends React.Component{
                 <Route path="/login" component={Login}/>
                 <Route path="/allstudents" component={allStudents}/>
                 <Route path="/summary" component ={SummaryData}/>
+              
             </Switch>
         )
     }

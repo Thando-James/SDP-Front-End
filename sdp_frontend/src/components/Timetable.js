@@ -7,7 +7,8 @@ import $ from 'jquery'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-// import Hamoni from "hamoni-sync";
+import './styles.css';
+//import Hamoni from "hamoni-sync";
 
 //hamoni
 
@@ -144,16 +145,74 @@ class Timetable extends Component{
               }
           });
       });
-  
     }
+           
+            
+           
 
+
+<<<<<<< HEAD
     render(){
         var newRow;
         //delete
-        $('.table-remove').click(function () {
-            $(this).parents('tr').detach();
-          });
+=======
+//  testing = function(){
+//     var tableElements = document.getElementsByTagName("table") ;
+//     for(var j = 0; j < tableElements.length; j++)
+//     {
+//         var table = tableElements[j] ;
 
+//         var rows = table.getElementsByTagName("tr") ;
+//         for(var i = 0; i <= rows.length; i++)
+//         {
+//             if(i%2==0){
+//                 rows[i].className = "even"
+//             }
+//             else{
+//                 rows[i].className = "odd";
+//             }
+//         }
+//     }
+// }
+ render(){
+        // delete
+>>>>>>> 069b1ec9dd95f916aa0f383f43cd0ab1147710eb
+        $('.table-remove').click(function () {
+            $(this).parents('tr').remove();
+          });
+        //   $(document).on("click", ".table-remove", function () {
+        //     var $killrow = $(this).parent('tr');
+        //     $killrow.addClass("danger");
+        //     $killrow.fadeOut(200, function () {
+        //         $(this).remove();
+        //     });
+        // });
+        // $(function(){
+        //     $("tr").each(function(){
+        //       var col_val = $(this).find("td:eq(0)");
+        //       if (col_val.value % 2 === 0 ){
+        //         $(this).addClass('even');  //the selected class colors the row green//
+        //       } else {
+        //         $(this).addClass('odd');
+        //       }
+        //     });
+        // });
+    //     window.onload = function (){
+    //         var table = document.getElementById('sessions');
+    //         var rows = table.getElementsByTagName("tr")[0]
+    //         for(var i=0;i<rows.length;i++){
+    //           console.log("Row val: "+ rows);  
+                
+    //             if(i%2 == 0){
+    //                 rows[i].className = "even";
+    //             }
+              
+    //             else{
+    //                 rows[i].className = "odd";
+    //         }
+    //      }
+    //    }
+          
         //add
           $('#add-btn').click(function (){
               console.log("Fireflies");
@@ -165,7 +224,7 @@ class Timetable extends Component{
                 $(this).parents('tr').detach();
               });
           });
-        
+
         var id = getCookie("id");
         if (id === "") {
             this.props.history.push({
@@ -194,6 +253,7 @@ class Timetable extends Component{
                         <h1 align='center'>Generated timetable with sessions</h1>
                     </PageHeader>
                 </pre>
+              
                 <div className='row'>
                     <div class='col-lg-5'>
                             <div align='center'>
@@ -211,24 +271,51 @@ class Timetable extends Component{
                             
                             <Table  class="table" id ="sessions" align='center' bordered striped condensed hover  >
                                 <thead>                   
-                                    <tr>
-                                        <th>Sessions</th>
-                                        <th>Dates</th> 
-                                        <th>Courses</th>
+                                    <tr className="tableheading">
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Sessions</th>
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Dates</th> 
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Courses</th>
                                         <th>
                                             <span id="add-btn" class="table-add glyphicon glyphicon-plus"></span>
                                         </th>
                                     </tr>
                                 </thead>
-                        
+                              
+                                      
                                 {this.props.location.state? this.props.location.state.map((x)=>{
-                                    return(
+                                   console.log("This is i " + x.resource[0].session)
+                                  
+                                  let style={}
+
+                                  let even = {
+                                    backgroundColor: "#e5e5e5",
+                                    
+                                    
+                                   }
+
+                                  let odd = {
+                                    backgroundColor: "#FFFFFF",
+                                
+                                  }
+
+                                  var num = parseInt(x.resource[0].session)
+
+                                  if(num %2 == 0){
+                                      style = even;
+                                  }
+
+                                  else{style = odd}
+                                   return(
+                                     
+
+
+
                                         <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
-                                                <td contenteditable="true">{x.resource[0].session}</td>
-                                                <td contenteditable="true">{x.data[0]}</td>
-                                                <td contenteditable="true">{x.subject + " "}</td>
+                                                <td contentEditable='true' style = {style} >{x.resource[0].session}</td>
+                                                <td contentEditable='true'style = {style}>{x.data[0]}</td>
+                                                <td contentEditable='true'style = {style}>{x.subject + " "}</td>
                                                 <td>
                                                     <span class="table-remove glyphicon glyphicon-remove"></span>
                                                 </td>

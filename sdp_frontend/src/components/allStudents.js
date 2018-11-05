@@ -27,8 +27,7 @@ class allStudents extends Component{
         var array = []
         for(var i=0, n=students.length;i<n;i++) {
                array.push(students[i].value)
-               
-           }       
+               }       
                 fetch(`${url}:3456/deregister`,{
                     method:"POST",
                     body:JSON.stringify({bye:array
@@ -41,6 +40,7 @@ class allStudents extends Component{
                     return response.json()
                    
                 })
+                
                 .then(function(response){
                     // console.log('Response from Nelly')
                     console.log(response)
@@ -55,6 +55,7 @@ class allStudents extends Component{
                 .catch(function(err){
                     console.log(err)
                 })
+               
             }.bind(this)
 
 
@@ -138,7 +139,7 @@ class allStudents extends Component{
                                 <span class="glyphicon glyphicon-search form-control-feedback" style={{marginRight:'28%'}}></span>
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'200px',marginRight:'1%'}} type="text" id="searchColumn"  onKeyUp= {this.search} placeholder="Search for students.." title="Type a course" class="form-control"/>
                             </div>
-             <div class='courses-list'>
+             <div class='virtualcourse-list'>
            {this.state.data != "" ? this.state.data.map((x)=>{
            return(
             

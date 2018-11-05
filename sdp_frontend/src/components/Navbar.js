@@ -19,31 +19,34 @@ class NavBar extends Component{
     render(){
 
         var id = getCookie("id");
-
+        //const navbar = {backgroundColor: '#07392a6'};
         return(
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                      <Navbar.Brand>
-                         <a href="/">Timetable Scheduler</a>
+                         <a href="/"><img src="./w1.png" width="150" height="75"/>Timetable Scheduler</a>
                      </Navbar.Brand> 
             <Navbar.Toggle/>
                 </Navbar.Header>
             <Navbar.Collapse>
                  <Nav>
                     <NavItem 
-                        eventKey={1} href="/">Scheduler
+                        eventKey={1} href="/allstudents">Students
                     </NavItem>
-                    <NavItem 
-                        eventKey={2} href="/allstudents">Students
-                    </NavItem>
-                    {
-                        id !== "" ? <NavItem 
-                        eventKey={3} href="/login" onClick={this.onLogOut}>Log Out
-                    </NavItem> : <NavItem 
-                        eventKey={3} href="/login">Login
-                    </NavItem>
-                    }
                 </Nav>   
+
+             <Nav pullRight>
+                    {
+                        id !== "" ?
+                    <NavItem img src="./login.png" 
+                  
+                        eventKey={2} href="/login" onClick={this.onLogOut}>Log Out
+                    </NavItem> : <Navbar.Brand>
+                            <a href="/login"><img src="./login.png" width="70" height="50"/>Login</a>
+                    </Navbar.Brand>
+                    }
+                    </Nav>
+
             </Navbar.Collapse>
             </Navbar>
         )
