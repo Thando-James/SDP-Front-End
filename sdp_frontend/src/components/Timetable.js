@@ -156,22 +156,23 @@ class Timetable extends Component{
   
     }
 
-    render(){
-        //delete
+
+ render(){
+     
+        // delete
         $('.table-remove').click(function () {
             $(this).parents('tr').detach();
           });
         //add
-          $('.table-add').click(function (){
-
+          $('#add-btn').click(function (){
+              console.log("Fireflies");
             //add new row
-            var newRow=document.getElementById('sessions').insertRow();
-            newRow.innerHTML=`<td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td>
-            <td><span class="table-remove glyphicon glyphicon-remove"></span></td>
-            `;
-            // newRow.setAttribute('contenteditable', 'true');
+            let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td></tr>';
             
-           
+            
+            $('.table-remove').click(function () {
+                $(this).parents('tr').detach();
+              });
           });
         
         var id = getCookie("id");
@@ -226,7 +227,7 @@ class Timetable extends Component{
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Dates</th> 
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Courses</th>
                                         <th>
-                                            <span class="table-add glyphicon glyphicon-plus"></span>
+                                            <span id="add-btn" class="table-add glyphicon glyphicon-plus"></span>
                                         </th>
                                     </tr>
                                 </thead>
