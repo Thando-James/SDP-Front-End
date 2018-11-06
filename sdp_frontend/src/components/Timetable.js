@@ -64,7 +64,7 @@ class Timetable extends Component{
           data:[],
           timetable: "",
           neighbor:false,
-          safe:"",
+          //save:"",
           student:false
         }
     }
@@ -168,12 +168,13 @@ class Timetable extends Component{
 
  render(){
     function  save(){
+        console.log("we in ")
         let _self = this;
-        let safe = "A random string"
+        let save = "A random string"
       
         fetch(`${url}:3456/save`,{
             method:"POST",
-            body:JSON.stringify({save:safe
+            body:JSON.stringify({save
         }),
           headers: {
               "Content-Type": "application/json; charset=utf-8",
@@ -184,6 +185,7 @@ class Timetable extends Component{
             return response.json()
         })
         .then(function(response){
+            console.log('should work')
           //  console.log(neighbor)
             // console.log('Response from Nelly')
             // console.log(response)
@@ -201,9 +203,7 @@ class Timetable extends Component{
         })
     }
 
-    window.onload = function(){
-     document.getElementById("saveMe").addEventListener("click", save);
-    }
+  
         // delete
         $('.table-remove').click(function () {
             $(this).parents('tr').detach();
@@ -263,7 +263,7 @@ class Timetable extends Component{
                             <div style={{marginLeft:"25%"}}align='center'>
                                 <ButtonToolbar align="center">
                                 <ReactHTMLTableToExcel id="test" className="btn btn-primary" table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
-                                <Button bsStyle='primary' id="saveMe">Save Timetable</Button>
+                                <Button bsStyle='primary' id="saveMe" onClick={this.save}>Save Timetable</Button>
                                 </ButtonToolbar>
                             </div> 
                             <p></p>
