@@ -361,17 +361,16 @@ class Students extends Component{
            
             <div>
           <PageHeader >
-          <h1 align='center'>Timetable Scheduler</h1>
-            
-          </PageHeader>
+          <h1  align='center'>Timetable Scheduler</h1>
+         </PageHeader>
                     
                
                
                 <div class='row'>
-                    <div class='col-lg-5'>
-                        <h2 style={{textAlign:'left',marginLeft:'40%'}}>Courses</h2>
+                    <div class='col-lg-7'>
+                        <h2 style={{textAlign:'left',marginLeft:'50%'}}>Courses</h2>
                         
-                        <div  style={{marginLeft:'25%'}}>
+                        <div  style={{marginLeft:'35%'}}>
                         {
                             this.state.data.length > 0 ? <ButtonToolbar>
                                 <Button  type="button" className="btn btn-primary"  onClick={this.selectAll}>Select All</Button>
@@ -387,14 +386,14 @@ class Students extends Component{
                          }
                          <p></p>
                          <div class ="form-group has-feedback has-search" align='center'>
-                                <span class="glyphicon glyphicon-search form-control-feedback" style={{marginRight:'38%'}}></span>
+                                <span class="glyphicon glyphicon-search form-control-feedback" style={{marginRight:'35%'}}></span>
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'200px',marginRight:'25%'}} type="text" id="searchColumn"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
                             </div>
                         </div>
                         <p></p>
                         
                         <p></p>
-                        <div className = "virtualcourse-list">
+                        <div className = "virtualcourse-list" style={{marginLeft:'30%'}} >
                             {this.state.data != "" ? this.state.data.map((x)=>{
                                 let count = 0
                                 return(
@@ -438,7 +437,7 @@ class Students extends Component{
                             }
                         </div>
                     </div>
-                    <div className="col-lg-7">
+                    <div className="col-lg-5">
                         <div className="generate">
                             <div>
                                 <input type="text" name="maxSession" placeholder="Please input max session"  onChange={this.onParamChange} style={{textAlign:'left'}}/>

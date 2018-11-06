@@ -30,17 +30,18 @@
     text-align: center;
     height: 410px;
     overflow: scroll;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
     border: 1px solid grey;
     background-color:#F5F5F5;
 }
 .virtualcourse-list{
     text-align: center;
     height: 410px;
+    width: 410px;
     overflow: scroll;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
     border: 1px solid grey;
     background-color: #F5F5F5;
 }
