@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Table} from 'react-bootstrap'
+import "./styles.css"
 
 class SummaryData extends Component{
     constructor(props){
@@ -11,30 +11,27 @@ class SummaryData extends Component{
     }
 
 render(){
+    console.log(this.props.location.state)
     return(
         <div>
             <pre><h1 align='center'>Summary Data</h1></pre>
-        <div class ='row'>
-        <div class= "col-lg-6">
-        <Table>
-            <tr><td></td></tr>
-        </Table>
-        </div>
-        <label>Clash paramter: </label>
-        <label>Number of sessions: </label>
-        <label>Sorting Policy: </label>
-        <label>#Students writing more than 1 exam in a day: </label>
-        <label>#Students who have back to back exams: </label>
-        <p>Students with worst timetables (In Order : Worst first):</p>
+        <div className ='virtualcourse-list2'>
+        <div class= "col-lg-7">
         <ol>
-        <li>...</li>
-        <li>...</li>
-        <li>...</li>
+        <li>Number of same day students: {this.props.location.state[0]} </li>
+        <li>Number of Students who have back to back exams: {this.props.location.state[1]}</li>
+        <li>Number of clashes: {this.props.location.state[2]}</li>
+        <li>Students with worst timetables (In Order : Worst to least Worst):<ul>
+       {this.props.location.state? this.props.location.state[3].map((x)=>{
+           return(
+           <li>{x}</li>
+           )
+        }):null}
+        </ul>
+        </li>
         </ol>
-        </div>    
+        </div>
+        </div>
         </div>
 
-    )
-}
-
-}export default SummaryData
+    )}}export default SummaryData
