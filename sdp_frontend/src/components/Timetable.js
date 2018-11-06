@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Table} from 'react-bootstrap';
+import {Table, ButtonToolbar} from 'react-bootstrap';
 import {PageHeader} from 'react-bootstrap';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {Button} from 'react-bootstrap'
@@ -7,45 +7,6 @@ import $ from 'jquery'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-// import Hamoni from "hamoni-sync";
-
-//hamoni
-
-// componentDidMount() {
-//     let hamoni = new Hamoni("13f86ce6-43fe-4e6d-b7fe-4aa4ae543da2", "4cd736cec26643aa987bf5f18f556210");
-//     hamoni
-//       .connect()
-//       .then(() => {
-//         hamoni
-//     .get("datagrid")
-//     .then(listPrimitive => {
-//       this.listPrimitive = listPrimitive;
-//       this.setState({
-//         data: [...listPrimitive.getAll()]
-//       });
-//       listPrimitive.onItemAdded(item => {
-//         this.setState({ data: [...this.state.data, item.value] });
-//       });
-//       listPrimitive.onItemUpdated(item => {
-//         let data = [
-//         ...this.state.data.slice(0, item.index),
-//         item.value,
-//         ...this.state.data.slice(item.index + 1)
-//         ];
-//         this.setState({ data: data });
-//       });
-//       listPrimitive.onSync(data => {
-//         this.setState({ data: data });
-//       });
-//     })
-//     .catch(console.log);
-
-//       })
-//       .catch(console.log);
-//   }
-
-
-//hamoni
 
 const localizer = BigCalendar.momentLocalizer(moment)
 let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
@@ -62,8 +23,18 @@ class Timetable extends Component{
           studentnumber:"",
           coursecode:"",
           data:[],
-          timetable: ""
+          timetable: "",
+          neighbor:false,
+          student:false
         }
+        this.showMainTim = this.showMainTim.bind(this);
+    }
+
+    showMainTim(){
+        this.setState({
+            neighbor:false,
+            student:false
+        })
     }
 
     sendStdnum = function(){
@@ -109,7 +80,9 @@ class Timetable extends Component{
                 }
                 console.log(response)
                 _self.setState({
-                    timetable:timetable
+                    timetable:timetable,
+                    student:true,
+                    neighbor:false
                 })
             }
         })
@@ -121,7 +94,7 @@ class Timetable extends Component{
     getNeighbor= function(){
         let _self = this;
         var courseN = document.getElementById("courseN")
-    
+      
         fetch(`${url}:3456/neighbors`,{
             method:"POST",
             body:JSON.stringify({coursecode:courseN.value
@@ -153,7 +126,9 @@ class Timetable extends Component{
             }
             console.log(response);
             _self.setState({
-                timetable:timetable
+                timetable:timetable,
+                neighbor:true,                    
+                student:false    
             })
         })
         .catch(function(err){
@@ -161,7 +136,40 @@ class Timetable extends Component{
         })
     }.bind(this)
 
-   
+    save = function(){
+        let _self = this;
+        var courseN = document.getElementById("courseN")
+      
+        fetch(`${url}:3456/neighbors`,{
+            method:"POST",
+            body:JSON.stringify({coursecode:courseN.value
+        }),
+          headers: {
+              "Content-Type": "application/json; charset=utf-8",
+          },
+        })
+        .then(function(response){
+            return response.json()
+        })
+        .then(function(response){
+          //  console.log(neighbor)
+            // console.log('Response from Nelly')
+            // console.log(response)
+            // _self.props.history.push({
+            //     pathname:'/interactions',
+            //     state:response
+            // })
+            _self.setState({
+                timetable:response,
+                neighbor:true,                    
+                student:false
+                
+            })
+        })
+        .catch(function(err){
+            console.log(err)
+        })
+    }.bind(this)
     search = function (){
       $("#myInput").on("input",function(){
   
@@ -244,8 +252,11 @@ class Timetable extends Component{
                 </pre>
                 <div className='row'>
                     <div class='col-lg-5'>
-                            <div align='center'>
+                            <div style={{marginLeft:"25%"}}align='center'>
+                                <ButtonToolbar align="center">
                                 <ReactHTMLTableToExcel id="test" className="btn btn-primary" table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
+                                <Button bsStyle='primary'>Save Timetable</Button>
+                                </ButtonToolbar>
                             </div> 
                             <p></p>
                             <div align='center'>
@@ -256,7 +267,77 @@ class Timetable extends Component{
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'400px'}} type="text" id="myInput"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
                             </div>
                             <p></p>
+                            {
+                                (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p>Main Timetable</p>)
+                            }
+                              {this.state.neighbor || this.state.student?
+                            <Table  class="table" id ="sessions" align='center' bordered striped condensed hover  >
+                                <thead>                   
+                                    <tr className="tableheading">
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Date</th>
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Course Name</th> 
+                                     
+                                        {
+                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>Percentage</th>:null
+                                        }
+                                        {
+                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>Number of students</th>:null
+                                        }
+                                        
+                                    </tr>
+                                </thead>
+                              
+                                      
+                                {this.state.timetable? this.state.timetable.map((x, i)=>{
+                                   // console.log(i);
+                                   // console.log(lengthTimetable);
+                                    if(i == lengthTimetable){
+                                        return
+                                    }
+                                   console.log("This is i " + x.resource[0].session)
+                                  
+                                  let style={}
+
+                                  let even = {
+                                    backgroundColor: "#e5e5e5",
+                                     }
+
+                                  let odd = {
+                                    backgroundColor: "#f1f8ff",
+                                
+                                  }
+
+                                  var num = parseInt(x.resource[0].session)
+
+                                  if(num %2 == 0){
+                                      style = even;
+                                  }
+
+                                  else{style = odd}
+                                   return(
+                                        <tbody>
+                                            <tr>
+                                                {console.log(typeof(x.start))}
+                                                {this.state.neighbor || this.state.student?
+                                                <td contentEditable='true'style = {style}>{x.resource}</td>:null
+                                                }
+                                                {this.state.neighbor || this.state.student?
+                                                <td contentEditable='true' style = {style} >{x.title}</td>:null
+                                                }
+                                                {this.state.neighbor?
+                                                <td contentEditable='true'style = {style}>{x.percentage}</td>
+                                                :null
+                                                }
+                                                {this.state.neighbor?
+                                                <td contentEditable='true'style = {style}>{x.size}</td>:null
+                                                }
+                                               </tr>
+                                        </tbody>
+                                    )} ) : <div></div>
+                                }
                             
+                            </Table>:
+                              
                             <Table  class="table" id ="sessions" align='center' bordered striped condensed hover  >
                                 <thead>                   
                                     <tr className="tableheading">
@@ -287,7 +368,7 @@ class Timetable extends Component{
                                    }
 
                                   let odd = {
-                                    backgroundColor: "#FFFFFF",
+                                    backgroundColor: "#f1f8ff",
                                 
                                   }
 
@@ -299,11 +380,7 @@ class Timetable extends Component{
 
                                   else{style = odd}
                                    return(
-                                     
-
-
-
-                                        <tbody>
+                                            <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
                                                 <td contentEditable='true' style = {style} >{x.resource[0].session}</td>
@@ -318,6 +395,8 @@ class Timetable extends Component{
                                 }
                             
                             </Table>
+                            }
+                            
                     </div>
 
                     <div className="col-lg-7">
@@ -326,7 +405,10 @@ class Timetable extends Component{
                                 <input type="text" name="studentNum"  id = "stdNum" placeholder="Enter student number" style={{marginRight:10}}/>
                                 <br/>
                                 <br/>
-                                <Button bsStyle="success" onClick={this.sendStdnum} style={{float:'right', marginRight:60}}>Generate timetable</Button>
+                                {
+                                    this.state.studentnumber===""?<Button bsStyle="success" onClick={this.sendStdnum} style={{float:'right', marginRight:60}} disabled>Generate timetable</Button>:<Button bsStyle="success" onClick={this.sendStdnum} style={{float:'right', marginRight:60}}>Generate timetable</Button>
+                                }
+                                
                             </div>
                            
                            <div className="col-lg-6">
