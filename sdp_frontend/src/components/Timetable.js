@@ -7,6 +7,7 @@ import $ from 'jquery'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import SummaryData from './SummaryData';
 
 const localizer = BigCalendar.momentLocalizer(moment)
 let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
@@ -25,7 +26,7 @@ class Timetable extends Component{
           data:[],
           timetable: "",
           neighbor:false,
-          safe:"",
+          save:"",
           student:false
         }
         this.showMainTim = this.showMainTim.bind(this);
@@ -161,9 +162,8 @@ class Timetable extends Component{
   
     }
 
-
- render(){
-    function  save(){
+     save = function(){
+         console.log("Theres hope")
         let _self = this;
         let safe = "A random string"
       
@@ -180,7 +180,7 @@ class Timetable extends Component{
             return response.json()
         })
         .then(function(response){
-          //  console.log(neighbor)
+           console.log("Hopefully went in")
             // console.log('Response from Nelly')
             // console.log(response)
             // _self.props.history.push({
@@ -197,9 +197,11 @@ class Timetable extends Component{
         })
     }
 
-    window.onload = function(){
-     document.getElementById("saveMe").addEventListener("click", save);
-    }
+
+ render(){
+    
+
+    
         // delete
         $('.table-remove').click(function () {
             $(this).parents('tr').detach();
@@ -259,7 +261,7 @@ class Timetable extends Component{
                             <div style={{marginLeft:"25%"}}align='center'>
                                 <ButtonToolbar align="center">
                                 <ReactHTMLTableToExcel id="test" className="btn btn-primary" table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
-                                <Button bsStyle='primary' id="saveMe">Save Timetable</Button>
+                                <Button bsStyle='primary' id="saveMe" onClick={this.save}>Save Timetable</Button>
                                 </ButtonToolbar>
                             </div> 
                             <p></p>
@@ -271,6 +273,11 @@ class Timetable extends Component{
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'400px'}} type="text" id="myInput"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
                             </div>
                             <p></p>
+                            
+                            {
+                                !this.state.neighbor && !this.state.student && 
+                                <p align="right"className="mainTim">Summary Data</p>
+                            }
                             {
                                 (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p>Main Timetable</p>)
                             }
@@ -298,7 +305,7 @@ class Timetable extends Component{
                                     if(i == lengthTimetable){
                                         return
                                     }
-                                   console.log("This is i " + x.resource[0].session)
+                                 //  console.log("This is i " + x.resource[0].session)
                                   
                                   let style={}
 
@@ -356,12 +363,12 @@ class Timetable extends Component{
                               
                                       
                                 {this.props.location.state? this.props.location.state.map((x, i)=>{
-                                    console.log(i);
-                                    console.log(lengthTimetable);
+                                //    console.log(i);
+                                  //  console.log(lengthTimetable);
                                     if(i == lengthTimetable){
                                         return
                                     }
-                                   console.log("This is i " + x.resource[0].session)
+                                //   console.log("This is i " + x.resource[0].session)
                                   
                                   let style={}
 
