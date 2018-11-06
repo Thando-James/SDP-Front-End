@@ -140,7 +140,40 @@ class Timetable extends Component{
         })
     }.bind(this)
 
-   
+    save = function(){
+        let _self = this;
+        var courseN = document.getElementById("courseN")
+      
+        fetch(`${url}:3456/neighbors`,{
+            method:"POST",
+            body:JSON.stringify({coursecode:courseN.value
+        }),
+          headers: {
+              "Content-Type": "application/json; charset=utf-8",
+          },
+        })
+        .then(function(response){
+            return response.json()
+        })
+        .then(function(response){
+          //  console.log(neighbor)
+            // console.log('Response from Nelly')
+            // console.log(response)
+            // _self.props.history.push({
+            //     pathname:'/interactions',
+            //     state:response
+            // })
+            _self.setState({
+                timetable:response,
+                neighbor:true,                    
+                student:false
+                
+            })
+        })
+        .catch(function(err){
+            console.log(err)
+        })
+    }.bind(this)
     search = function (){
       $("#myInput").on("input",function(){
   
@@ -192,12 +225,20 @@ class Timetable extends Component{
 
         if(this.props.location.state && !this.state.timetable){
             let timetable = this.props.location.state;
+            let date = new Date();
+            let h=0;
             for(let i = 0; i<timetable.length; i++){
                     console.log(timetable[i]);
                     let a = new Date(timetable[i].start)
                     let b = new Date(timetable[i].end)
-                    timetable[i].start = new Date(a + (2*60*60*1000))
-                    timetable[i].end = new Date(b + (2*60*60*1000))
+                    if(date.toDateString() === a.toDateString()){
+                        alert(a.getTime())
+                        h = h+2;
+                    }else{
+                        h=0;
+                    }
+                    timetable[i].start = new Date(a.setTime(a.getTime() + (h*60*60*1000)))
+                    timetable[i].end = new Date(b.setTime(b.getTime() + (h*60*60*1000)))
 
             }
             console.log(timetable);
