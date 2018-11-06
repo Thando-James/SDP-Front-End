@@ -369,9 +369,7 @@ class Timetable extends Component{
 
                                   let even = {
                                     backgroundColor: "#e5e5e5",
-                                    
-                                    
-                                   }
+                                 }
 
                                   let odd = {
                                     backgroundColor: "#f1f8ff",
@@ -384,7 +382,7 @@ class Timetable extends Component{
                                       style = even;
                                   }
 
-                                  else{style = odd}
+                                  else{style = odd;}
                                    return(
                                             <tbody>
                                             <tr>

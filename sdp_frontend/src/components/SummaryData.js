@@ -20,7 +20,17 @@ render(){
             <tr><td></td></tr>
         </Table>
         </div>
-        <label>Clash Parameter:</label>
+        <label>Clash paramter: </label>
+        <label>Number of sessions: </label>
+        <label>Sorting Policy: </label>
+        <label>#Students writing more than 1 exam in a day: </label>
+        <label>#Students who have back to back exams: </label>
+        <p>Students with worst timetables (In Order : Worst first):</p>
+        <ol>
+        <li>...</li>
+        <li>...</li>
+        <li>...</li>
+        </ol>
         </div>    
         </div>
 
