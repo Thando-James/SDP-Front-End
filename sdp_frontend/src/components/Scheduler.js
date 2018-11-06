@@ -141,7 +141,7 @@ class Students extends Component{
                                 maxSessions:this.state.maxSessions,
                                 clashParameter:this.state.clashParameter,
                                 SortBy:strValue,
-                                date:this.state.startDate._d
+                                date:this.state.startDate.format("L")
                                 }),
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -159,6 +159,7 @@ class Students extends Component{
             alert("There was an error generating your timetable! Please try again")
           }else{
             console.log(response)
+            console.log(_self.state.startDate._d);
             _self.props.history.push({
                 pathname:'/timetable',
                 state:response,

@@ -90,9 +90,26 @@ class Timetable extends Component{
                 console.log(response)
                 alert("Student does not exist. Enter new student number")
             }else{
+                let timetable = response;
+                let date = new Date();
+                let h=0;
+                for(let i = 0; i<timetable.length; i++){
+                        console.log(timetable[i]);
+                        let a = new Date(timetable[i].start)
+                        let b = new Date(timetable[i].end)
+                        if(date.toDateString() === a.toDateString()){
+                            h = h+2;
+                        }else{
+                            h=0;
+                            date = a;
+                        }
+                        timetable[i].start = new Date(a.setTime(a.getTime() + (h*60*60*1000)))
+                        timetable[i].end = new Date(b.setTime(b.getTime() + (h*60*60*1000)))
+    
+                }
                 console.log(response)
                 _self.setState({
-                    timetable:response
+                    timetable:timetable
                 })
             }
         })
@@ -117,14 +134,26 @@ class Timetable extends Component{
             return response.json()
         })
         .then(function(response){
-            // console.log('Response from Nelly')
-            // console.log(response)
-            // _self.props.history.push({
-            //     pathname:'/interactions',
-            //     state:response
-            // })
+            let timetable = response;
+            let date = new Date();
+            let h=0;
+            for(let i = 0; i<timetable.length; i++){
+                    console.log(timetable[i]);
+                    let a = new Date(timetable[i].start)
+                    let b = new Date(timetable[i].end)
+                    if(date.toDateString() === a.toDateString()){
+                        h = h+2;
+                    }else{
+                        h=0;
+                        date = a;
+                    }
+                    timetable[i].start = new Date(a.setTime(a.getTime() + (h*60*60*1000)))
+                    timetable[i].end = new Date(b.setTime(b.getTime() + (h*60*60*1000)))
+
+            }
+            console.log(response);
             _self.setState({
-                timetable:response
+                timetable:timetable
             })
         })
         .catch(function(err){
@@ -191,10 +220,10 @@ class Timetable extends Component{
                     let a = new Date(timetable[i].start)
                     let b = new Date(timetable[i].end)
                     if(date.toDateString() === a.toDateString()){
-                        alert(a.getTime())
                         h = h+2;
                     }else{
                         h=0;
+                        date = a;
                     }
                     timetable[i].start = new Date(a.setTime(a.getTime() + (h*60*60*1000)))
                     timetable[i].end = new Date(b.setTime(b.getTime() + (h*60*60*1000)))
