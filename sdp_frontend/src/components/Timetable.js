@@ -25,7 +25,7 @@ class Timetable extends Component{
           data:[],
           timetable: "",
           neighbor:false,
-          //save:"",
+          save:"",
           student:false
         }
         this.showMainTim = this.showMainTim.bind(this);
@@ -161,16 +161,14 @@ class Timetable extends Component{
   
     }
 
-
- render(){
-    function  save(){
-        console.log("we in ")
+    save =  function (){
+        console.log("we are in ")
         let _self = this;
-        let save = "A random string"
+        let safe = "A random string"
       
         fetch(`${url}:3456/save`,{
             method:"POST",
-            body:JSON.stringify({save
+            body:JSON.stringify({save:safe
         }),
           headers: {
               "Content-Type": "application/json; charset=utf-8",
@@ -198,6 +196,10 @@ class Timetable extends Component{
             console.log(err)
         })
     }
+
+
+
+ render(){
 
   
         // delete
