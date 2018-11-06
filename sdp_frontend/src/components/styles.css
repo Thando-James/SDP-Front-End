@@ -140,6 +140,16 @@ select{
     .odd {
           background-color: grey;
 }
+
+.mainTim{
+    cursor: pointer;
+    color: #4074A8;
+}
+
+.mainTim:hover{
+    text-decoration: underline;
+}
+
 body, html {
     height: 50%;
     background-repeat: no-repeat;
