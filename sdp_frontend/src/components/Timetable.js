@@ -29,12 +29,19 @@ class Timetable extends Component{
           student:false
         }
         this.showMainTim = this.showMainTim.bind(this);
+        this.onInputChange = this.onInputChange.bind(this);
     }
 
     showMainTim(){
         this.setState({
             neighbor:false,
             student:false
+        })
+    }
+
+    onInputChange(e){
+        this.setState({
+            studentnumber:e.target.value
         })
     }
 
@@ -272,12 +279,16 @@ class Timetable extends Component{
                             </div>
                             <p></p>
                             {
-                                (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p>Main Timetable</p>)
+                                (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)
+                            }
+                            {
+                                !this.state.neighbor && !this.state.student && <p align="right" className="mainTim" onClick={this.showMainTim}>Summary Data</p>
                             }
                               {this.state.neighbor || this.state.student?
                             <Table  class="table" id ="sessions" align='center' bordered striped condensed hover  >
                                 <thead>                   
                                     <tr className="tableheading">
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Sessions</th>
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Date</th>
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Course Name</th> 
                                      
@@ -298,7 +309,7 @@ class Timetable extends Component{
                                     if(i == lengthTimetable){
                                         return
                                     }
-                                   console.log("This is i " + x.resource[0].session)
+                                   console.log("This is i " + x.session)
                                   
                                   let style={}
 
@@ -311,7 +322,7 @@ class Timetable extends Component{
                                 
                                   }
 
-                                  var num = parseInt(x.resource[0].session)
+                                  var num = parseInt(x.session)
 
                                   if(num %2 == 0){
                                       style = even;
@@ -322,18 +333,19 @@ class Timetable extends Component{
                                         <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
+                                                <td style={style}>{x.session}</td>
                                                 {this.state.neighbor || this.state.student?
-                                                <td contentEditable='true'style = {style}>{x.resource}</td>:null
+                                                <td style = {style}>{x.resource}</td>:null
                                                 }
                                                 {this.state.neighbor || this.state.student?
-                                                <td contentEditable='true' style = {style} >{x.title}</td>:null
+                                                <td style = {style} >{x.title}</td>:null
                                                 }
                                                 {this.state.neighbor?
-                                                <td contentEditable='true'style = {style}>{x.percentage}</td>
+                                                <td style = {style}>{x.percentage}</td>
                                                 :null
                                                 }
                                                 {this.state.neighbor?
-                                                <td contentEditable='true'style = {style}>{x.size}</td>:null
+                                                <td style = {style}>{x.size}</td>:null
                                                 }
                                                </tr>
                                         </tbody>
@@ -404,7 +416,7 @@ class Timetable extends Component{
                     <div className="col-lg-7">
                         <div className="timetable row" style={{marginBottom:25}}>
                             <div className="col-lg-6">
-                                <input type="text" name="studentNum"  id = "stdNum" placeholder="Enter student number" style={{marginRight:10}}/>
+                                <input type="text" name="studentNum"  id = "stdNum" placeholder="Enter student number" onChange={this.onInputChange} style={{marginRight:10}}/>
                                 <br/>
                                 <br/>
                                 {
