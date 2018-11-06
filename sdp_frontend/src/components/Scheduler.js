@@ -151,22 +151,19 @@ class Students extends Component{
             return response.json()
         })
       .then(function(response){
-            console.log(response)
             let data = []
             let merged = _self.state.mergedCourses
-            
-            // for(let i = 0; i<response.length; i++){
-            //     let a = moment(response[i].start)
-            //     let b = moment(response[i].end)
-            //     response[i].start = a
-            //     response[i].end = b
-            //     data.push(response[i]);
-            // }
 
+          if(response.errorType){
+            console.log(response)
+            alert("There was an error generating your timetable! Please try again")
+          }else{
+            console.log(response)
             _self.props.history.push({
                 pathname:'/timetable',
                 state:response,
             })
+          }
         })
         .catch(function(err){
             console.log(err)

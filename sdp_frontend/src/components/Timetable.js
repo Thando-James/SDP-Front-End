@@ -7,8 +7,7 @@ import $ from 'jquery'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './styles.css';
-//import Hamoni from "hamoni-sync";
+// import Hamoni from "hamoni-sync";
 
 //hamoni
 
@@ -54,6 +53,7 @@ let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 let url = 'http://youthleague.co'
 //let url = 'http://localhost'
 
+var lengthTimetable = 0;
 class Timetable extends Component{
 
     constructor(props){
@@ -83,10 +83,18 @@ class Timetable extends Component{
             return response.json()
         })
         .then(function(response){
-            console.log(response)
-            _self.setState({
-                timetable:response
-            })
+            if(response.errorType){
+                console.log(response)
+                alert("Could not generate student timetable. please try again")
+            }else if(response.length === 0){
+                console.log(response)
+                alert("Student does not exist. Enter new student number")
+            }else{
+                console.log(response)
+                _self.setState({
+                    timetable:response
+                })
+            }
         })
         .catch(function(err){
             console.log(err)
@@ -145,63 +153,28 @@ class Timetable extends Component{
               }
           });
       });
+  
     }
-           
-            
-           
 
 
-    render(){
-        var newRow;
-        //delete
+ render(){
+     
+        // delete
         $('.table-remove').click(function () {
-            $(this).parents('tr').remove();
+            $(this).parents('tr').detach();
           });
-        //   $(document).on("click", ".table-remove", function () {
-        //     var $killrow = $(this).parent('tr');
-        //     $killrow.addClass("danger");
-        //     $killrow.fadeOut(200, function () {
-        //         $(this).remove();
-        //     });
-        // });
-        // $(function(){
-        //     $("tr").each(function(){
-        //       var col_val = $(this).find("td:eq(0)");
-        //       if (col_val.value % 2 === 0 ){
-        //         $(this).addClass('even');  //the selected class colors the row green//
-        //       } else {
-        //         $(this).addClass('odd');
-        //       }
-        //     });
-        // });
-    //     window.onload = function (){
-    //         var table = document.getElementById('sessions');
-    //         var rows = table.getElementsByTagName("tr")[0]
-    //         for(var i=0;i<rows.length;i++){
-    //           console.log("Row val: "+ rows);  
-                
-    //             if(i%2 == 0){
-    //                 rows[i].className = "even";
-    //             }
-              
-    //             else{
-    //                 rows[i].className = "odd";
-    //         }
-    //      }
-    //    }
-          
         //add
           $('#add-btn').click(function (){
               console.log("Fireflies");
             //add new row
-            newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td></tr>';
+            let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td></tr>';
             
             
             $('.table-remove').click(function () {
                 $(this).parents('tr').detach();
               });
           });
-
+        
         var id = getCookie("id");
         if (id === "") {
             this.props.history.push({
@@ -212,13 +185,15 @@ class Timetable extends Component{
         if(this.props.location.state && !this.state.timetable){
             let timetable = this.props.location.state;
             for(let i = 0; i<timetable.length; i++){
+                    console.log(timetable[i]);
                     let a = new Date(timetable[i].start)
                     let b = new Date(timetable[i].end)
-                    timetable[i].start = new Date(a)
-                    timetable[i].end = new Date(b)
+                    timetable[i].start = new Date(a + (2*60*60*1000))
+                    timetable[i].end = new Date(b + (2*60*60*1000))
 
             }
             console.log(timetable);
+            lengthTimetable = timetable.length-1; 
             this.setState({
                 timetable:timetable
             })
@@ -230,7 +205,6 @@ class Timetable extends Component{
                         <h1 align='center'>Generated timetable with sessions</h1>
                     </PageHeader>
                 </pre>
-              
                 <div className='row'>
                     <div class='col-lg-5'>
                             <div align='center'>
@@ -259,16 +233,19 @@ class Timetable extends Component{
                                 </thead>
                               
                                       
-                                {this.props.location.state? this.props.location.state.map((x)=>{
-                                 //  console.log("This is i " + x.resource[0].session)
+                                {this.props.location.state? this.props.location.state.map((x, i)=>{
+                                    console.log(i);
+                                    console.log(lengthTimetable);
+                                    if(i == lengthTimetable){
+                                        return
+                                    }
+                                   console.log("This is i " + x.resource[0].session)
                                   
                                   let style={}
 
                                   let even = {
                                     backgroundColor: "#e5e5e5",
-                                    
-                                    
-                                   }
+                                 }
 
                                   let odd = {
                                     backgroundColor: "#FFFFFF",
@@ -281,7 +258,7 @@ class Timetable extends Component{
                                       style = even;
                                   }
 
-                                  else{style = odd}
+                                  else{style = odd;}
                                    return(
                                       <tbody>
                                             <tr>
