@@ -25,7 +25,7 @@ class Timetable extends Component{
           data:[],
           timetable: "",
           neighbor:false,
-          save:"",
+          //save:"",
           student:false
         }
         this.showMainTim = this.showMainTim.bind(this);

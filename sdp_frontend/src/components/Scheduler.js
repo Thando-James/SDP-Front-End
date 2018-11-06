@@ -361,10 +361,11 @@ class Students extends Component{
       return(
            
             <div>
+        <pre>
           <PageHeader >
           <h1  align='center'>Timetable Scheduler</h1>
          </PageHeader>
-                    
+         </pre>          
                
                
                 <div class='row'>
