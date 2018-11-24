@@ -9,7 +9,7 @@ import $ from 'jquery';
 
 import './styles.css';
 import 'react-datepicker/dist/react-datepicker.css';
-import Uploaded from "../assets/checked.png";
+import Loader from 'react-loader-spinner'
 
 
 let url = 'http://youthleague.co'
@@ -31,7 +31,8 @@ class Students extends Component{
             data:[],
             checkedArr:[],
             mergedCourses:[],
-            byebye:[],
+            generated:false,
+            loaderStyle:{display:"none"},
             isLoggedin:[],
             maxSessions:1000,
             clashParameter:1,
@@ -42,26 +43,36 @@ class Students extends Component{
             startDate:moment(),
             coursesSuccess:{},
             studentsSuccess:{},
+            selectedAll:false,
         }
     
     }
    // ValidateLogin()
   selectAll = function (){
         //
-        var checkboxes = document.getElementsByName('courses');
-         for(var i=0, n=checkboxes.length;i<n;i++) {
-          checkboxes[i].checked = true;
-          let e= {
-              target:{
-                  checked: true,
-                  value:checkboxes[i].value
-              }
-          }
-          this.onChecked(e)
+        if(this.state.selectedAll === false){
+            var checkboxes = document.getElementsByName('courses');
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+             checkboxes[i].checked = true;
+             let e= {
+                 target:{
+                     checked: true,
+                     value:checkboxes[i].value
+                 }
+             }
+             this.onChecked(e)
+           }
+           this.setState({
+            selectedAll:true,
+            })
         }
+        console.log(this.state.checkedArr);
     }.bind(this)
        
     deselectAll = function (){
+        this.setState({
+            selectedAll:false,
+        })
         var checkboxes = document.getElementsByName('courses');
           for(var i=0, n=checkboxes.length;i<n;i++) {
             checkboxes[i].checked = false;
@@ -137,6 +148,10 @@ class Students extends Component{
         //Sort By functionality
         var dropdown = document.getElementById('sortby');
         var strValue = dropdown.options[dropdown.selectedIndex].value;  
+        this.setState({
+            generated:true,
+            loaderStyle:{display:"block"}
+        })
 
         fetch(`${url}:3456/generate`,{
             method:"POST",
@@ -163,6 +178,10 @@ class Students extends Component{
           }else{
             console.log(response)
             console.log(_self.state.startDate._d);
+            _self.setState({
+                generated:false,
+                display:"none"
+            })
             _self.props.history.push({
                 pathname:'/timetable',
                 state:response,
@@ -374,7 +393,16 @@ class Students extends Component{
      
       return(
            
-            <div>
+        <div>
+              <div className="Loader" style={this.state.loaderStyle}>
+                    <Loader 
+                        type="Triangle"
+                        color="#00BFFF"
+                        height="100"	
+                        width="100"
+                        className="load"
+                    />   
+            </div>
         <pre>
           <PageHeader >
           <h1  align='center'>Timetable Scheduler</h1>

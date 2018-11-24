@@ -11,6 +11,11 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 const localizer = BigCalendar.momentLocalizer(moment)
 let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
+const cellEdit = {
+    mode: 'click', // click cell to edit
+    blurToSave: true,
+};
+
 let url = 'http://youthleague.co'
 //let url = 'http://localhost'
 
@@ -424,7 +429,7 @@ class Timetable extends Component{
                             
                         </div>
                         
-                        <div style={{width:'50vw', height:'70vh'}}>
+                        <div style={{width:'50vw', height:'100vh'}}>
                             
                             <BigCalendar
                                 localizer={localizer}
