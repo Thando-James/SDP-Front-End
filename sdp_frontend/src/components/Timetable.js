@@ -25,16 +25,24 @@ class Timetable extends Component{
           data:[],
           timetable: "",
           neighbor:false,
-          //save:"",
+          safe:"",
           student:false
         }
         this.showMainTim = this.showMainTim.bind(this);
+        this.onInputChange = this.onInputChange.bind(this);
+        this.getSummary = this.getSummary.bind(this)
     }
 
     showMainTim(){
         this.setState({
             neighbor:false,
             student:false
+        })
+    }
+
+    onInputChange(e){
+        this.setState({
+            studentnumber:e.target.value
         })
     }
 
@@ -160,49 +168,25 @@ class Timetable extends Component{
       });
   
     }
-
-    save =  function (){
-        console.log("we are in ")
+     
+    getSummary =function(){
         let _self = this;
-        let safe = "A random string"
-      
-        fetch(`${url}:3456/save`,{
-            method:"POST",
-            body:JSON.stringify({save:safe
-        }),
-          headers: {
-              "Content-Type": "application/json; charset=utf-8",
-             
-          },
-        })
-        .then(function(response){
-            return response.json()
-        })
-        .then(function(response){
-            console.log('should work')
-          //  console.log(neighbor)
-            // console.log('Response from Nelly')
-            // console.log(response)
-            // _self.props.history.push({
-            //     pathname:'/interactions',
-            //     state:response
-            // })
-            _self.setState({
-                
-                
-            })
-        })
-        .catch(function(err){
-            console.log(err)
+        let arr = this.props.location.state
+        this.props.history.push({
+
+            pathname:"./summary",
+            state:arr[arr.length-1]
+
         })
     }
+     
+
+
 
 
 
  render(){
-
-  
-        // delete
+         // delete
         $('.table-remove').click(function () {
             $(this).parents('tr').detach();
           });
@@ -230,7 +214,7 @@ class Timetable extends Component{
             let date = new Date();
             let h=0;
             for(let i = 0; i<timetable.length; i++){
-                    console.log(timetable[i]);
+                  //  console.log(timetable[i]);
                     let a = new Date(timetable[i].start)
                     let b = new Date(timetable[i].end)
                     if(date.toDateString() === a.toDateString()){
@@ -243,7 +227,7 @@ class Timetable extends Component{
                     timetable[i].end = new Date(b.setTime(b.getTime() + (h*60*60*1000)))
 
             }
-            console.log(timetable);
+         //   console.log(timetable);
             lengthTimetable = timetable.length-1; 
             this.setState({
                 timetable:timetable
@@ -261,7 +245,7 @@ class Timetable extends Component{
                             <div style={{marginLeft:"25%"}}align='center'>
                                 <ButtonToolbar align="center">
                                 <ReactHTMLTableToExcel id="test" className="btn btn-primary" table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
-                                <Button bsStyle='primary' id="saveMe" onClick={this.save}>Save Timetable</Button>
+                                <Button bsStyle='primary' id="saveMe">Save Timetable</Button>
                                 </ButtonToolbar>
                             </div> 
                             <p></p>
@@ -274,12 +258,19 @@ class Timetable extends Component{
                             </div>
                             <p></p>
                             {
-                                (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p>Main Timetable</p>)
+                                (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)
+                            }
+                            {
+                            !this.state.neighbor && !this.state.student && <p align="right" className="mainTim" onClick={this.getSummary}>Summary Data</p>
+                            
+                           // !this.state.neighbor && !this.state.student && <p align="right" className="mainTim" onClick={this.getSummary}>Modified Timetable</p>
+                            
                             }
                               {this.state.neighbor || this.state.student?
                             <Table  class="table" id ="sessions" align='center' bordered striped condensed hover  >
                                 <thead>                   
                                     <tr className="tableheading">
+                                        <th style = {{backgoundColor:"#e5e5e5"}}>Sessions</th>
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Date</th>
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Course Name</th> 
                                      
@@ -300,7 +291,7 @@ class Timetable extends Component{
                                     if(i == lengthTimetable){
                                         return
                                     }
-                                   console.log("This is i " + x.resource[0].session)
+                                //   console.log("This is i " + x.session)
                                   
                                   let style={}
 
@@ -313,7 +304,7 @@ class Timetable extends Component{
                                 
                                   }
 
-                                  var num = parseInt(x.resource[0].session)
+                                  var num = parseInt(x.session)
 
                                   if(num %2 == 0){
                                       style = even;
@@ -324,18 +315,19 @@ class Timetable extends Component{
                                         <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
+                                                <td style={style}>{x.session}</td>
                                                 {this.state.neighbor || this.state.student?
-                                                <td contentEditable='true'style = {style}>{x.resource}</td>:null
+                                                <td style = {style}>{x.resource}</td>:null
                                                 }
                                                 {this.state.neighbor || this.state.student?
-                                                <td contentEditable='true' style = {style} >{x.title}</td>:null
+                                                <td style = {style} >{x.title}</td>:null
                                                 }
                                                 {this.state.neighbor?
-                                                <td contentEditable='true'style = {style}>{x.percentage}</td>
+                                                <td style = {style}>{x.percentage}</td>
                                                 :null
                                                 }
                                                 {this.state.neighbor?
-                                                <td contentEditable='true'style = {style}>{x.size}</td>:null
+                                                <td style = {style}>{x.size}</td>:null
                                                 }
                                                </tr>
                                         </tbody>
@@ -358,12 +350,12 @@ class Timetable extends Component{
                               
                                       
                                 {this.props.location.state? this.props.location.state.map((x, i)=>{
-                                    console.log(i);
-                                    console.log(lengthTimetable);
+                                  //  console.log(i);
+                                    //console.log(lengthTimetable);
                                     if(i == lengthTimetable){
                                         return
                                     }
-                                   console.log("This is i " + x.resource[0].session)
+                                //   console.log("This is i " + x.resource[0].session)
                                   
                                   let style={}
 
@@ -406,7 +398,7 @@ class Timetable extends Component{
                     <div className="col-lg-7">
                         <div className="timetable row" style={{marginBottom:25}}>
                             <div className="col-lg-6">
-                                <input type="text" name="studentNum"  id = "stdNum" placeholder="Enter student number" style={{marginRight:10}}/>
+                                <input type="text" name="studentNum"  id = "stdNum" placeholder="Enter student number" onChange={this.onInputChange} style={{marginRight:10}}/>
                                 <br/>
                                 <br/>
                                 {
@@ -414,7 +406,7 @@ class Timetable extends Component{
                                 }
                                 
                             </div>
-                           
+                             
                            <div className="col-lg-6">
                                 <select style={{marginLeft:10}} id="courseN">
                                         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"/>

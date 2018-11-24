@@ -380,7 +380,7 @@ class Students extends Component{
           <h1  align='center'>Timetable Scheduler</h1>
          </PageHeader>
          </pre>          
-               
+               s
                
                 <div class='row'>
                     <div class='col-lg-7'>
