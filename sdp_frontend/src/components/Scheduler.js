@@ -39,6 +39,8 @@ class Students extends Component{
             isCoursesChanged: false,
             isStudentsChanged: false,
             startDate:moment(),
+            coursesSuccess:false,
+            studentsSuccess:false,
         }
     
     }
@@ -187,10 +189,16 @@ class Students extends Component{
         //     response.json()
         // })
         .then(function(response){
-            console.log(response)
-            _self.setState({
-                isCourses:true
-            })
+            console.log(response);
+            if(response.status === 200){
+                _self.setState({
+                    isCourses:true,
+                    coursesSuccess:true
+                })
+            }else{
+                alert("An error occured while uploading. Please try again")
+            }
+            
         })
         .catch(function(err){
             console.log(err)
@@ -213,9 +221,13 @@ class Students extends Component{
         // })
         .then(function(response){
             console.log(response)
-            _self.setState({
-                isStudents:true
-            })
+            if(response.status === 200){
+                _self.setState({
+                    isStudents:true
+                })
+            }else{
+                alert("An error occured while uploading. Please try again")
+            }
         })
         .catch(function(err){
             console.log(err)
@@ -414,7 +426,9 @@ class Students extends Component{
                                                     this.state.isCoursesChanged ? <Button bsStyle="primary" className='btn' type="submit" >Upload Students</Button> :
                                                     <Button bsStyle="primary" className='btn' type="submit" disabled >Upload Students</Button>
                                                 }
-                                                
+                                                {
+                                                    this.state.coursesSuccess && <img src="../assets/checked.png"/>
+                                                }
                                             </form>
                                         
                                         </div>
