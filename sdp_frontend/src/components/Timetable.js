@@ -25,23 +25,16 @@ class Timetable extends Component{
           data:[],
           timetable: "",
           neighbor:false,
-          safe:"",
+          //save:"",
           student:false
         }
         this.showMainTim = this.showMainTim.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
     }
 
     showMainTim(){
         this.setState({
             neighbor:false,
             student:false
-        })
-    }
-
-    onInputChange(e){
-        this.setState({
-            studentnumber:e.target.value
         })
     }
 
@@ -168,9 +161,8 @@ class Timetable extends Component{
   
     }
 
-
- render(){
-    function  save(){
+    save =  function (){
+        console.log("we are in ")
         let _self = this;
         let safe = "A random string"
       
@@ -187,6 +179,7 @@ class Timetable extends Component{
             return response.json()
         })
         .then(function(response){
+            console.log('should work')
           //  console.log(neighbor)
             // console.log('Response from Nelly')
             // console.log(response)
@@ -204,9 +197,11 @@ class Timetable extends Component{
         })
     }
 
-    window.onload = function(){
-     document.getElementById("saveMe").addEventListener("click", save);
-    }
+
+
+ render(){
+
+  
         // delete
         $('.table-remove').click(function () {
             $(this).parents('tr').detach();
@@ -266,7 +261,7 @@ class Timetable extends Component{
                             <div style={{marginLeft:"25%"}}align='center'>
                                 <ButtonToolbar align="center">
                                 <ReactHTMLTableToExcel id="test" className="btn btn-primary" table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
-                                <Button bsStyle='primary' id="saveMe">Save Timetable</Button>
+                                <Button bsStyle='primary' id="saveMe" onClick={this.save}>Save Timetable</Button>
                                 </ButtonToolbar>
                             </div> 
                             <p></p>
@@ -279,16 +274,12 @@ class Timetable extends Component{
                             </div>
                             <p></p>
                             {
-                                (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)
-                            }
-                            {
-                                !this.state.neighbor && !this.state.student && <p align="right" className="mainTim" onClick={this.showMainTim}>Summary Data</p>
+                                (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p>Main Timetable</p>)
                             }
                               {this.state.neighbor || this.state.student?
                             <Table  class="table" id ="sessions" align='center' bordered striped condensed hover  >
                                 <thead>                   
                                     <tr className="tableheading">
-                                        <th style = {{backgoundColor:"#e5e5e5"}}>Sessions</th>
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Date</th>
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Course Name</th> 
                                      
@@ -309,7 +300,7 @@ class Timetable extends Component{
                                     if(i == lengthTimetable){
                                         return
                                     }
-                                   console.log("This is i " + x.session)
+                                   console.log("This is i " + x.resource[0].session)
                                   
                                   let style={}
 
@@ -322,7 +313,7 @@ class Timetable extends Component{
                                 
                                   }
 
-                                  var num = parseInt(x.session)
+                                  var num = parseInt(x.resource[0].session)
 
                                   if(num %2 == 0){
                                       style = even;
@@ -333,19 +324,18 @@ class Timetable extends Component{
                                         <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
-                                                <td style={style}>{x.session}</td>
                                                 {this.state.neighbor || this.state.student?
-                                                <td style = {style}>{x.resource}</td>:null
+                                                <td contentEditable='true'style = {style}>{x.resource}</td>:null
                                                 }
                                                 {this.state.neighbor || this.state.student?
-                                                <td style = {style} >{x.title}</td>:null
+                                                <td contentEditable='true' style = {style} >{x.title}</td>:null
                                                 }
                                                 {this.state.neighbor?
-                                                <td style = {style}>{x.percentage}</td>
+                                                <td contentEditable='true'style = {style}>{x.percentage}</td>
                                                 :null
                                                 }
                                                 {this.state.neighbor?
-                                                <td style = {style}>{x.size}</td>:null
+                                                <td contentEditable='true'style = {style}>{x.size}</td>:null
                                                 }
                                                </tr>
                                         </tbody>
@@ -416,7 +406,7 @@ class Timetable extends Component{
                     <div className="col-lg-7">
                         <div className="timetable row" style={{marginBottom:25}}>
                             <div className="col-lg-6">
-                                <input type="text" name="studentNum"  id = "stdNum" placeholder="Enter student number" onChange={this.onInputChange} style={{marginRight:10}}/>
+                                <input type="text" name="studentNum"  id = "stdNum" placeholder="Enter student number" style={{marginRight:10}}/>
                                 <br/>
                                 <br/>
                                 {

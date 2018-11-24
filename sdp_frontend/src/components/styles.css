@@ -45,6 +45,15 @@
     border: 1px solid grey;
     background-color: #F5F5F5;
 }
+.virtualcourse-list2{
+    text-align: justify;
+    height: 300px;
+    width: 800px;
+    margin-left: 350px;
+    margin-right: 350px;
+    border: 1px solid #8ab0e9;
+    background-color: #F5F5F5;
+}
 
 .row{
     overflow: hidden;
