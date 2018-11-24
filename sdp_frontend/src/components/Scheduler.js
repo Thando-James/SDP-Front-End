@@ -9,6 +9,7 @@ import $ from 'jquery';
 
 import './styles.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import Uploaded from "../assets/checked.png";
 
 
 let url = 'http://youthleague.co'
@@ -39,8 +40,8 @@ class Students extends Component{
             isCoursesChanged: false,
             isStudentsChanged: false,
             startDate:moment(),
-            coursesSuccess:false,
-            studentsSuccess:false,
+            coursesSuccess:{},
+            studentsSuccess:{},
         }
     
     }
@@ -193,7 +194,7 @@ class Students extends Component{
             if(response.status === 200){
                 _self.setState({
                     isCourses:true,
-                    coursesSuccess:true
+                    coursesSuccess:{backgroundColor:"green"}
                 })
             }else{
                 alert("An error occured while uploading. Please try again")
@@ -211,7 +212,7 @@ class Students extends Component{
         let form = e.target;
         let data = new FormData(form);
 
-        fetch(`${url}:3456/upload/students`,{
+        fetch(`${url}:3456/upload/papers`,{
             method:"POST",
             body:data
         })
@@ -223,7 +224,8 @@ class Students extends Component{
             console.log(response)
             if(response.status === 200){
                 _self.setState({
-                    isStudents:true
+                    isStudents:true,
+                    studentsSuccess: {backgroundColor:"green"}
                 })
             }else{
                 alert("An error occured while uploading. Please try again")
@@ -425,10 +427,7 @@ class Students extends Component{
                                                 <br/>
                                                 {
                                                     this.state.isCoursesChanged ? <Button bsStyle="primary" className='btn' type="submit" >Upload Students</Button> :
-                                                    <Button bsStyle="primary" className='btn' type="submit" disabled >Upload Students</Button>
-                                                }
-                                                {
-                                                    this.state.coursesSuccess && <img src="../assets/checked.png"/>
+                                                    <Button bsStyle="primary" className='btn' type="submit" disabled style={this.state.coursesSuccess}>{this.state.coursesSuccess.size > 0 ? "Students Uploaded" : "Upload Students"}</Button>
                                                 }
                                             </form>
                                         
@@ -443,9 +442,8 @@ class Students extends Component{
                                                 <br/>
                                                 {
                                                     this.state.isStudentsChanged && this.state.isCourses? <Button bsStyle="primary" className='btn' type="submit">Upload Courses Data</Button> :
-                                                    <Button bsStyle="primary" className='btn' type="submit" disabled>Upload Courses Data</Button>
+                                                    <Button bsStyle="primary" className='btn' type="submit" disabled style={this.state.studentsSuccess}>{this.state.studentsSuccess.size > 0 ? "Papers Uploaded":"Upload Papers"}</Button>
                                                 }
-                                                
                                             </form>
                                         </div>
                                     </div>
