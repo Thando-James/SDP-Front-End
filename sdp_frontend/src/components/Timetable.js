@@ -246,6 +246,7 @@ class Timetable extends Component{
              new_data:temp
            })
            console.log(_self.state.new_data)
+           $('td:nth-child(5)').fadeOut(1000);
         });
   })
 
