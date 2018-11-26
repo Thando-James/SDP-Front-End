@@ -16,3 +16,13 @@
     border: 1px solid grey;
     background-color: #F5F5F5;
 }
+
+.Loader{
+  width: 100%;
+  height: 100%;
+  background-color:rgba(255, 255, 255, 0.7);
+  position: absolute;
+  z-index: 99;
+  padding:25%;
+  padding-left: 45%;
+}
