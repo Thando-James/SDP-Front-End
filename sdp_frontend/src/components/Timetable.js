@@ -26,7 +26,9 @@ class Timetable extends Component{
           timetable: "",
           neighbor:false,
           safe:"",
-          student:false
+          student:false,
+          save:[],
+          new_data:[]
         }
         this.showMainTim = this.showMainTim.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
@@ -179,6 +181,25 @@ class Timetable extends Component{
 
         })
     }
+
+    saveTimetable = function(){
+        
+     let added = this.state.new_data
+        fetch(`${url}:3456/save`,{
+            method:"POST",
+            body:JSON.stringify({save:added,
+            }),
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+        }) .then(function(response){
+            console.log(response)
+     })
+        .catch(function(err){
+            console.log(err)
+        })
+
+}.bind(this);
      
 
 
@@ -186,6 +207,8 @@ class Timetable extends Component{
 
 
  render(){
+     let _self = this;
+     var temp=[]
          // delete
         $('.table-remove').click(function () {
             $(this).parents('tr').detach();
@@ -194,14 +217,41 @@ class Timetable extends Component{
           $('#add-btn').click(function (){
               console.log("Fireflies");
             //add new row
-            let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td contenteditable="true">New session</td><td contenteditable="true">New date</td><td contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td></tr>';
-            
+            let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true">New date</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
+          
             
             $('.table-remove').click(function () {
                 $(this).parents('tr').detach();
               });
-          });
+
+               $(".table-ok").click(function () {
+               // alert(event.target.textContent);
+               var $row = $(this).closest('tr');
+               var $newSession = $row.find('.new_session').text();
+               var $newDate = $row.find('.new_date').text();
+               var $newCourse = $row.find('.new_course').text();
+
+               var $arr = [];
+               
+               $arr.push($newSession);
+               $arr.push($newDate);
+               $arr.push($newCourse);
+               temp.push($arr);
+            _self.setState({
+             new_data:temp
+           })
+           console.log(_self.state.new_data)
+           $('td:nth-child(5)').fadeOut(1000);
+        });
+  })
+
+
+      
         
+        
+       
+
+
         var id = getCookie("id");
         if (id === "") {
             this.props.history.push({
@@ -245,7 +295,7 @@ class Timetable extends Component{
                             <div style={{marginLeft:"25%"}}align='center'>
                                 <ButtonToolbar align="center">
                                 <ReactHTMLTableToExcel id="test" className="btn btn-primary" table="sessions" filename="Sessions table" sheet="sessions" buttonText="Download as XLS"/>
-                                <Button bsStyle='primary' id="saveMe">Save Timetable</Button>
+                                <Button bsStyle='primary' id="saveMe"  onClick={this.saveTimetable}>Save Timetable</Button>
                                 </ButtonToolbar>
                             </div> 
                             <p></p>
@@ -257,13 +307,14 @@ class Timetable extends Component{
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'400px'}} type="text" id="myInput"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
                             </div>
                             <p></p>
+                            <p align="right" className="mainTim" onClick={this.getSummary}>Modified Timetable</p>
                             {
                                 (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)
                             }
                             {
                             !this.state.neighbor && !this.state.student && <p align="right" className="mainTim" onClick={this.getSummary}>Summary Data</p>
                             
-                           // !this.state.neighbor && !this.state.student && <p align="right" className="mainTim" onClick={this.getSummary}>Modified Timetable</p>
+                           
                             
                             }
                               {this.state.neighbor || this.state.student?
@@ -379,9 +430,9 @@ class Timetable extends Component{
                                             <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
-                                                <td contentEditable='true' style = {style} >{x.resource[0].session}</td>
-                                                <td contentEditable='true'style = {style}>{x.data[0]}</td>
-                                                <td contentEditable='true'style = {style}>{x.subject + " "}</td>
+                                                <td contentEditable='false' style = {style} >{x.resource[0].session}</td>
+                                                <td contentEditable='false'style = {style}>{x.data[0]}</td>
+                                                <td contentEditable='false'style = {style}>{x.subject + " "}</td>
                                                 <td>
                                                     <span class="table-remove glyphicon glyphicon-remove"></span>
                                                 </td>
