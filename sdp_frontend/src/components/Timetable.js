@@ -312,7 +312,7 @@ class Timetable extends Component{
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'400px'}} type="text" id="myInput"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
                             </div>
                             <p></p>
-                            <p align="right" className="mainTim" onClick={this.getSummary}>Modified Timetable</p>
+                            <p align="right" className="mainTim" >Modified Timetable</p>
                             {
                                 (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)
                             }
