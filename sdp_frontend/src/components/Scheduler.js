@@ -175,6 +175,9 @@ class Students extends Component{
           if(response.errorType){
             console.log(response)
             alert("There was an error generating your timetable! Please try again")
+            _self.setState({
+                loaderStyle:{display:"none"}
+            })
           }else{
             console.log(response)
             console.log(_self.state.startDate._d);
@@ -211,6 +214,7 @@ class Students extends Component{
         .then(function(response){
             console.log(response);
             if(response.status === 200){
+                document.getElementById("courses").disabled = true;
                 _self.setState({
                     isCourses:true,
                     coursesSuccess:{backgroundColor:"green"}
@@ -242,10 +246,24 @@ class Students extends Component{
         .then(function(response){
             console.log(response)
             if(response.status === 200){
+                document.getElementById("students").disabled = true;
+                fetch(`${url}:3456/display/courses`)
+                .then(function(res){
+                    return res.json()
+                })
+                .then(function(response){
+                    _self.setState({
+                        data:response,
+                    })
+                })
+                .catch(function(err){
+                    console.log(err)
+                })
                 _self.setState({
                     isStudents:true,
                     studentsSuccess: {backgroundColor:"green"}
                 })
+
             }else{
                 alert("An error occured while uploading. Please try again")
             }
@@ -450,11 +468,11 @@ class Students extends Component{
                                         <div>
                                             <form onSubmit={this.onSubmitCourses} id="students-form">
                                                 <label>Upload a CSV with courses available</label><br/><br/>
-                                                <input type="file" name="file" accept=".csv" onChange={this.onCoursesChange}/>
+                                                <input id="courses" type="file" name="file" accept=".csv" onChange={this.onCoursesChange}/>
                                                 <br/>
                                                 {
-                                                    this.state.isCoursesChanged ? <Button bsStyle="primary" className='btn' type="submit" >Upload Students</Button> :
-                                                    <Button bsStyle="primary" className='btn' type="submit" disabled style={this.state.coursesSuccess}>{this.state.coursesSuccess.size > 0 ? "Students Uploaded" : "Upload Students"}</Button>
+                                                    this.state.isCoursesChanged ? <Button bsStyle="primary" className='btn' type="submit" style={this.state.coursesSuccess}>{Object.keys(this.state.coursesSuccess).length > 0 ? "Students Uploaded" : "Upload Students"}</Button> :
+                                                    <Button bsStyle="primary" className='btn' type="submit" style={this.state.coursesSuccess} disabled>{Object.keys(this.state.coursesSuccess).length > 0 ? "Students Uploaded" : "Upload Students"}</Button>
                                                 }
                                             </form>
                                         
@@ -465,11 +483,11 @@ class Students extends Component{
                                         <div>
                                             <form onSubmit={this.onSubmitStudents} id="students-form">
                                                 <label>Upload csv with students registration data</label><br/><br/>
-                                                <input type="file" name="file" accept=".csv" onChange={this.onStudentsChange}/>
+                                                <input id="students" type="file" name="file" accept=".csv" onChange={this.onStudentsChange}/>
                                                 <br/>
                                                 {
-                                                    this.state.isStudentsChanged && this.state.isCourses? <Button bsStyle="primary" className='btn' type="submit">Upload Courses Data</Button> :
-                                                    <Button bsStyle="primary" className='btn' type="submit" disabled style={this.state.studentsSuccess}>{this.state.studentsSuccess.size > 0 ? "Papers Uploaded":"Upload Papers"}</Button>
+                                                    this.state.isStudentsChanged && this.state.isCourses? <Button bsStyle="primary" className='btn' type="submit" style={this.state.studentsSuccess} id="students">{Object.keys(this.state.studentsSuccess).length > 0 ? "Papers Uploaded":"Upload Papers"}</Button> :
+                                                    <Button bsStyle="primary" className='btn' type="submit" style={this.state.studentsSuccess} disabled >{Object.keys(this.state.studentsSuccess).length > 0 ? "Papers Uploaded":"Upload Papers"}</Button>
                                                 }
                                             </form>
                                         </div>
@@ -518,20 +536,45 @@ class Students extends Component{
 
     componentDidMount(){
         let _self = this;
-        
         fetch(`${url}:3456/display/courses`)
         .then(function(res){
             return res.json()
         })
         .then(function(response){
-            //console.log("Nton nton" + response)
-            _self.setState({
-                data:response,
-                //states:response
-            })
+              if(response.length > 0){
+                document.getElementById("courses").disabled = true;
+                  _self.setState({
+                      coursesSuccess: {backgroundColor:"green"},
+                      isCourses:true
+                  })
+              }     
         })
         .catch(function(err){
             console.log(err)
+        })
+
+        fetch(`${url}:3456/get/papers`)
+        .then(function(res){
+            return res.json()
+        })
+        .then(function(response){
+            if(response.length > 0){
+                _self.setState({
+                    studentsSuccess: {backgroundColor:"green"}
+                })
+                fetch(`${url}:3456/display/courses`)
+                .then(function(res){
+                    return res.json()
+                })
+                .then(function(response){
+                    _self.setState({
+                        data:response,
+                    })
+                })
+                .catch(function(err){
+                    console.log(err)
+                })
+            }
         })
      }
 }
