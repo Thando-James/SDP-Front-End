@@ -220,10 +220,24 @@ class Timetable extends Component{
           });
         //add
           $('#add-btn').click(function (){
-              console.log("Fireflies");
+               console.log("Fireflies");
             //add new row
-            let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true">New date</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
-          
+            //var newDate = new Date();
+           // var paidDate1 = newDate.getFullYear() + "-" + ('0' + (newDate.getMonth() + 1)).slice(-2) + "-" + ('0' + newDate.getDay()).slice(-2);
+           
+            let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date"> Click Here</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
+           
+         //   $('#sessions').append(newRow);
+            $("#sessions").on('click.input','input',function(event){
+                event.stopPropagation();
+            })
+
+            $("#sessions").on('click.td','.new_date',function(){
+                var $td = $(this);
+                var text = $(this).html();
+                var $input = $('<input type="date" class="nd" value="Insert Date Here" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />');
+                $td.html('').append($input);
+            })
             
             $('.table-remove').click(function () {
                 $(this).parents('tr').detach();
@@ -233,7 +247,8 @@ class Timetable extends Component{
                // alert(event.target.textContent);
                var $row = $(this).closest('tr');
                var $newSession = $row.find('.new_session').text();
-               var $newDate = $row.find('.new_date').text();
+               var $newDate = $row.find('.nd')[0].value;
+              // var sdate = $newDate.toString();
                var $newCourse = $row.find('.new_course').text();
 
                var $arr = [];
@@ -245,7 +260,7 @@ class Timetable extends Component{
             _self.setState({
              new_data:temp
            })
-           console.log(_self.state.new_data)
+           console.log($arr)
            $('td:nth-child(5)').fadeOut(1000);
         });
   })
@@ -312,7 +327,7 @@ class Timetable extends Component{
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'400px'}} type="text" id="myInput"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
                             </div>
                             <p></p>
-                            <p align="right" className="mainTim" onClick={this.getSummary}>Modified Timetable</p>
+                            <p align="right" className="mainTim" >Modified Timetable</p>
                             {
                                 (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)
                             }
