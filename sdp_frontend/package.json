@@ -5,8 +5,12 @@
   "dependencies": {
     "chai-things": "^0.2.0",
     "circular-json": "^0.5.7",
+    "cssnano": "^4.1.7",
     "jquery": "^3.3.1",
     "moment": "^2.22.2",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
     "react": "^16.4.2",
     "react-big-calendar": "^0.20.1",
     "react-bootstrap": "^0.32.3",
@@ -20,9 +24,10 @@
     "react-loader-spinner": "^2.2.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
+    "react-scripts": "^2.1.1",
     "react-select-search": "^0.9.3",
-    "react-through": "^1.1.1"
+    "react-through": "^1.1.1",
+    "sugarss": "^2.0.0"
   },
   "scripts": {
     "start": "set PORT=3001 && react-scripts start && npm run homepage",
@@ -34,5 +39,11 @@
   "devDependencies": {
     "jest": "^23.6.0",
     "sleep-ms": "^2.0.1"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
