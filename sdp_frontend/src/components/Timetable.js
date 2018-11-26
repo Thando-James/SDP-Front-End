@@ -201,6 +201,8 @@ class Timetable extends Component{
                 $(this).parents('tr').detach();
               });
           });
+
+          
         
         var id = getCookie("id");
         if (id === "") {
