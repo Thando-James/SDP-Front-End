@@ -9,7 +9,7 @@ import $ from 'jquery';
 
 import './styles.css';
 import 'react-datepicker/dist/react-datepicker.css';
- import Loader from 'react-loader-spinner'
+import Loader from 'react-loader-spinner'
 
 
 let url = 'http://youthleague.co'
@@ -188,6 +188,7 @@ class Students extends Component{
             _self.props.history.push({
                 pathname:'/timetable',
                 state:response,
+                checkedStuff:_self.state.checkedArr,
             })
           }
         })
@@ -412,7 +413,7 @@ class Students extends Component{
       return(
            
         <div>
-              { <div className="Loader" style={this.state.loaderStyle}>
+              <div className="Loader" style={this.state.loaderStyle}>
                     <Loader 
                         type="Triangle"
                         color="#00BFFF"
@@ -420,7 +421,7 @@ class Students extends Component{
                         width="100"
                         className="load"
                     />   
-            </div> }
+            </div>
         <pre>
           <PageHeader >
           <h1  align='center'>Timetable Scheduler</h1>

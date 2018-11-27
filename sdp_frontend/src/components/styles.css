@@ -46,13 +46,19 @@
     background-color: #F5F5F5;
 }
 .virtualcourse-list2{
+    padding-top: 7%;
     text-align: justify;
-    height: 300px;
-    width: 800px;
-    margin-left: 350px;
-    margin-right: 350px;
-    border: 1px solid #8ab0e9;
-    background-color: #F5F5F5;
+    padding-right: 20px;
+}
+
+#data{
+    padding-top: 5%;
+}
+
+#data ul{
+    list-style: none;
+    padding: 5px;
+    font-size: 1.2em;
 }
 
 .row{

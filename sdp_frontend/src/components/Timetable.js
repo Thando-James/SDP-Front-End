@@ -209,6 +209,7 @@ addRow(){
     let temp = [];
     console.log("Fireflies");
     //add new row
+<<<<<<< HEAD
     let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true">New date</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
     $("#sessions").on('click.input','input',function(event){
         event.stopPropagation();
@@ -221,6 +222,10 @@ addRow(){
     })
 
 
+=======
+    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true"></td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
+  
+>>>>>>> d62adf0047d0f5cfe3cc73dd965c06baecb9f5d5
     
     $('.table-remove').click(function () {
         $(this).parents('tr').detach();
@@ -324,13 +329,16 @@ addRow(){
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Sessions</th>
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Date</th>
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Course Name</th> 
-                                     
                                         {
-                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>Percentage</th>:null
+                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>#students in each course</th>:null
                                         }
                                         {
-                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>Number of students</th>:null
+                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>% shared/main</th>:null
                                         }
+                                        {
+                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>% shared/neighbor</th>:null
+                                        }
+                                      
                                         
                                     </tr>
                                 </thead>
@@ -374,12 +382,17 @@ addRow(){
                                                 <td style = {style} >{x.title}</td>:null
                                                 }
                                                 {this.state.neighbor?
-                                                <td style = {style}>{x.percentage}</td>
+                                                <td style = {style}>{x.size}</td>:null
+                                                }
+                                                {this.state.neighbor?
+                                                <td style = {style}>{x.percentageBig}</td>
                                                 :null
                                                 }
                                                 {this.state.neighbor?
-                                                <td style = {style}>{x.size}</td>:null
+                                                <td style = {style}>{x.percentageSub}</td>
+                                                :null
                                                 }
+                                                
                                                </tr>
                                         </tbody>
                                     )} ) : <div></div>
@@ -462,9 +475,9 @@ addRow(){
                                 <select style={{marginLeft:10}} id="courseN">
                                         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"/>
                                     
-                                        {this.state.data != "" ? this.state.data.map((x)=>{
+                                        {this.props.location.checkedStuff != "" ? this.props.location.checkedStuff.map((x)=>{
                                             return(
-                                                <option value={x.course_code}>{x.course_code}</option>
+                                                <option value={x}>{x}</option>
                                             )}) : <div></div>
                                         }
                                 </select>
@@ -475,7 +488,7 @@ addRow(){
                             
                         </div>
                         
-                        <div style={{width:'50vw', height:'100vh'}}>
+                        <div id style={{width:'50vw', height:'100vh'}}>
                             
                             <BigCalendar
                                 localizer={localizer}
