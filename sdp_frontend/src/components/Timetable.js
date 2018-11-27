@@ -183,6 +183,17 @@ class Timetable extends Component{
         })
     }
 
+    showModified =function(){
+        let _self = this;
+        let arr = _self.props.location.state
+        this.props.history.push({
+
+            pathname:"./viewModified",
+            // state:arr[arr.length-1]
+
+        })
+    }
+
     saveTimetable = function(){
         
      let added = this.state.new_data
@@ -298,7 +309,7 @@ addRow(){
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'400px'}} type="text" id="myInput"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
                             </div>
                             <p></p>
-                            <p align="right" className="mainTim" >Modified Timetable</p>
+                            <p align="right" className="mainTim" onClick={this.showModified}>Modified Timetable</p>
                             {
                                 (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)
                             }
@@ -319,10 +330,10 @@ addRow(){
                                             this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>#students in each course</th>:null
                                         }
                                         {
-                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>% shared/main</th>:null
+                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>%/main</th>:null
                                         }
                                         {
-                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>% shared/neighbor</th>:null
+                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>%/neighbor</th>:null
                                         }
                                       
                                         
@@ -473,6 +484,7 @@ addRow(){
                            </div>
                             
                         </div>
+
                         
                         <div id style={{width:'50vw', height:'100vh'}}>
                             
@@ -485,8 +497,9 @@ addRow(){
                                 startAccessor="start"
                                 endAccessor="end"
                             />
+                            
                         </div>
-                        
+                          
                     </div>
                 </div>
             </div>                
