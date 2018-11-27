@@ -188,12 +188,15 @@ class Students extends Component{
             _self.props.history.push({
                 pathname:'/timetable',
                 state:response,
-                checkedStuff:_self.state.checkedArr,
             })
           }
         })
         .catch(function(err){
             console.log(err)
+            alert(err)
+            _self.setState({
+                loaderStyle:{display:"none"}
+            })
         })        
      }
 
