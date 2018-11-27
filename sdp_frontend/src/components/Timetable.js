@@ -247,21 +247,13 @@ addRow(){
     $('.table-remove').click(function () {
     $(this).parents('tr').detach();
     var $row = $(this).closest('tr');
-   // var $delSession = $row.find('.the_session').text();
-    //var $delDate = $row.find('the_date');
     var $delCourse = $row.find('.new_course').text();
-
-   // var temp=[];
-  //  $arr.push($delSession);
-    //$arr.push($delDate);
     $arr.push($delCourse);
     _del.setState({
         delCourses:$arr
     })
-   // temp.push($arr);
     console.log($arr)
-   
-   });
+    });
       
    
         var id = getCookie("id");

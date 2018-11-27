@@ -5,6 +5,7 @@ import Timetable from './components/Timetable';
 import Login from './components/Login';
 import allStudents from './components/allStudents';
 import SummaryData from './components/SummaryData';
+import ModifiedTable from './components/ModifiedTable'
 
 
 
@@ -17,6 +18,7 @@ export default class Routes extends React.Component{
                 <Route path="/login" component={Login}/>
                 <Route path="/allstudents" component={allStudents}/>
                 <Route path="/summary" component ={SummaryData}/>
+                <Route path="/viewModified" component ={ModifiedTable}/>
               
             </Switch>
         )
