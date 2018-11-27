@@ -74,25 +74,6 @@ render(){
     return(
         <div>
             <pre><h1 align='center'>Summary Data</h1></pre>
-<<<<<<< HEAD
-        <div className ='virtualcourse-list2'>
-        <div class= "col-lg-7">
-        <ol>
-        <li>Number of same day students: {this.props.location.state[0]} </li>
-        <li>Number of Students who have back to back exams: {this.props.location.state[1]}</li>
-        <li>Number of clashes: {this.props.location.state[2]}</li>
-        <li>(10)Students with worst timetables (In Order : Least worst to worst):<ul>
-       {this.props.location.state? this.props.location.state[3].map((x)=>{
-           return(
-           <li>{x}</li>
-           )
-        }):null}
-        </ul>
-        </li>
-        </ol>
-        </div>
-        </div>
-=======
             <div className ='virtualcourse-list2'>
                 <div class= "col-lg-4" id="data">
                     <ul>
@@ -124,7 +105,6 @@ render(){
                 </div>
                 <div class="col-lg-1"></div>
             </div>
->>>>>>> 9b730c820105c236cef49f452e1680c2017747d1
         </div>
 
     )}}export default SummaryData
