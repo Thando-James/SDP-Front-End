@@ -209,11 +209,11 @@ addRow(){
     let temp = [];
     console.log("Fireflies");
     //add new row
-<<<<<<< HEAD
-    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true">New date</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
+    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true" color="green">Click Me!</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
     $("#sessions").on('click.input','input',function(event){
         event.stopPropagation();
     })
+
     $("#sessions").on('click.td','.new_date',function(){
         var $td = $(this);
         var text = $(this).html();
@@ -221,11 +221,6 @@ addRow(){
         $td.html('').append($input);
     })
 
-
-=======
-    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true"></td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
-  
->>>>>>> d62adf0047d0f5cfe3cc73dd965c06baecb9f5d5
     
     $('.table-remove').click(function () {
         $(this).parents('tr').detach();
