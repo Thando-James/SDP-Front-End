@@ -220,8 +220,18 @@ addRow(){
     let temp = [];
     console.log("Fireflies");
     //add new row
-    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true"></td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
-  
+    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true" color="green">Click Me!</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
+    $("#sessions").on('click.input','input',function(event){
+        event.stopPropagation();
+    })
+
+    $("#sessions").on('click.td','.new_date',function(){
+        var $td = $(this);
+        var text = $(this).html();
+        var $input = $('<input type="date" class="nd" value="Insert Date Here" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />');
+        $td.html('').append($input);
+    })
+
     
     $('.table-remove').click(function () {
         $(this).parents('tr').detach();
@@ -231,16 +241,15 @@ addRow(){
        // alert(event.target.textContent);
        var $row = $(this).closest('tr');
        var $newSession = $row.find('.new_session').text();
-       var $newDate = $row.find('.new_date').text();
+       var $newDate = $row.find('.nd')[0].value;
        var $newCourse = $row.find('.new_course').text();
-
        var $arr = [];
-       
        $arr.push($newSession);
        $arr.push($newDate);
        $arr.push($newCourse);
        temp.push($arr);
-    _self.setState({
+       console.log($arr)
+      _self.setState({
         new_data:temp
     })
     $('td:nth-child(5)').fadeOut(1000);
