@@ -13,7 +13,7 @@ let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
 let url = 'http://youthleague.co'
 //let url = 'http://localhost'
-
+var $arr = [];
 var lengthTimetable = 0;
 class Timetable extends Component{
 
@@ -28,12 +28,13 @@ class Timetable extends Component{
           safe:"",
           student:false,
           save:[],
-          new_data:[]
-        }
+          new_data:[],
+          delCourses:[],        }
         this.showMainTim = this.showMainTim.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
         this.getSummary = this.getSummary.bind(this);
         this.addRow = this.addRow.bind(this);
+      //  this.delRow=this.delRow.bind(this);
     }
 
     showMainTim(){
@@ -186,9 +187,10 @@ class Timetable extends Component{
     saveTimetable = function(){
         
      let added = this.state.new_data
+     let added2 = this.state.delCourses
         fetch(`${url}:3456/save`,{
             method:"POST",
-            body:JSON.stringify({save:added,
+            body:JSON.stringify({save:added,del:added2
             }),
             headers: {
               "Content-Type": "application/json; charset=utf-8",
@@ -201,15 +203,13 @@ class Timetable extends Component{
         })
 
 }.bind(this);
-     
-
 
 addRow(){
     let _self = this;
     let temp = [];
     console.log("Fireflies");
     //add new row
-    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true" color="green">Click Me!</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
+    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr ><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true" color="green">Click Me!</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove" ></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
     $("#sessions").on('click.input','input',function(event){
         event.stopPropagation();
     })
@@ -220,13 +220,7 @@ addRow(){
         var $input = $('<input type="date" class="nd" value="Insert Date Here" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />');
         $td.html('').append($input);
     })
-
-    
-    $('.table-remove').click(function () {
-        $(this).parents('tr').detach();
-      });
-
-       $(".table-ok").click(function () {
+ $(".table-ok").click(function () {
        // alert(event.target.textContent);
        var $row = $(this).closest('tr');
        var $newSession = $row.find('.new_session').text();
@@ -237,7 +231,7 @@ addRow(){
        $arr.push($newDate);
        $arr.push($newCourse);
        temp.push($arr);
-       console.log($arr)
+      console.log($arr)
       _self.setState({
         new_data:temp
     })
@@ -246,12 +240,30 @@ addRow(){
 }
 
 
- render(){
-         // delete
-        $('.table-remove').click(function () {
-            $(this).parents('tr').detach();
-          });
 
+ render(){
+
+    let _del = this;
+    $('.table-remove').click(function () {
+    $(this).parents('tr').detach();
+    var $row = $(this).closest('tr');
+   // var $delSession = $row.find('.the_session').text();
+    //var $delDate = $row.find('the_date');
+    var $delCourse = $row.find('.new_course').text();
+
+   // var temp=[];
+  //  $arr.push($delSession);
+    //$arr.push($delDate);
+    $arr.push($delCourse);
+    _del.setState({
+        delCourses:$arr
+    })
+   // temp.push($arr);
+    console.log($arr)
+   
+   });
+      
+   
         var id = getCookie("id");
         if (id === "") {
             this.props.history.push({
@@ -438,9 +450,9 @@ addRow(){
                                             <tbody>
                                             <tr>
                                                 {console.log(typeof(x.start))}
-                                                <td contentEditable='false' style = {style} >{x.resource[0].session}</td>
-                                                <td contentEditable='false'style = {style}>{x.data[0]}</td>
-                                                <td contentEditable='false'style = {style}>{x.subject + " "}</td>
+                                                <td contentEditable='false' style = {style} class="the_session" >{x.resource[0].session}</td>
+                                                <td contentEditable='false'style = {style} class="the_date">{x.data[0]}</td>
+                                                <td contentEditable='false'style = {style} class="new_course">{x.subject + " "}</td>
                                                 <td>
                                                     <span class="table-remove glyphicon glyphicon-remove"></span>
                                                 </td>
