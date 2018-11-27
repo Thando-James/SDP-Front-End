@@ -171,3 +171,15 @@ body, html {
     background-image: url(/sdp_frontend/public/bkgnd.jpg) no-repeat center center fixed;
  
 }
+.col-lg-4{
+    text-align: left;
+    height: 410px;
+   
+    overflow: scroll;
+    box-align: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid grey;
+    background-color: #F5F5F5;
+    width: 40%;
+}

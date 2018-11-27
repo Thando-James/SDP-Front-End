@@ -209,7 +209,8 @@ class Timetable extends Component{
               "Content-Type": "application/json; charset=utf-8",
             },
         }) .then(function(response){
-            console.log(response)
+            console.log(response);
+            alert("Successfully saved timetable!!");
      })
         .catch(function(err){
             console.log(err)
@@ -222,7 +223,7 @@ addRow(){
     let temp = [];
     console.log("Fireflies");
     //add new row
-    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr ><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true" color="green">Click Me!</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove" ></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
+    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr ><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true" color="green">Click Me!</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
     $("#sessions").on('click.input','input',function(event){
         event.stopPropagation();
     })
@@ -248,7 +249,8 @@ addRow(){
       _self.setState({
         new_data:temp
     })
-    $('td:nth-child(5)').fadeOut(1000);
+    $('td:nth-child(4)').fadeOut(500);
+   
     });
 }
 
@@ -458,9 +460,9 @@ addRow(){
                                                 <td contentEditable='false' style = {style} class="the_session" >{x.resource[0].session}</td>
                                                 <td contentEditable='false'style = {style} class="the_date">{x.data[0]}</td>
                                                 <td contentEditable='false'style = {style} class="new_course">{x.subject + " "}</td>
-                                                <td>
+                                                {/* <td>
                                                     <span class="table-remove glyphicon glyphicon-remove"></span>
-                                                </td>
+                                                </td> */}
                                             </tr>
                                         </tbody>
                                     )} ) : <div></div>
