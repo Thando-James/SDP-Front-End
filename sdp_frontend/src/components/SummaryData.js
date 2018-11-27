@@ -74,17 +74,22 @@ render(){
     return(
         <div>
             <pre><h1 align='center'>Summary Data</h1></pre>
+            <div>       
+            <label  style={{marginLeft:'15%'}} >Information</label>
+            <label style={{marginLeft:'50%'}} >Calendar View</label>           
+            </div>
             <div className ='virtualcourse-list2'>
                 <div class= "col-lg-4" id="data">
                     <ul>
                         <li>Number of same day students: {this.props.location.state[0]} </li>
                         <li>Number of Students who have back to back exams: {this.props.location.state[1]}</li>
                         <li>Number of clashes: {this.props.location.state[2]}</li>
+                        <li>Final clash parameter: {this.props.location.state[4]}</li>
                         <br/>
-                        <li>(10)Students with worst timetables (In Order : Least worst to worst):<ul>
+                        <li>Students with worst timetables (In Order : Least worst to worst):<ul>
                     {this.props.location.state? this.props.location.state[3].map((x)=>{
                         return(
-                        <li onClick={()=>this.studentTimetable(x)}>{x}</li>
+                        <li className="mainTim" onClick={()=>this.studentTimetable(x)}>{x}</li>
                         )
                         }):null}
                         </ul>
