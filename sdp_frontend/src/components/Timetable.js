@@ -324,13 +324,16 @@ class Timetable extends Component{
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Sessions</th>
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Date</th>
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Course Name</th> 
-                                     
                                         {
-                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>Percentage</th>:null
+                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>#students in each course</th>:null
                                         }
                                         {
-                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>Number of students</th>:null
+                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>% shared/main</th>:null
                                         }
+                                        {
+                                            this.state.neighbor?<th style = {{backgoundColor:"#e5e5e5"}}>% shared/neighbor</th>:null
+                                        }
+                                      
                                         
                                     </tr>
                                 </thead>
@@ -374,12 +377,17 @@ class Timetable extends Component{
                                                 <td style = {style} >{x.title}</td>:null
                                                 }
                                                 {this.state.neighbor?
-                                                <td style = {style}>{x.percentage}</td>
+                                                <td style = {style}>{x.size}</td>:null
+                                                }
+                                                {this.state.neighbor?
+                                                <td style = {style}>{x.percentageBig}</td>
                                                 :null
                                                 }
                                                 {this.state.neighbor?
-                                                <td style = {style}>{x.size}</td>:null
+                                                <td style = {style}>{x.percentageSub}</td>
+                                                :null
                                                 }
+                                                
                                                </tr>
                                         </tbody>
                                     )} ) : <div></div>
@@ -462,9 +470,9 @@ class Timetable extends Component{
                                 <select style={{marginLeft:10}} id="courseN">
                                         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"/>
                                     
-                                        {this.state.data != "" ? this.state.data.map((x)=>{
+                                        {this.props.location.checkedStuff != "" ? this.props.location.checkedStuff.map((x)=>{
                                             return(
-                                                <option value={x.course_code}>{x.course_code}</option>
+                                                <option value={x}>{x}</option>
                                             )}) : <div></div>
                                         }
                                 </select>
@@ -475,7 +483,7 @@ class Timetable extends Component{
                             
                         </div>
                         
-                        <div style={{width:'50vw', height:'100vh'}}>
+                        <div id style={{width:'50vw', height:'100vh'}}>
                             
                             <BigCalendar
                                 localizer={localizer}

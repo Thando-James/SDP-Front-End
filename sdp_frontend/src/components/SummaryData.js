@@ -21,7 +21,7 @@ render(){
         <li>Number of same day students: {this.props.location.state[0]} </li>
         <li>Number of Students who have back to back exams: {this.props.location.state[1]}</li>
         <li>Number of clashes: {this.props.location.state[2]}</li>
-        <li>Students with worst timetables (In Order : Worst to least Worst):<ul>
+        <li>(10)Students with worst timetables (In Order : Least worst to worst):<ul>
        {this.props.location.state? this.props.location.state[3].map((x)=>{
            return(
            <li>{x}</li>
