@@ -184,6 +184,19 @@ class Timetable extends Component{
         })
     }
 
+     
+    getModified =function(){
+        let _self = this;
+        // let arr = this.props.location.state
+        this.props.history.push({
+
+            pathname:"./viewModified",
+            // state:arr[arr.length-1]
+
+        })
+    }
+
+
     saveTimetable = function(){
         
      let added = this.state.new_data
@@ -311,7 +324,7 @@ addRow(){
                                 <input class="glyphicon glyphicon-search form-control-feedback" style={{width:'400px'}} type="text" id="myInput"  onKeyUp= {this.search} placeholder="Search for courses.." title="Type a course" class="form-control"/>
                             </div>
                             <p></p>
-                            <p align="right" className="mainTim" >Modified Timetable</p>
+                            <p align="right" className="mainTim" onClick={this.getModified} >Modified Timetable</p>
                             {
                                 (this.state.neighbor && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)|| (this.state.student && <p align="right" className="mainTim" onClick={this.showMainTim}>Main Timetable</p>)
                             }
