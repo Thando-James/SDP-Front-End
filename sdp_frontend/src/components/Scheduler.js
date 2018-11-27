@@ -188,6 +188,7 @@ class Students extends Component{
             _self.props.history.push({
                 pathname:'/timetable',
                 state:response,
+                checkedStuff:checked,
             })
           }
         })
