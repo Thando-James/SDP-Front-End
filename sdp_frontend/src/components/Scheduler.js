@@ -513,7 +513,7 @@ class Students extends Component{
                                     <option value='0' name="Degree" onSelect={this.sortBy}>Degree</option>
                                     <option value='1' name="Noofstudents "onSelect={this.sortBy}>Number of students in the course</option>
                                     <option value='2'name="Affected" onSelect={this.sortBy}>Number of students affected</option>
-                                    <option value='3'name="Affected" onSelect={this.sortBy}>Row sum without diagonal</option>
+                                    {/* <option value='3'name="Affected" onSelect={this.sortBy}>Row sum without diagonal</option> */}
                                 </select>
                             </div>
                             <div>
