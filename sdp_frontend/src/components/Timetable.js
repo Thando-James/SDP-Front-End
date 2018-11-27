@@ -32,7 +32,8 @@ class Timetable extends Component{
         }
         this.showMainTim = this.showMainTim.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-        this.getSummary = this.getSummary.bind(this)
+        this.getSummary = this.getSummary.bind(this);
+        this.addRow = this.addRow.bind(this);
     }
 
     showMainTim(){
@@ -203,54 +204,44 @@ class Timetable extends Component{
      
 
 
+addRow(){
+    let _self = this;
+    let temp = [];
+    console.log("Fireflies");
+    //add new row
+    let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true"></td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
+  
+    
+    $('.table-remove').click(function () {
+        $(this).parents('tr').detach();
+      });
 
+       $(".table-ok").click(function () {
+       // alert(event.target.textContent);
+       var $row = $(this).closest('tr');
+       var $newSession = $row.find('.new_session').text();
+       var $newDate = $row.find('.new_date').text();
+       var $newCourse = $row.find('.new_course').text();
+
+       var $arr = [];
+       
+       $arr.push($newSession);
+       $arr.push($newDate);
+       $arr.push($newCourse);
+       temp.push($arr);
+    _self.setState({
+        new_data:temp
+    })
+    $('td:nth-child(5)').fadeOut(1000);
+    });
+}
 
 
  render(){
-     let _self = this;
-     var temp=[]
          // delete
         $('.table-remove').click(function () {
             $(this).parents('tr').detach();
           });
-        //add
-          $('#add-btn').click(function (){
-              console.log("Fireflies");
-            //add new row
-            let newRow = document.getElementById('sessions').insertRow().innerHTML='<tr><td class="new_session" contenteditable="true">New session</td><td class="new_date" contenteditable="true">New date</td><td class="new_course" contenteditable="true">New Course</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td><td><span class="table-ok glyphicon glyphicon-ok"></span></td></tr>';
-          
-            
-            $('.table-remove').click(function () {
-                $(this).parents('tr').detach();
-              });
-
-               $(".table-ok").click(function () {
-               // alert(event.target.textContent);
-               var $row = $(this).closest('tr');
-               var $newSession = $row.find('.new_session').text();
-               var $newDate = $row.find('.new_date').text();
-               var $newCourse = $row.find('.new_course').text();
-
-               var $arr = [];
-               
-               $arr.push($newSession);
-               $arr.push($newDate);
-               $arr.push($newCourse);
-               temp.push($arr);
-            _self.setState({
-             new_data:temp
-           })
-           console.log(_self.state.new_data)
-           $('td:nth-child(5)').fadeOut(1000);
-        });
-  })
-
-
-      
-        
-        
-       
-
 
         var id = getCookie("id");
         if (id === "") {
@@ -402,7 +393,7 @@ class Timetable extends Component{
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Dates</th> 
                                         <th style = {{backgoundColor:"#e5e5e5"}}>Courses</th>
                                         <th>
-                                            <span id="add-btn" class="table-add glyphicon glyphicon-plus"></span>
+                                            <span id="add-btn" onClick={this.addRow} class="table-add glyphicon glyphicon-plus"></span>
                                         </th>
                                     </tr>
                                 </thead>
