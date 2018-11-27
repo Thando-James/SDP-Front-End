@@ -209,7 +209,8 @@ class Timetable extends Component{
               "Content-Type": "application/json; charset=utf-8",
             },
         }) .then(function(response){
-            console.log(response)
+            console.log(response);
+            alert("Successfully saved timetable!!");
      })
         .catch(function(err){
             console.log(err)
@@ -248,7 +249,8 @@ addRow(){
       _self.setState({
         new_data:temp
     })
-    $('td:nth-child(5)').fadeOut(1000);
+    $('td:nth-child(4)').fadeOut(500);
+   
     });
 }
 
