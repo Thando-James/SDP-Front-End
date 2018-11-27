@@ -28,7 +28,8 @@ class Timetable extends Component{
           safe:"",
           student:false,
           save:[],
-          new_data:[]
+          new_data:[],
+          checkedArr: this.props.location.checkedStuff
         }
         this.showMainTim = this.showMainTim.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
@@ -195,7 +196,7 @@ class Timetable extends Component{
     }
 
     saveTimetable = function(){
-        
+    let _self = this;
      let added = this.state.new_data
         fetch(`${url}:3456/save`,{
             method:"POST",
@@ -206,6 +207,19 @@ class Timetable extends Component{
             },
         }) .then(function(response){
             console.log(response)
+            let time = this.state.timetable
+            let obj = {
+                subject:added[2],
+                data:[new Date(added[1]),new Date(added[1])],
+                start:new Date(added[1]),
+                end: new Date(added[1]),
+                resource:[{session: added[0]}],
+                allDay:false,
+            }
+            time.push(obj);
+            _self.setState({
+                timetable:time
+            })
      })
         .catch(function(err){
             console.log(err)
@@ -232,6 +246,13 @@ addRow(){
         $td.html('').append($input);
     })
 
+    $("#sessions").on('click.td','.new_session',function(){
+        var $td = $(this);
+        var text = $(this).html();
+        var $input = $('<input type="number" class="ns" value="1" />');
+        $td.html('').append($input);
+    })
+
     
     $('.table-remove').click(function () {
         $(this).parents('tr').detach();
@@ -240,7 +261,7 @@ addRow(){
        $(".table-ok").click(function () {
        // alert(event.target.textContent);
        var $row = $(this).closest('tr');
-       var $newSession = $row.find('.new_session').text();
+       var $newSession = $row.find('.ns')[0].value;
        var $newDate = $row.find('.nd')[0].value;
        var $newCourse = $row.find('.new_course').text();
        var $arr = [];
@@ -272,6 +293,7 @@ addRow(){
 
         if(this.props.location.state && !this.state.timetable){
             let timetable = this.props.location.state;
+            console.log(timetable);
             let date = new Date();
             let h=0;
             for(let i = 0; i<timetable.length; i++){
@@ -481,7 +503,7 @@ addRow(){
                                 <select style={{marginLeft:10}} id="courseN">
                                         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"/>
                                     
-                                        {this.props.location.checkedStuff != "" ? this.props.location.checkedStuff.map((x)=>{
+                                        {this.state.data != "" ? this.state.data.map((x)=>{
                                             return(
                                                 <option value={x}>{x}</option>
                                             )}) : <div></div>
@@ -516,6 +538,8 @@ addRow(){
     }
           
     componentDidMount(){
+        console.log(this.state.timetable);
+        console.log(this.state.data);
         let schedule = this.props.location.state;
         console.log(schedule);
 
@@ -531,7 +555,7 @@ addRow(){
         //         timetable: schedule
         //     })
         let _self = this;
-        fetch(`${url}:3456/display/courses`)
+        fetch(`${url}:3456/selected`)
         .then(function(res){
             return res.json()
         })

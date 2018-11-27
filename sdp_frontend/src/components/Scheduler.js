@@ -194,6 +194,10 @@ class Students extends Component{
         })
         .catch(function(err){
             console.log(err)
+            alert(err)
+            _self.setState({
+                loaderStyle:{display:"none"}
+            })
         })        
      }
 
